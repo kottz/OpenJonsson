@@ -10,18 +10,11 @@
           "background": "stockholm/Internal/GHV/B GHV-210.png",
           "clickableAreas": [
             {
-              "x": 100,
-              "y": 200,
-              "width": 50,
-              "height": 50,
+              "x": 295,
+              "y": 220,
+              "width": 131,
+              "height": 236,
               "targetScene": 2
-            },
-            {
-              "x": 300,
-              "y": 400,
-              "width": 60,
-              "height": 60,
-              "targetScene": 3
             }
           ]
         },
@@ -31,11 +24,18 @@
           "background": "stockholm/Internal/GHU/B GHU-191.png",
           "clickableAreas": [
             {
-              "x": 50,
-              "y": 100,
-              "width": 40,
-              "height": 40,
+              "x": 790,
+              "y": 204,
+              "width": 102,
+              "height": 149,
               "targetScene": 1
+            },
+            {
+              "x": 1705,
+              "y": 1146,
+              "width": 214,
+              "height": 289,
+              "targetScene": 3
             }
           ]
         },
@@ -45,10 +45,17 @@
           "background": "stockholm/Internal/Bilscen/B Bilscen-229.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
+              "x": 0,
+              "y": 1185,
+              "width": 551,
+              "height": 253,
+              "targetScene": 2 
+            },
+            {
+              "x": 990,
+              "y": 649,
+              "width": 234,
+              "height": 190,
               "targetScene": 4 
             }
           ]
@@ -59,10 +66,17 @@
           "background": "stockholm/Internal/AFF/B AFF-286.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
+              "x": 1582,
+              "y": 709,
+              "width": 340,
+              "height": 256,
+              "targetScene": 3 
+            },
+            {
+              "x": 0,
+              "y": 956,
+              "width": 272,
+              "height": 352,
               "targetScene": 5 
             }
           ]
@@ -73,10 +87,17 @@
           "background": "stockholm/Internal/AFB/B AFB-305.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
+              "x": 1105,
+              "y": 730,
+              "width": 245,
+              "height": 256,
+              "targetScene": 4 
+            },
+            {
+              "x": 734,
+              "y": 882,
+              "width": 176,
+              "height": 239,
               "targetScene": 6 
             }
           ]
@@ -87,10 +108,17 @@
           "background": "stockholm/Internal/AFN/B AFN-324.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
+              "x": 287,
+              "y": 575,
+              "width": 275,
+              "height": 353,
+              "targetScene": 5 
+            },
+            {
+              "x": 774,
+              "y": 121,
+              "width": 122,
+              "height": 259,
               "targetScene": 7 
             }
           ]
@@ -101,32 +129,46 @@
           "background": "stockholm/Internal/AFUE/B AFUE-343.png",
           "clickableAreas": [
             {
-              "x": 100,
-              "y": 200,
-              "width": 50,
-              "height": 50,
+              "x": 1016,
+              "y": 622,
+              "width": 224,
+              "height": 312,
               "targetScene": 8
             },
             {
-              "x": 300,
-              "y": 400,
-              "width": 60,
-              "height": 60,
+              "x": 286,
+              "y": 874,
+              "width": 133,
+              "height": 205,
               "targetScene": 10
+            },
+            {
+              "x": 1270,
+              "y": 1174,
+              "width": 650,
+              "height": 262,
+              "targetScene": 6
             }
           ]
         },
         {
           "id": 8,
 	  "description": "Amundsen's house - Upstairs - Second hallway",
-          "background": "stockholm/Internal/AFU/B AFU2-381.png",
+          "background": "stockholm/Internal/AFU/B AFU-382.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
-              "targetScene": 9
+              "x": 672,
+              "y": 493,
+              "width": 174,
+              "height": 368,
+              "targetScene": 7 
+            },
+            {
+              "x": 334,
+              "y": 764,
+              "width": 120,
+              "height": 239,
+              "targetScene": 9 
             }
           ]
         },
@@ -136,10 +178,10 @@
           "background": "stockholm/Internal/AFK/B AFK-400.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
+              "x": 1353,
+              "y": 391,
+              "width": 114,
+              "height": 281,
               "targetScene": 8
             }
           ]
@@ -150,10 +192,10 @@
           "background": "stockholm/Internal/AFKE/B AFKE-362.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
+              "x": 1338,
+              "y": 408,
+              "width": 133,
+              "height": 277,
               "targetScene": 7
             }
           ]

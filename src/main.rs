@@ -133,7 +133,7 @@ impl Game {
         let mut game = Game {
             textures: HashMap::new(),
             current_level: 1,
-            current_scene: 8,
+            current_scene: 1,
             game_data,
             loading_textures: HashSet::new(),
             window_size,
