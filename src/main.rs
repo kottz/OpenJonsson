@@ -70,6 +70,23 @@ impl Game {
         Ok(game)
     }
 
+    fn current_level(&self) -> Option<&Level> {
+        self.game_data
+            .levels
+            .iter()
+            .find(|l| l.id == self.current_level)
+    }
+
+    fn current_scene(&self) -> Option<&Scene> {
+        self.current_level()
+            .and_then(|level| level.scenes.iter().find(|s| s.id == self.current_scene))
+    }
+
+    fn get_scene(&self, scene_id: u32) -> Option<&Scene> {
+        self.current_level()
+            .and_then(|level| level.scenes.iter().find(|s| s.id == scene_id))
+    }
+
     fn calculate_game_rect(window_size: Vec2) -> Rect {
         let window_aspect = window_size.x / window_size.y;
         let game_aspect = 1920.0 / 1440.0;
@@ -129,27 +146,12 @@ impl Game {
     async fn load_current_and_adjacent_scenes(&mut self) {
         let mut backgrounds_to_load = Vec::new();
 
-        if let Some(current_level) = self
-            .game_data
-            .levels
-            .iter()
-            .find(|l| l.id == self.current_level)
-        {
-            if let Some(current_scene) = current_level
-                .scenes
-                .iter()
-                .find(|s| s.id == self.current_scene)
-            {
-                backgrounds_to_load.push(current_scene.background.clone());
+        if let Some(current_scene) = self.current_scene() {
+            backgrounds_to_load.push(current_scene.background.clone());
 
-                for area in &current_scene.clickable_areas {
-                    if let Some(target_scene) = current_level
-                        .scenes
-                        .iter()
-                        .find(|s| s.id == area.target_scene)
-                    {
-                        backgrounds_to_load.push(target_scene.background.clone());
-                    }
+            for area in &current_scene.clickable_areas {
+                if let Some(target_scene) = self.get_scene(area.target_scene) {
+                    backgrounds_to_load.push(target_scene.background.clone());
                 }
             }
         }
@@ -158,146 +160,143 @@ impl Game {
     }
 
     async fn update(&mut self) {
+        self.update_window_size();
+        self.handle_mouse_click().await;
+    }
+
+    fn update_window_size(&mut self) {
         let new_window_size = Vec2::new(screen_width(), screen_height());
         if new_window_size != self.window_size {
             self.window_size = new_window_size;
             self.game_rect = Game::calculate_game_rect(self.window_size);
         }
+    }
 
+    async fn handle_mouse_click(&mut self) {
         if is_mouse_button_pressed(MouseButton::Left) {
-            let (mouse_x, mouse_y) = mouse_position();
-            let scale = self.get_scale();
+            let (game_x, game_y) = self.get_game_coordinates(mouse_position());
 
-            // Translate mouse position to game coordinates
-            let game_x = (mouse_x - self.game_rect.x) / scale;
-            let game_y = (mouse_y - self.game_rect.y) / scale;
-
-            if let Some(current_level) = self
-                .game_data
-                .levels
-                .iter()
-                .find(|l| l.id == self.current_level)
-            {
-                if let Some(current_scene) = current_level
-                    .scenes
-                    .iter()
-                    .find(|s| s.id == self.current_scene)
-                {
-                    for area in &current_scene.clickable_areas {
-                        if game_x >= area.x
-                            && game_x <= area.x + area.width
-                            && game_y >= area.y
-                            && game_y <= area.y + area.height
-                        {
-                            self.current_scene = area.target_scene;
-                            self.load_current_and_adjacent_scenes().await;
-                            break;
-                        }
-                    }
-                }
+            if let Some(area) = self.find_clicked_area(game_x, game_y) {
+                self.current_scene = area.target_scene;
+                self.load_current_and_adjacent_scenes().await;
             }
         }
+    }
+
+    fn get_game_coordinates(&self, (mouse_x, mouse_y): (f32, f32)) -> (f32, f32) {
+        let scale = self.get_scale();
+        (
+            (mouse_x - self.game_rect.x) / scale,
+            (mouse_y - self.game_rect.y) / scale,
+        )
+    }
+
+    fn find_clicked_area(&self, game_x: f32, game_y: f32) -> Option<&ClickableArea> {
+        self.current_scene().and_then(|scene| {
+            scene.clickable_areas.iter().find(|area| {
+                game_x >= area.x
+                    && game_x <= area.x + area.width
+                    && game_y >= area.y
+                    && game_y <= area.y + area.height
+            })
+        })
     }
 
     fn draw(&self) {
         clear_background(BLACK);
 
-        if let Some(current_level) = self
-            .game_data
-            .levels
-            .iter()
-            .find(|l| l.id == self.current_level)
-        {
-            if let Some(current_scene) = current_level
-                .scenes
-                .iter()
-                .find(|s| s.id == self.current_scene)
-            {
-                if let Some(texture) = self.textures.get(&current_scene.background) {
-                    // Draw the background texture
-                    draw_texture_ex(
-                        texture,
-                        self.game_rect.x,
-                        self.game_rect.y,
-                        WHITE,
-                        DrawTextureParams {
-                            dest_size: Some(Vec2::new(self.game_rect.w, self.game_rect.h)),
-                            ..Default::default()
-                        },
-                    );
-
-                    // Debug: Draw clickable areas and target scene descriptions
-                    for area in &current_scene.clickable_areas {
-                        let (x, y) = self.get_scaled_pos(area.x, area.y);
-                        let width = area.width * self.get_scale();
-                        let height = area.height * self.get_scale();
-
-                        draw_rectangle_lines(x, y, width, height, 2.0, RED);
-
-                        // Find and draw the target scene description
-                        if let Some(target_scene) = current_level
-                            .scenes
-                            .iter()
-                            .find(|s| s.id == area.target_scene)
-                        {
-                            let text = &target_scene.description;
-                            let font_size = 15.0 * self.get_scale();
-                            let text_dim = measure_text(text, None, font_size as u16, 1.0);
-
-                            let text_x = x + (width - text_dim.width) / 2.0;
-                            let text_y = y - text_dim.height - 5.0 * self.get_scale();
-
-                            draw_rectangle(
-                                text_x - 5.0 * self.get_scale(),
-                                text_y - 5.0 * self.get_scale(),
-                                text_dim.width + 10.0 * self.get_scale(),
-                                text_dim.height + 10.0 * self.get_scale(),
-                                Color::new(0.0, 0.0, 0.0, 0.5),
-                            );
-
-                            draw_text(text, text_x, text_y + text_dim.height, font_size, WHITE);
-                        }
-                    }
-
-                    // Draw current scene description in red at the top-left corner
-                    let (desc_x, desc_y) = self.get_scaled_pos(20.0, 20.0);
-                    draw_text(
-                        &current_scene.description,
-                        desc_x,
-                        desc_y,
-                        30.0 * self.get_scale(),
-                        RED,
-                    );
-                } else {
-                    let (text_x, text_y) = self.get_scaled_pos(20.0, 20.0);
-                    draw_text(
-                        &format!("Loading texture: {}", current_scene.background),
-                        text_x,
-                        text_y,
-                        30.0 * self.get_scale(),
-                        YELLOW,
-                    );
-                }
-            } else {
-                let (text_x, text_y) = self.get_scaled_pos(20.0, 20.0);
-                draw_text(
-                    &format!("Scene not found: {}", self.current_scene),
-                    text_x,
-                    text_y,
-                    30.0 * self.get_scale(),
-                    RED,
-                );
-            }
+        if let Some(current_scene) = self.current_scene() {
+            self.draw_scene(current_scene);
         } else {
-            let (text_x, text_y) = self.get_scaled_pos(20.0, 20.0);
-            draw_text(
-                &format!("Level not found: {}", self.current_level),
-                text_x,
-                text_y,
-                30.0 * self.get_scale(),
-                RED,
-            );
+            self.draw_error_message("Scene not found");
         }
+    }
+
+    fn draw_scene(&self, scene: &Scene) {
+        if let Some(texture) = self.textures.get(&scene.background) {
+            self.draw_background(texture);
+            self.draw_clickable_areas(scene);
+            self.draw_scene_description(scene);
+        } else {
+            self.draw_loading_message(&scene.background);
+        }
+    }
+
+    fn draw_background(&self, texture: &Texture2D) {
+        draw_texture_ex(
+            texture,
+            self.game_rect.x,
+            self.game_rect.y,
+            WHITE,
+            DrawTextureParams {
+                dest_size: Some(Vec2::new(self.game_rect.w, self.game_rect.h)),
+                ..Default::default()
+            },
+        );
+    }
+
+    fn draw_clickable_areas(&self, scene: &Scene) {
+        for area in &scene.clickable_areas {
+            self.draw_clickable_area(area);
+            self.draw_target_scene_description(area);
+        }
+    }
+
+    fn draw_clickable_area(&self, area: &ClickableArea) {
+        let (x, y) = self.get_scaled_pos(area.x, area.y);
+        let width = area.width * self.get_scale();
+        let height = area.height * self.get_scale();
+        draw_rectangle_lines(x, y, width, height, 2.0, RED);
+    }
+
+    fn draw_target_scene_description(&self, area: &ClickableArea) {
+        if let Some(target_scene) = self.get_scene(area.target_scene) {
+            let (x, y) = self.get_scaled_pos(area.x, area.y);
+            let width = area.width * self.get_scale();
+            let text = &target_scene.description;
+            let font_size = 15.0 * self.get_scale();
+            let text_dim = measure_text(text, None, font_size as u16, 1.0);
+
+            let text_x = x + (width - text_dim.width) / 2.0;
+            let text_y = y - text_dim.height - 5.0 * self.get_scale();
+
+            draw_rectangle(
+                text_x - 5.0 * self.get_scale(),
+                text_y - 5.0 * self.get_scale(),
+                text_dim.width + 10.0 * self.get_scale(),
+                text_dim.height + 10.0 * self.get_scale(),
+                Color::new(0.0, 0.0, 0.0, 0.5),
+            );
+
+            draw_text(text, text_x, text_y + text_dim.height, font_size, WHITE);
+        }
+    }
+
+    fn draw_scene_description(&self, scene: &Scene) {
+        let (desc_x, desc_y) = self.get_scaled_pos(20.0, 20.0);
+        draw_text(
+            &scene.description,
+            desc_x,
+            desc_y,
+            30.0 * self.get_scale(),
+            RED,
+        );
+    }
+
+    fn draw_loading_message(&self, background: &str) {
+        let (text_x, text_y) = self.get_scaled_pos(20.0, 20.0);
+        draw_text(
+            &format!("Loading texture: {}", background),
+            text_x,
+            text_y,
+            30.0 * self.get_scale(),
+            YELLOW,
+        );
+    }
+
+    fn draw_error_message(&self, message: &str) {
+        let (text_x, text_y) = self.get_scaled_pos(20.0, 20.0);
+        draw_text(message, text_x, text_y, 30.0 * self.get_scale(), RED);
     }
 }
 
