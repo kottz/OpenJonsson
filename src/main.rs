@@ -34,6 +34,80 @@ struct GameData {
     levels: Vec<Level>,
 }
 
+struct DebugTools {
+    bounding_box_mode: bool,
+    bounding_box_start: Option<Vec2>,
+    current_bounding_box: Option<Rect>,
+}
+
+impl DebugTools {
+    fn new() -> Self {
+        DebugTools {
+            bounding_box_mode: false,
+            bounding_box_start: None,
+            current_bounding_box: None,
+        }
+    }
+
+    fn toggle_bounding_box_mode(&mut self) {
+        self.bounding_box_mode = !self.bounding_box_mode;
+        self.bounding_box_start = None;
+        self.current_bounding_box = None;
+        println!(
+            "Bounding box mode: {}",
+            if self.bounding_box_mode { "ON" } else { "OFF" }
+        );
+    }
+
+    fn handle_bounding_box_creation(&mut self, game_coordinates: (f32, f32)) {
+        let (game_x, game_y) = game_coordinates;
+
+        if let Some(start) = self.bounding_box_start {
+            // Second click, create the bounding box
+            let width = game_x - start.x;
+            let height = game_y - start.y;
+            let (x, y) = if width < 0.0 || height < 0.0 {
+                (game_x.min(start.x), game_y.min(start.y))
+            } else {
+                (start.x, start.y)
+            };
+            let rect = Rect::new(x, y, width.abs(), height.abs());
+            self.current_bounding_box = Some(rect);
+            self.bounding_box_start = None;
+
+            println!(
+                "Bounding Box: x: {}, y: {}, width: {}, height: {}",
+                x,
+                y,
+                width.abs(),
+                height.abs()
+            );
+        } else {
+            // First click, set the starting point
+            self.bounding_box_start = Some(Vec2::new(game_x, game_y));
+            self.current_bounding_box = None;
+        }
+    }
+
+    fn draw_bounding_box_info(&self, game: &Game) {
+        let (text_x, text_y) = game.get_scaled_pos(20.0, game.game_rect.h - 40.0);
+        draw_text(
+            "Bounding Box Mode: ON",
+            text_x,
+            text_y,
+            20.0 * game.get_scale(),
+            GREEN,
+        );
+
+        if let Some(rect) = self.current_bounding_box {
+            let (x, y) = game.get_scaled_pos(rect.x, rect.y);
+            let width = rect.w * game.get_scale();
+            let height = rect.h * game.get_scale();
+            draw_rectangle_lines(x, y, width, height, 2.0, GREEN);
+        }
+    }
+}
+
 struct Game {
     textures: HashMap<String, Texture2D>,
     current_level: u32,
@@ -42,6 +116,7 @@ struct Game {
     loading_textures: HashSet<String>,
     window_size: Vec2,
     game_rect: Rect,
+    debug_tools: Option<DebugTools>,
 }
 
 impl Game {
@@ -58,11 +133,12 @@ impl Game {
         let mut game = Game {
             textures: HashMap::new(),
             current_level: 1,
-            current_scene: 1,
+            current_scene: 8,
             game_data,
             loading_textures: HashSet::new(),
             window_size,
             game_rect,
+            debug_tools: Some(DebugTools::new()),
         };
 
         game.load_current_and_adjacent_scenes().await;
@@ -115,6 +191,14 @@ impl Game {
         (self.game_rect.x + x * scale, self.game_rect.y + y * scale)
     }
 
+    fn get_game_coordinates(&self, (mouse_x, mouse_y): (f32, f32)) -> (f32, f32) {
+        let scale = self.get_scale();
+        (
+            (mouse_x - self.game_rect.x) / scale,
+            (mouse_y - self.game_rect.y) / scale,
+        )
+    }
+
     async fn load_texture(&mut self, bg: &str) -> Result<(), String> {
         if self.textures.contains_key(bg) || self.loading_textures.contains(bg) {
             return Ok(());
@@ -161,7 +245,26 @@ impl Game {
 
     async fn update(&mut self) {
         self.update_window_size();
-        self.handle_mouse_click().await;
+
+        if is_key_pressed(KeyCode::B) {
+            if let Some(debug_tools) = &mut self.debug_tools {
+                debug_tools.toggle_bounding_box_mode();
+            }
+        }
+
+        if is_mouse_button_pressed(MouseButton::Left) {
+            let game_coordinates = self.get_game_coordinates(mouse_position());
+
+            if let Some(debug_tools) = &mut self.debug_tools {
+                if debug_tools.bounding_box_mode {
+                    debug_tools.handle_bounding_box_creation(game_coordinates);
+                } else {
+                    self.handle_mouse_click(game_coordinates).await;
+                }
+            } else {
+                self.handle_mouse_click(game_coordinates).await;
+            }
+        }
     }
 
     fn update_window_size(&mut self) {
@@ -172,23 +275,11 @@ impl Game {
         }
     }
 
-    async fn handle_mouse_click(&mut self) {
-        if is_mouse_button_pressed(MouseButton::Left) {
-            let (game_x, game_y) = self.get_game_coordinates(mouse_position());
-
-            if let Some(area) = self.find_clicked_area(game_x, game_y) {
-                self.current_scene = area.target_scene;
-                self.load_current_and_adjacent_scenes().await;
-            }
+    async fn handle_mouse_click(&mut self, (game_x, game_y): (f32, f32)) {
+        if let Some(area) = self.find_clicked_area(game_x, game_y) {
+            self.current_scene = area.target_scene;
+            self.load_current_and_adjacent_scenes().await;
         }
-    }
-
-    fn get_game_coordinates(&self, (mouse_x, mouse_y): (f32, f32)) -> (f32, f32) {
-        let scale = self.get_scale();
-        (
-            (mouse_x - self.game_rect.x) / scale,
-            (mouse_y - self.game_rect.y) / scale,
-        )
     }
 
     fn find_clicked_area(&self, game_x: f32, game_y: f32) -> Option<&ClickableArea> {
@@ -209,6 +300,12 @@ impl Game {
             self.draw_scene(current_scene);
         } else {
             self.draw_error_message("Scene not found");
+        }
+
+        if let Some(debug_tools) = &self.debug_tools {
+            if debug_tools.bounding_box_mode {
+                debug_tools.draw_bounding_box_info(self);
+            }
         }
     }
 
