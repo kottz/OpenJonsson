@@ -1,0 +1,220 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "name": "Stockholm",
+      "scenes": [
+        {
+          "id": 1,
+	  "description": "Attic",
+          "background": "stockholm/Internal/GHV/B GHV-210.png",
+          "clickableAreas": [
+            {
+              "x": 100,
+              "y": 200,
+              "width": 50,
+              "height": 50,
+              "targetScene": 2
+            },
+            {
+              "x": 300,
+              "y": 400,
+              "width": 60,
+              "height": 60,
+              "targetScene": 3
+            }
+          ]
+        },
+        {
+          "id": 2,
+	  "description": "Outside the house",
+          "background": "stockholm/Internal/GHU/B GHU-191.png",
+          "clickableAreas": [
+            {
+              "x": 50,
+              "y": 100,
+              "width": 40,
+              "height": 40,
+              "targetScene": 1
+            }
+          ]
+        },
+        {
+          "id": 3,
+	  "description": "At the car",
+          "background": "stockholm/Internal/Bilscen/B Bilscen-229.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 4 
+            }
+          ]
+        },
+        {
+          "id": 4,
+	  "description": "Amundsen's house - Front",
+          "background": "stockholm/Internal/AFF/B AFF-286.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 5 
+            }
+          ]
+        },
+        {
+          "id": 5,
+	  "description": "Amundsen's house - Back",
+          "background": "stockholm/Internal/AFB/B AFB-305.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 6 
+            }
+          ]
+        },
+        {
+          "id": 6,
+	  "description": "Amundsen's house - Downstairs",
+          "background": "stockholm/Internal/AFN/B AFN-324.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 7 
+            }
+          ]
+        },
+        {
+          "id": 7,
+	  "description": "Amundsen's house - Upstairs - First hallway",
+          "background": "stockholm/Internal/AFUE/B AFUE-343.png",
+          "clickableAreas": [
+            {
+              "x": 100,
+              "y": 200,
+              "width": 50,
+              "height": 50,
+              "targetScene": 8
+            },
+            {
+              "x": 300,
+              "y": 400,
+              "width": 60,
+              "height": 60,
+              "targetScene": 10
+            }
+          ]
+        },
+        {
+          "id": 8,
+	  "description": "Amundsen's house - Upstairs - Second hallway",
+          "background": "stockholm/Internal/AFU/B AFU2-381.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 9
+            }
+          ]
+        },
+        {
+          "id": 9,
+	  "description": "Amundsen's house - Upstairs -  Amundsen's office",
+          "background": "stockholm/Internal/AFK/B AFK-400.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 8
+            }
+          ]
+        },
+        {
+          "id": 10,
+	  "description": "Amundsen's house - Upstairs -  2nd office",
+          "background": "stockholm/Internal/AFKE/B AFKE-362.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 7
+            }
+          ]
+        },
+        {
+          "id": 11,
+	  "description": "Wall-Enberg street outside office",
+          "background": "stockholm/Internal/WEG/B WEG-609.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 12
+            }
+          ]
+        },
+        {
+          "id": 12,
+	  "description": "Wall-Enberg street outside office",
+          "background": "stockholm/Internal/WEG/B WEG-609.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 13
+            }
+          ]
+        },
+        {
+          "id": 13,
+	  "description": "Wall-Enberg office secretary",
+          "background": "stockholm/Internal/WEG/B WEG-609.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 14
+            }
+          ]
+        },
+        {
+          "id": 14,
+	  "description": "Wall-Enberg office",
+          "background": "stockholm/Internal/WEK/B WEK-454.png",
+          "clickableAreas": [
+            {
+              "x": 200,
+              "y": 300,
+              "width": 70,
+              "height": 70,
+              "targetScene": 7
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
