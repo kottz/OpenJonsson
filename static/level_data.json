@@ -73,6 +73,13 @@
               "targetScene": 3 
             },
             {
+              "x": 1582,
+              "y": 350,
+              "width": 340,
+              "height": 256,
+              "targetScene": 11
+            },
+            {
               "x": 0,
               "y": 956,
               "width": 272,
@@ -206,53 +213,450 @@
           "background": "stockholm/Internal/WEG/B WEG-609.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
+              "x": 1182,
+              "y": 334,
+              "width": 224,
+              "height": 412,
               "targetScene": 12
             }
           ]
         },
         {
           "id": 12,
-	  "description": "Wall-Enberg street outside office",
-          "background": "stockholm/Internal/WEG/B WEG-609.png",
+	  "description": "Wall-Enberg office secretary",
+          "background": "stockholm/Internal/Whall/B Whall-438.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
+              "x": 344,
+              "y": 571,
+              "width": 234,
+              "height": 242,
+              "targetScene": 11
+            },
+            {
+              "x": 1359,
+              "y": 543,
+              "width": 121,
+              "height": 287,
               "targetScene": 13
             }
           ]
         },
         {
           "id": 13,
-	  "description": "Wall-Enberg office secretary",
-          "background": "stockholm/Internal/WEG/B WEG-609.png",
+	  "description": "Wall-Enberg office",
+          "background": "stockholm/Internal/WEK/B WEK-454.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
+              "x": 0,
+              "y": 1233,
+              "width": 714,
+              "height": 203,
+              "targetScene": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Paris",
+      "scenes": [
+        {
+          "id": 1,
+          "description": "Start - Painter's street",
+          "background": "paris/Internal/B PG2-217.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 698,
+              "width": 161,
+              "height": 629,
+              "targetScene": 2
+            },
+            {
+              "x": 1751,
+              "y": 78,
+              "width": 166,
+              "height": 756,
+              "targetScene": 5
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "description": "Outside the Louvre",
+          "background": "paris/Internal/B PUL-235.png",
+          "clickableAreas": [
+            {
+              "x": 250,
+              "y": 270,
+              "width": 100,
+              "height": 216,
+              "targetScene": 3
+            },
+            {
+              "x": 1775,
+              "y": 90,
+              "width": 145,
+              "height": 612,
+              "targetScene": 1
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "description": "Inside the Louvre - Outer Room",
+          "background": "paris/Internal/B PL-253.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1285,
+              "width": 595,
+              "height": 152,
+              "targetScene": 2
+            },
+            {
+              "x": 1818,
+              "y": 520,
+              "width": 105,
+              "height": 301,
+              "targetScene": 4
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "description": "Inside the Louvre - Mona Lisa Room",
+          "background": "paris/Internal/B PLL-271.png",
+          "clickableAreas": [
+            {
+              "x": 1785,
+              "y": 1015,
+              "width": 138,
+              "height": 420,
+              "targetScene": 3
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "description": "Souvenir stand street",
+          "background": "paris/Internal/B PG1-181.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1160,
+              "width": 436,
+              "height": 280,
+              "targetScene": 1
+            },
+            {
+              "x": 171,
+              "y": 473,
+              "width": 110,
+              "height": 220,
+              "targetScene": 6 
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "description": "Butcher shop",
+          "background": "paris/Internal/B PGK-199.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1243,
+              "width": 571,
+              "height": 196,
+              "targetScene": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "London",
+      "scenes": [
+        {
+          "id": 1,
+          "description": "Start street corner",
+          "background": "london/Internal/B LHG2-176.png",
+          "clickableAreas": [
+            {
+              "x": 465,
+              "y": 314,
+              "width": 112,
+              "height": 274,
+              "targetScene": 2
+            },
+            {
+              "x": 1807,
+              "y": 649,
+              "width": 113,
+              "height": 568,
+              "targetScene": 4
+            },
+            {
+              "x": 0,
+              "y": 341,
+              "width": 139,
+              "height": 362,
+              "targetScene": 11
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "description": "Hotel Lobby",
+          "background": "london/Internal/B LHK-222.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1311,
+              "width": 611,
+              "height": 126,
+              "targetScene": 1
+            },
+            {
+              "x": 262,
+              "y": 260,
+              "width": 103,
+              "height": 194,
+              "targetScene": 3
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "description": "Hotel Room",
+          "background": "london/Internal/B LHR-205.png",
+          "clickableAreas": [
+            {
+              "x": 224,
+              "y": 555,
+              "width": 125,
+              "height": 222,
+              "targetScene": 2
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "description": "Shop street - Royal beds",
+          "background": "london/Internal/B LHF-239.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1277,
+              "width": 742,
+              "height": 161,
+              "targetScene": 1 
+            },
+            {
+              "x": 320,
+              "y": 781,
+              "width": 122,
+              "height": 240,
+              "targetScene": 5
+            },
+            {
+              "x": 1339,
+              "y": 296,
+              "width": 104,
+              "height": 267,
+              "targetScene": 6 
+            },
+            {
+              "x": 786,
+              "y": 0,
+              "width": 123,
+              "height": 737,
+              "targetScene": 7 
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "description": "Royal Beds",
+          "background": "london/Internal/B LHM-256.png",
+          "clickableAreas": [
+            {
+              "x": 390,
+              "y": 504,
+              "width": 115,
+              "height": 198,
+              "targetScene": 4
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "description": "Tailor",
+          "background": "london/Internal/B LHS-273.png",
+          "clickableAreas": [
+            {
+              "x": 1732,
+              "y": 1084,
+              "width": 190,
+              "height": 355,
+              "targetScene": 4
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "description": "Second street",
+          "background": "london/Internal/B LMS-375.png",
+          "clickableAreas": [
+            {
+              "x": 1127,
+              "y": 1289,
+              "width": 796,
+              "height": 146,
+              "targetScene": 4
+            },
+            {
+              "x": 1091,
+              "y": 0,
+              "width": 281,
+              "height": 108,
+              "targetScene": 8
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "description": "Outside Buckingham Palace",
+          "background": "london/Internal/B LUS-392.png",
+          "clickableAreas": [
+            {
+              "x": 1660,
+              "y": 1030,
+              "width": 262,
+              "height": 407,
+              "targetScene": 4
+            },
+            {
+              "x": 40,
+              "y": 181,
+              "width": 159,
+              "height": 359,
+              "targetScene": 9 
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "description": "Inside Buckingham Palace - Stairs",
+          "background": "london/Internal/B LUDR-426.png",
+          "clickableAreas": [
+            {
+              "x": 1548,
+              "y": 1304,
+              "width": 376,
+              "height": 130,
+              "targetScene": 8
+            },
+            {
+              "x": 23,
+              "y": 446,
+              "width": 109,
+              "height": 196,
+              "targetScene": 10
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "description": "Queen's Room",
+          "background": "london/Internal/B LTR-290.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1246,
+              "width": 465,
+              "height": 193,
+              "targetScene": 9
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "description": "Grass path to bar",
+          "background": "london/Internal/B LPH-307.png",
+          "clickableAreas": [
+            {
+              "x": 948,
+              "y": 1261,
+              "width": 332,
+              "height": 176,
+              "targetScene": 1
+            },
+            {
+              "x": 682,
+              "y": 82,
+              "width": 382,
+              "height": 237,
+              "targetScene": 12
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "description": "Outside bar",
+          "background": "london/Internal/B LPU-324.png",
+          "clickableAreas": [
+            {
+              "x": 212,
+              "y": 1270,
+              "width": 608,
+              "height": 169,
+              "targetScene": 11
+            },
+            {
+              "x": 1216,
+              "y": 486,
+              "width": 149,
+              "height": 257,
+              "targetScene": 13
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "description": "Bar",
+          "background": "london/Internal/B LPP-341.png",
+          "clickableAreas": [
+            {
+              "x": 199,
+              "y": 512,
+              "width": 118,
+              "height": 204,
+              "targetScene": 12
+            },
+            {
+              "x": 806,
+              "y": 388,
+              "width": 124,
+              "height": 218,
               "targetScene": 14
             }
           ]
         },
         {
           "id": 14,
-	  "description": "Wall-Enberg office",
-          "background": "stockholm/Internal/WEK/B WEK-454.png",
+          "description": "Bar Office",
+          "background": "london/Internal/B LPR-358.png",
           "clickableAreas": [
             {
-              "x": 200,
-              "y": 300,
-              "width": 70,
-              "height": 70,
-              "targetScene": 7
+              "x": 1060,
+              "y": 439,
+              "width": 103,
+              "height": 266,
+              "targetScene": 13
             }
           ]
         }
