@@ -397,7 +397,7 @@ impl Game {
     }
 }
 
-#[macroquad::main("Point and Click Adventure")]
+#[macroquad::main("OpenJönsson")]
 async fn main() {
     match Game::new().await {
         Ok(mut game) => loop {
