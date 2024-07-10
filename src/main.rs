@@ -372,7 +372,7 @@ impl Game {
     fn draw_scene_description(&self, scene: &Scene) {
         let (desc_x, desc_y) = self.get_scaled_pos(20.0, 20.0);
         draw_text(
-            &scene.description,
+            format!("#{} - {}", scene.id, scene.description).as_str(),
             desc_x,
             desc_y,
             30.0 * self.get_scale(),
