@@ -661,6 +661,880 @@
           ]
         }
       ]
+    },
+    {
+      "id": 4,
+      "name": "Berlin",
+      "scenes": [
+        {
+          "id": 1,
+          "description": "Start street - T-junction",
+          "background": "berlin/Internal/B BMB-217.png",
+          "clickableAreas": [
+            {
+              "x": 578,
+              "y": 95,
+              "width": 167,
+              "height": 562,
+              "targetScene": 2 
+            },
+            {
+              "x": 0,
+              "y": 1220,
+              "width": 470,
+              "height": 217,
+              "targetScene": 4
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "description": "Street - Top Left",
+          "background": "berlin/Internal/B BMA-199.png",
+          "clickableAreas": [
+            {
+              "x": 1813,
+              "y": 785,
+              "width": 110,
+              "height": 374,
+              "targetScene": 1
+            },
+            {
+              "x": 0,
+              "y": 796,
+              "width": 160,
+              "height": 404,
+              "targetScene": 3
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "description": "Souvenir Stand",
+          "background": "berlin/Internal/B BMG-181.png",
+          "clickableAreas": [
+            {
+              "x": 756,
+              "y": 0,
+              "width": 469,
+              "height": 151,
+              "targetScene": 2 
+            },
+            {
+              "x": 1772,
+              "y": 1019,
+              "width": 145,
+              "height": 419,
+              "targetScene": 4 
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "description": "Bottom left junction",
+          "background": "berlin/Internal/B BMC-235.png",
+          "clickableAreas": [
+            {
+              "x": 1424,
+              "y": 65,
+              "width": 200,
+              "height": 535,
+              "targetScene": 1 
+            },
+            {
+              "x": 0,
+              "y": 509,
+              "width": 143,
+              "height": 666,
+              "targetScene": 3 
+            },
+            {
+              "x": 1520,
+              "y": 1007,
+              "width": 400,
+              "height": 427,
+              "targetScene": 5 
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "description": "Mountain Entrance",
+          "background": "berlin/Internal/B BJM-253.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1179,
+              "width": 121,
+              "height": 258,
+              "targetScene": 4 
+            },
+            {
+              "x": 1411,
+              "y": 274,
+              "width": 166,
+              "height": 178,
+              "targetScene": 6 
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "description": "Mountain - First T-junction",
+          "background": "berlin/Internal/B BJM1-379.png",
+          "clickableAreas": [
+            {
+              "x": 1244,
+              "y": 1294,
+              "width": 676,
+              "height": 142,
+              "targetScene": 5 
+            },
+            {
+              "x": 0,
+              "y": 320,
+              "width": 133,
+              "height": 464,
+              "targetScene": 7 
+            },
+            {
+              "x": 798,
+              "y": 0,
+              "width": 392,
+              "height": 160,
+              "targetScene": 8 
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "description": "Mountain - First Left pass",
+          "background": "berlin/Internal/B BJM15-631.png",
+          "clickableAreas": [
+            {
+              "x": 1244,
+              "y": 1294,
+              "width": 676,
+              "height": 142,
+              "targetScene": 6 
+            },
+            {
+              "x": 798,
+              "y": 0,
+              "width": 392,
+              "height": 160,
+              "targetScene": 9 
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "description": "Mountain - 5-way Junction",
+          "background": "berlin/Internal/B BJM14-613.png",
+          "clickableAreas": [
+            {
+              "x": 531,
+              "y": 1327,
+              "width": 600,
+              "height": 110,
+              "targetScene": 6 
+            },
+            {
+              "x": 0,
+              "y": 447,
+              "width": 103,
+              "height": 334,
+              "targetScene": 9 
+            },
+            {
+              "x": 609,
+              "y": 0,
+              "width": 248,
+              "height": 102,
+              "targetScene": 10 
+            },
+            {
+              "x": 1264,
+              "y": 0,
+              "width": 204,
+              "height": 107,
+              "targetScene": 11 
+            },
+            {
+              "x": 1816,
+              "y": 517,
+              "width": 102,
+              "height": 368,
+              "targetScene": 12 
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "description": "Mountain - Fat T-Junction - Left from 5-way",
+          "background": "berlin/Internal/B BJM4-433.png",
+          "clickableAreas": [
+            {
+              "x": 1722,
+              "y": 114,
+              "width": 199,
+              "height": 367,
+              "targetScene": 8 
+            },
+            {
+              "x": 357,
+              "y": 1312,
+              "width": 972,
+              "height": 127,
+              "targetScene": 7 
+            },
+            {
+              "x": 701,
+              "y": 0,
+              "width": 422,
+              "height": 138,
+              "targetScene": 10 
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "description": "Mountain - Top T-Junction - Top Left from 5-way",
+          "background": "berlin/Internal/B BJM12-577.png",
+          "clickableAreas": [
+            {
+              "x": 415,
+              "y": 1321,
+              "width": 538,
+              "height": 118,
+              "targetScene": 9 
+            },
+            {
+              "x": 0,
+              "y": 254,
+              "width": 127,
+              "height": 526,
+              "targetScene": 14 
+            },
+            {
+              "x": 1755,
+              "y": 872,
+              "width": 164,
+              "height": 563,
+              "targetScene": 8
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "description": "Mountain - Passage with traveller - Top Right from 5-way",
+          "background": "berlin/Internal/B BJM13-595.png",
+          "clickableAreas": [
+            {
+              "x": 295,
+              "y": 1319,
+              "width": 842,
+              "height": 120,
+              "targetScene": 8 
+            },
+            {
+              "x": 695,
+              "y": 0,
+              "width": 340,
+              "height": 126,
+              "targetScene": 15
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "description": "Mountain - Passage - Right from 5-way",
+          "background": "berlin/Internal/B BJM8-505.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1292,
+              "width": 868,
+              "height": 144,
+              "targetScene": 8 
+            },
+            {
+              "x": 703,
+              "y": 0,
+              "width": 454,
+              "height": 125,
+              "targetScene": 17
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "description": "Mountain - Passage - Right from 5-way",
+          "background": "berlin/Internal/B BJM8-505.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1292,
+              "width": 868,
+              "height": 144,
+              "targetScene": 8 
+            },
+            {
+              "x": 703,
+              "y": 0,
+              "width": 454,
+              "height": 125,
+              "targetScene": 6 
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "description": "Mountain - Top Left Stop with Piece - Left->Up->Left from 5-way",
+          "background": "berlin/Internal/B BJM7-487.png",
+          "clickableAreas": [
+            {
+              "x": 1280,
+              "y": 1262,
+              "width": 641,
+              "height": 175,
+              "targetScene": 10 
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "description": "Mountain - Top T-Junction ABOVE TRAVELLER - Top Right->Up from 5-way #1",
+          "background": "berlin/Internal/B BJM12-577.png",
+          "clickableAreas": [
+            {
+              "x": 415,
+              "y": 1321,
+              "width": 538,
+              "height": 118,
+              "targetScene": 11 
+            },
+            {
+              "x": 0,
+              "y": 254,
+              "width": 127,
+              "height": 526,
+              "targetScene": 27
+            },
+            {
+              "x": 1755,
+              "y": 872,
+              "width": 164,
+              "height": 563,
+              "targetScene": 16
+            }
+          ]
+        },
+        {
+          "id": 16,
+          "description": "Mountain - T-junction with bottom right piece - Above traveller and then right",
+          "background": "berlin/Internal/B BJM1-379.png",
+          "clickableAreas": [
+            {
+              "x": 1244,
+              "y": 1294,
+              "width": 676,
+              "height": 142,
+              "targetScene": 17 
+            },
+            {
+              "x": 0,
+              "y": 320,
+              "width": 133,
+              "height": 464,
+              "targetScene": 15 
+            },
+            {
+              "x": 798,
+              "y": 0,
+              "width": 392,
+              "height": 160,
+              "targetScene": 19
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "description": "Mountain - Fat T-Junction - Above Traveller->Right->Down",
+          "background": "berlin/Internal/B BJM4-433.png",
+          "clickableAreas": [
+            {
+              "x": 1722,
+              "y": 114,
+              "width": 199,
+              "height": 367,
+              "targetScene": 18 
+            },
+            {
+              "x": 357,
+              "y": 1312,
+              "width": 972,
+              "height": 127,
+              "targetScene": 12 
+            },
+            {
+              "x": 701,
+              "y": 0,
+              "width": 422,
+              "height": 138,
+              "targetScene": 16 
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "description": "Mountain - Fat T-Junction - Above Traveller->Right->Down->Right OR First T-junction->Right->Up->Right",
+          "background": "berlin/Internal/B BJM10-541.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1270,
+              "width": 662,
+              "height": 169,
+              "targetScene": 17
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "description": "Mountain - above traveller->right->up",
+          "background": "berlin/Internal/B BJM13-595.png",
+          "clickableAreas": [
+            {
+              "x": 295,
+              "y": 1319,
+              "width": 842,
+              "height": 120,
+              "targetScene": 16 
+            },
+            {
+              "x": 695,
+              "y": 0,
+              "width": 340,
+              "height": 126,
+              "targetScene": 20
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "description": "Mountain - Above Traveller->Right->Up->Up",
+          "background": "berlin/Internal/B BJM1-379.png",
+          "clickableAreas": [
+            {
+              "x": 1244,
+              "y": 1294,
+              "width": 676,
+              "height": 142,
+              "targetScene": 19
+            },
+            {
+              "x": 0,
+              "y": 320,
+              "width": 133,
+              "height": 464,
+              "targetScene": 22
+            },
+            {
+              "x": 798,
+              "y": 0,
+              "width": 392,
+              "height": 160,
+              "targetScene": 21
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "description": "Mountain - Exit to Castle - Above Traveller->Right->Up->Up->Up",
+          "background": "berlin/Internal/B BJM24-793.png",
+          "clickableAreas": [
+            {
+              "x": 202,
+              "y": 1298,
+              "width": 944,
+              "height": 140,
+              "targetScene": 20
+            },
+            {
+              "x": 1568,
+              "y": 0,
+              "width": 253,
+              "height": 179,
+              "targetScene": 32
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "description": "Mountain - 3-way to ?? - Above Traveller->Right->Up->Up->Left",
+          "background": "berlin/Internal/B BJM20-721.png",
+          "clickableAreas": [
+            {
+              "x": 450,
+              "y": 0,
+              "width": 407,
+              "height": 122,
+              "targetScene": 23
+            },
+            {
+              "x": 410,
+              "y": 1300,
+              "width": 490,
+              "height": 139,
+              "targetScene": 26
+            },
+            {
+              "x": 1730,
+              "y": 920,
+              "width": 190,
+              "height": 517,
+              "targetScene": 20
+            }
+          ]
+        },
+        {
+          "id": 23,
+          "description": "Mountain - Passage way - Above 3-way to ??",
+          "background": "berlin/Internal/B BJM13-595.png",
+          "clickableAreas": [
+            {
+              "x": 295,
+              "y": 1319,
+              "width": 842,
+              "height": 120,
+              "targetScene": 22 
+            },
+            {
+              "x": 695,
+              "y": 0,
+              "width": 340,
+              "height": 126,
+              "targetScene": 24
+            }
+          ]
+        },
+        {
+          "id": 24,
+          "description": "Mountain - Passage way - Above Above 3-way to ??",
+          "background": "berlin/Internal/B BJM17-667.png",
+          "clickableAreas": [
+            {
+              "x": 738,
+              "y": 1322,
+              "width": 912,
+              "height": 115,
+              "targetScene": 23 
+            },
+            {
+              "x": 870,
+              "y": 0,
+              "width": 356,
+              "height": 124,
+              "targetScene": 25
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "description": "Mountain - Dead end with Top-Left piece -Above Above Above 3-way to ??",
+          "background": "berlin/Internal/B BJM23-775.png",
+          "clickableAreas": [
+            {
+              "x": 249,
+              "y": 1296,
+              "width": 895,
+              "height": 142,
+              "targetScene": 24
+            }
+          ]
+        },
+        {
+          "id": 26,
+          "description": "Mountain - Passage way - Under 3-way to ??",
+          "background": "berlin/Internal/B BJM17-667.png",
+          "clickableAreas": [
+            {
+              "x": 738,
+              "y": 1322,
+              "width": 912,
+              "height": 115,
+              "targetScene": 27 
+            },
+            {
+              "x": 870,
+              "y": 0,
+              "width": 356,
+              "height": 124,
+              "targetScene": 22
+            }
+          ]
+        },
+        {
+          "id": 27,
+          "description": "Mountain - SECOND 5-way Junction",
+          "background": "berlin/Internal/B BJM14-613.png",
+          "clickableAreas": [
+            {
+              "x": 531,
+              "y": 1327,
+              "width": 600,
+              "height": 110,
+              "targetScene": 15 
+            },
+            {
+              "x": 0,
+              "y": 447,
+              "width": 103,
+              "height": 334,
+              "targetScene": 29 
+            },
+            {
+              "x": 609,
+              "y": 0,
+              "width": 248,
+              "height": 102,
+              "targetScene": 31 
+            },
+            {
+              "x": 1264,
+              "y": 0,
+              "width": 204,
+              "height": 107,
+              "targetScene": 26 
+            },
+            {
+              "x": 1816,
+              "y": 517,
+              "width": 102,
+              "height": 368,
+              "targetScene": 28 
+            }
+          ]
+        },
+        {
+          "id": 28,
+          "description": "Mountain - Dead End to the right - Right of SECOND 5-way junction",
+          "background": "berlin/Internal/B BJM10-541.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1270,
+              "width": 662,
+              "height": 169,
+              "targetScene": 27
+            }
+          ]
+        },
+        {
+          "id": 29,
+          "description": "Mountain - Left pass with woman - Left of SECOND 5-way junction",
+          "background": "berlin/Internal/B BJM15-631.png",
+          "clickableAreas": [
+            {
+              "x": 1244,
+              "y": 1294,
+              "width": 676,
+              "height": 142,
+              "targetScene": 27
+            },
+            {
+              "x": 798,
+              "y": 0,
+              "width": 392,
+              "height": 160,
+              "targetScene": 30
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "description": "Mountain - Right bend with top-right piece - Above Woman - Left->up of SECOND 5-way junction",
+          "background": "berlin/Internal/B BJM19-703.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1237,
+              "width": 576,
+              "height": 200,
+              "targetScene": 29
+            },
+            {
+              "x": 1764,
+              "y": 661,
+              "width": 158,
+              "height": 398,
+              "targetScene": 31
+            }
+          ]
+        },
+        {
+          "id": 31,
+          "description": "Mountain - Horizontal Passage - Left->up->Right of SECOND 5-way junction",
+          "background": "berlin/Internal/B BJM18-685.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 491,
+              "width": 133,
+              "height": 476,
+              "targetScene": 30
+            },
+            {
+              "x": 1764,
+              "y": 904,
+              "width": 157,
+              "height": 534,
+              "targetScene": 27
+            }
+          ]
+        },
+        {
+          "id": 32,
+          "description": "Castle - Outside",
+          "background": "berlin/Internal/B BJS-271.png",
+          "clickableAreas": [
+            {
+              "x": 867,
+              "y": 1302,
+              "width": 196,
+              "height": 136,
+              "targetScene": 21
+            },
+            {
+              "x": 272,
+              "y": 689,
+              "width": 158,
+              "height": 203,
+              "targetScene": 33
+            }
+          ]
+        },
+        {
+          "id": 33,
+          "description": "Castle - Basement",
+          "background": "berlin/Internal/B BJB-289.png",
+          "clickableAreas": [
+            {
+              "x": 867,
+              "y": 1302,
+              "width": 196,
+              "height": 136,
+              "targetScene": 32
+            },
+            {
+              "x": 362,
+              "y": 445,
+              "width": 134,
+              "height": 287,
+              "targetScene": 34
+            }
+          ]
+        },
+        {
+          "id": 34,
+          "description": "Castle - Hallway",
+          "background": "berlin/Internal/B BJH-325.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 673,
+              "width": 103,
+              "height": 450,
+              "targetScene": 35
+            },
+            {
+              "x": 426,
+              "y": 474,
+              "width": 138,
+              "height": 313,
+              "targetScene": 33
+            },
+            {
+              "x": 81,
+              "y": 311,
+              "width": 122,
+              "height": 289,
+              "targetScene": 36
+            },
+            {
+              "x": 793,
+              "y": 657,
+              "width": 144,
+              "height": 319,
+              "targetScene": 36
+            },
+            {
+              "x": 1147,
+              "y": 834,
+              "width": 134,
+              "height": 313,
+              "targetScene": 35
+            },
+            {
+              "x": 1486,
+              "y": 1007,
+              "width": 136,
+              "height": 309,
+              "targetScene": 36
+            }
+          ]
+        },
+        {
+          "id": 35,
+          "description": "Castle - Hallway 2 - At the shield on the wall",
+          "background": "berlin/Internal/B BJH2-343.png",
+          "clickableAreas": [
+            {
+              "x": 1131,
+              "y": 1319,
+              "width": 499,
+              "height": 120,
+              "targetScene": 34
+            },
+            {
+              "x": 919,
+              "y": 732,
+              "width": 136,
+              "height": 283,
+              "targetScene": 35
+            },
+            {
+              "x": 1279,
+              "y": 897,
+              "width": 142,
+              "height": 340,
+              "targetScene": 36
+            },
+            {
+              "x": 1643,
+              "y": 1084,
+              "width": 124,
+              "height": 272,
+              "targetScene": 34
+            }
+          ]
+        },
+        {
+          "id": 36,
+          "description": "Castle - Slip'n'Slide away",
+          "background": "berlin/Internal/B LAB-363.png",
+          "clickableAreas": [
+            {
+              "x": 906,
+              "y": 1278,
+              "width": 434,
+              "height": 161,
+              "targetScene": 16
+            }
+          ]
+        }
+      ]   
     }
   ]
 }
