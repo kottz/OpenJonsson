@@ -1765,5 +1765,12 @@
         }
       ]
     }
+  ],
+  "characters": [
+    {
+      "name": "sickan",
+      "speed": 200.0,
+      "run_speed": 200.4
+    }
   ]
 }

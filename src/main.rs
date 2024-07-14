@@ -2,6 +2,8 @@ use macroquad::prelude::*;
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::path::Path;
+mod character;
+use character::{Character, CharacterData};
 
 #[derive(Deserialize, Debug, Clone)]
 struct ClickableArea {
@@ -32,6 +34,7 @@ struct Level {
 #[derive(Deserialize, Debug, Clone)]
 struct GameData {
     levels: Vec<Level>,
+    characters: Vec<CharacterData>,
 }
 
 struct DebugTools {
@@ -63,7 +66,6 @@ impl DebugTools {
         let (game_x, game_y) = game_coordinates;
 
         if let Some(start) = self.bounding_box_start {
-            // Second click, create the bounding box
             let width = game_x - start.x;
             let height = game_y - start.y;
             let (x, y) = if width < 0.0 || height < 0.0 {
@@ -83,7 +85,6 @@ impl DebugTools {
                 height.abs()
             );
         } else {
-            // First click, set the starting point
             self.bounding_box_start = Some(Vec2::new(game_x, game_y));
             self.current_bounding_box = None;
         }
@@ -117,6 +118,8 @@ struct Game {
     window_size: Vec2,
     game_rect: Rect,
     debug_tools: Option<DebugTools>,
+    characters: Vec<Character>,
+    character_textures: HashMap<String, Texture2D>,
 }
 
 impl Game {
@@ -139,9 +142,12 @@ impl Game {
             window_size,
             game_rect,
             debug_tools: Some(DebugTools::new()),
+            characters: Vec::new(),
+            character_textures: HashMap::new(),
         };
 
         game.load_current_and_adjacent_scenes().await;
+        game.load_characters().await;
 
         Ok(game)
     }
@@ -168,13 +174,11 @@ impl Game {
         let game_aspect = 1920.0 / 1440.0;
 
         if window_aspect > game_aspect {
-            // Window is wider, fit to height
             let height = window_size.y;
             let width = height * game_aspect;
             let x = (window_size.x - width) / 2.0;
             Rect::new(x, 0.0, width, height)
         } else {
-            // Window is taller, fit to width
             let width = window_size.x;
             let height = width / game_aspect;
             let y = (window_size.y - height) / 2.0;
@@ -243,12 +247,49 @@ impl Game {
         self.load_textures(backgrounds_to_load).await;
     }
 
+    async fn load_characters(&mut self) {
+        for (index, character_data) in self.game_data.characters.iter().enumerate() {
+            let start_x = 100.0 + (index as f32 * 100.0);
+            let start_y = 100.0;
+            let character = Character::new(character_data.clone(), Vec2::new(start_x, start_y));
+            self.characters.push(character);
+
+            // Load character textures
+            for dir in 1..=8 {
+                for frame in 0..=7 {
+                    for state in [0, 7] {
+                        let filename =
+                            format!("{}{}{}{}.png", character_data.name, dir, frame, state);
+                        if let Ok(texture) =
+                            load_texture(&format!("static/resources/berlin/Gubbar/{}", filename))
+                                .await
+                        {
+                            self.character_textures.insert(filename, texture);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     async fn update(&mut self) {
         self.update_window_size();
 
         if is_key_pressed(KeyCode::B) {
             if let Some(debug_tools) = &mut self.debug_tools {
                 debug_tools.toggle_bounding_box_mode();
+            }
+        }
+
+        // Animation speed controls
+        if is_key_pressed(KeyCode::Up) {
+            for character in &mut self.characters {
+                character.set_animation_speed(character.animation_speed - 0.01);
+            }
+        }
+        if is_key_pressed(KeyCode::Down) {
+            for character in &mut self.characters {
+                character.set_animation_speed(character.animation_speed + 0.01);
             }
         }
 
@@ -265,6 +306,30 @@ impl Game {
                 self.handle_mouse_click(game_coordinates).await;
             }
         }
+
+        // Update characters
+        let movement = self.get_character_movement();
+        let delta_time = get_frame_time();
+        for character in &mut self.characters {
+            character.update(movement, delta_time);
+        }
+    }
+
+    fn get_character_movement(&self) -> Vec2 {
+        let mut movement = Vec2::new(0.0, 0.0);
+        if is_key_down(KeyCode::Left) || is_key_down(KeyCode::A) {
+            movement.x -= 1.0;
+        }
+        if is_key_down(KeyCode::Right) || is_key_down(KeyCode::D) {
+            movement.x += 1.0;
+        }
+        if is_key_down(KeyCode::Up) || is_key_down(KeyCode::W) {
+            movement.y -= 1.0;
+        }
+        if is_key_down(KeyCode::Down) || is_key_down(KeyCode::S) {
+            movement.y += 1.0;
+        }
+        movement
     }
 
     fn update_window_size(&mut self) {
@@ -302,11 +367,81 @@ impl Game {
             self.draw_error_message("Scene not found");
         }
 
+        let scale = self.get_scale();
+        for character in &self.characters {
+            self.draw_character(character, scale);
+        }
+
+        let (text_x, text_y) = self.get_scaled_pos(20.0, 60.0);
+        draw_text(
+            &format!("Characters: {}", self.characters.len()),
+            text_x,
+            text_y,
+            20.0 * self.get_scale(),
+            WHITE,
+        );
+
+        if let Some(character) = self.characters.first() {
+            let (text_x, text_y) = self.get_scaled_pos(20.0, 90.0);
+            draw_text(
+                &format!("Animation Speed: {:.2}", character.animation_speed),
+                text_x,
+                text_y,
+                20.0 * self.get_scale(),
+                WHITE,
+            );
+        }
+
         if let Some(debug_tools) = &self.debug_tools {
             if debug_tools.bounding_box_mode {
                 debug_tools.draw_bounding_box_info(self);
             }
         }
+    }
+
+    fn draw_character(&self, character: &Character, scale: f32) {
+        let (x, y) = self.get_scaled_pos(character.position.x, character.position.y);
+
+        let cycle = if character.animation_index < 4 { 0 } else { 7 };
+        let frame = character.animation_index % 4;
+
+        let filename = format!(
+            "{}{}{}{}.png",
+            character.data.name, character.direction as u8, frame, cycle
+        );
+
+        match self.character_textures.get(&filename) {
+            Some(texture) => {
+                draw_texture_ex(
+                    texture,
+                    x,
+                    y,
+                    WHITE,
+                    DrawTextureParams {
+                        dest_size: Some(Vec2::new(
+                            texture.width() * scale,
+                            texture.height() * scale,
+                        )),
+                        ..Default::default()
+                    },
+                );
+            }
+            None => {
+                println!("Texture not found for filename: {}", filename);
+                // Draw a placeholder rectangle for debugging
+                draw_rectangle(x, y, 50.0 * scale, 50.0 * scale, RED);
+            }
+        }
+
+        // Debug info
+        let (text_x, text_y) = self.get_scaled_pos(x, y - 20.0);
+        draw_text(
+            &format!("File: {}", filename),
+            text_x,
+            text_y,
+            15.0 * scale,
+            WHITE,
+        );
     }
 
     fn draw_scene(&self, scene: &Scene) {
