@@ -412,10 +412,20 @@ impl Game {
 
         match self.character_textures.get(&filename) {
             Some(texture) => {
+                //let x = self.window_size.x / 2.0;
+                // The character assets are centered, so we need to offset the x position
+                // by half the width of the texture
+                // The width of the textures are different, but the character is always centered
+                // Then we play around with an offset to make it look better
+                // Ideally
+                let xt = texture.width() / 2.0 * scale;
+                let yt = texture.height() / 2.0 * scale;
+                let x_offset = 0.0;
+                let y_offset = 0.0;
                 draw_texture_ex(
                     texture,
-                    x,
-                    y,
+                    x - xt + x_offset,
+                    y - yt + y_offset,
                     WHITE,
                     DrawTextureParams {
                         dest_size: Some(Vec2::new(
