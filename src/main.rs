@@ -37,10 +37,58 @@ struct GameData {
     characters: Vec<CharacterData>,
 }
 
+struct Grid {
+    a: f32,
+    m: f32,
+    stretch: (f32, f32),
+    grid_offset: f32,
+}
+
+impl Grid {
+    fn new() -> Self {
+        Self {
+            a: 0.261,
+            m: -1.744,
+            stretch: (38.81, 10.32),
+            grid_offset: 10.,
+        }
+    }
+
+    fn get_grid_from_coord(&self, v: Vec2) -> (i32, i32) {
+        // Adjust the input coordinates to match the original game's coordinate system
+        let v = Vec2::new(v.x / 3.0, v.y / 3.0); // Scale up by 3 to match original game's resolution
+
+        let v = Vec2::new(v.x, v.y - self.grid_offset);
+        let untransformed_x = v.x - self.m * v.y;
+        let untransformed_y = v.y;
+
+        let rotated_x = self.a.cos() * untransformed_x + untransformed_y * self.a.sin();
+        let rotated_y = -self.a.sin() * untransformed_x + untransformed_y * self.a.cos();
+
+        let x = (rotated_x / self.stretch.0).round() as i32;
+        let y = (rotated_y / self.stretch.1).round() as i32;
+        (x + 1, y + 17)
+    }
+
+    fn get_coord_from_grid(&self, x: i32, y: i32) -> Vec2 {
+        let x = (x - 1) as f32 * self.stretch.0;
+        let y = (y - 17) as f32 * self.stretch.1;
+
+        let rotated_x = self.a.cos() * x - y * self.a.sin();
+        let rotated_y = self.a.sin() * x + y * self.a.cos();
+
+        let transformed_x = rotated_x + self.m * rotated_y;
+        let transformed_y = rotated_y + self.grid_offset;
+
+        Vec2::new(transformed_x * 3.0, transformed_y * 3.0)
+    }
+}
+
 struct DebugTools {
     bounding_box_mode: bool,
     bounding_box_start: Option<Vec2>,
     current_bounding_box: Option<Rect>,
+    draw_grid: bool,
 }
 
 impl DebugTools {
@@ -49,6 +97,7 @@ impl DebugTools {
             bounding_box_mode: false,
             bounding_box_start: None,
             current_bounding_box: None,
+            draw_grid: false,
         }
     }
 
@@ -107,6 +156,14 @@ impl DebugTools {
             draw_rectangle_lines(x, y, width, height, 2.0, GREEN);
         }
     }
+
+    fn toggle_grid(&mut self) {
+        self.draw_grid = !self.draw_grid;
+        println!(
+            "Grid display: {}",
+            if self.draw_grid { "ON" } else { "OFF" }
+        );
+    }
 }
 
 struct Game {
@@ -120,6 +177,7 @@ struct Game {
     debug_tools: Option<DebugTools>,
     characters: Vec<Character>,
     character_textures: HashMap<String, Texture2D>,
+    grid: Grid,
 }
 
 impl Game {
@@ -144,10 +202,12 @@ impl Game {
             debug_tools: Some(DebugTools::new()),
             characters: Vec::new(),
             character_textures: HashMap::new(),
+            grid: Grid::new(),
         };
 
         game.load_current_and_adjacent_scenes().await;
         game.load_characters().await;
+        game.load_debug_textures().await;
 
         Ok(game)
     }
@@ -195,11 +255,11 @@ impl Game {
         (self.game_rect.x + x * scale, self.game_rect.y + y * scale)
     }
 
-    fn get_game_coordinates(&self, (mouse_x, mouse_y): (f32, f32)) -> (f32, f32) {
+    fn get_game_coordinates(&self, mouse_pos: Vec2) -> Vec2 {
         let scale = self.get_scale();
-        (
-            (mouse_x - self.game_rect.x) / scale,
-            (mouse_y - self.game_rect.y) / scale,
+        Vec2::new(
+            (mouse_pos.x - self.game_rect.x) / scale,
+            (mouse_pos.y - self.game_rect.y) / scale,
         )
     }
 
@@ -272,8 +332,26 @@ impl Game {
         }
     }
 
+    async fn load_debug_textures(&mut self) {
+        if let Ok(texture) = load_texture("static/resources/berlin/Internal/-13.png").await {
+            self.textures.insert("debug_grid".to_string(), texture);
+        }
+    }
+
     async fn update(&mut self) {
         self.update_window_size();
+
+        if is_mouse_button_pressed(MouseButton::Left) {
+            let mouse_pos = Vec2::from(mouse_position());
+            let game_pos = self.get_game_coordinates(mouse_pos);
+            self.handle_mouse_click(game_pos).await;
+        }
+
+        if is_key_pressed(KeyCode::G) {
+            if let Some(debug_tools) = &mut self.debug_tools {
+                debug_tools.toggle_grid();
+            }
+        }
 
         if is_key_pressed(KeyCode::B) {
             if let Some(debug_tools) = &mut self.debug_tools {
@@ -294,11 +372,11 @@ impl Game {
         }
 
         if is_mouse_button_pressed(MouseButton::Left) {
-            let game_coordinates = self.get_game_coordinates(mouse_position());
+            let game_coordinates = self.get_game_coordinates(mouse_position().into());
 
             if let Some(debug_tools) = &mut self.debug_tools {
                 if debug_tools.bounding_box_mode {
-                    debug_tools.handle_bounding_box_creation(game_coordinates);
+                    debug_tools.handle_bounding_box_creation(game_coordinates.into());
                 } else {
                     self.handle_mouse_click(game_coordinates).await;
                 }
@@ -340,22 +418,92 @@ impl Game {
         }
     }
 
-    async fn handle_mouse_click(&mut self, (game_x, game_y): (f32, f32)) {
-        if let Some(area) = self.find_clicked_area(game_x, game_y) {
+    async fn handle_mouse_click(&mut self, game_pos: Vec2) {
+        let grid_coord = self.grid.get_grid_from_coord(game_pos);
+        println!(
+            "Clicked at coordinates: ({:.2}, {:.2}), Grid: ({}, {})",
+            game_pos.x, game_pos.y, grid_coord.0, grid_coord.1
+        );
+
+        if let Some(area) = self.find_clicked_area(game_pos) {
             self.current_scene = area.target_scene;
             self.load_current_and_adjacent_scenes().await;
         }
     }
 
-    fn find_clicked_area(&self, game_x: f32, game_y: f32) -> Option<&ClickableArea> {
+    fn find_clicked_area(&self, game_pos: Vec2) -> Option<&ClickableArea> {
         self.current_scene().and_then(|scene| {
             scene.clickable_areas.iter().find(|area| {
-                game_x >= area.x
-                    && game_x <= area.x + area.width
-                    && game_y >= area.y
-                    && game_y <= area.y + area.height
+                game_pos.x >= area.x
+                    && game_pos.x <= area.x + area.width
+                    && game_pos.y >= area.y
+                    && game_pos.y <= area.y + area.height
             })
         })
+    }
+
+    fn draw_debug_grid(&self) {
+        if let Some(debug_tools) = &self.debug_tools {
+            if !debug_tools.draw_grid {
+                return;
+            }
+
+            if let Some(texture) = self.textures.get("debug_grid") {
+                draw_texture_ex(
+                    texture,
+                    self.game_rect.x,
+                    self.game_rect.y,
+                    WHITE,
+                    DrawTextureParams {
+                        dest_size: Some(Vec2::new(self.game_rect.w, self.game_rect.h)),
+                        ..Default::default()
+                    },
+                );
+            }
+
+            let grid_color = Color::new(0.0, 1.0, 0.0, 0.5); // Semi-transparent green
+            let scale = self.get_scale();
+
+            // Calculate the number of grid cells based on the original resolution
+            let grid_width = 41; // From 0 to 40 inclusive
+            let grid_height = 41;
+
+            // The get_coord_from_grid function returns the center of the grid cell
+            // We need to adjust the start and end points to draw the lines in between the cells
+            // Find the difference between two adjacent centers and divide by 2 to find the middle
+            // point between them
+            let x_delta =
+                (self.grid.get_coord_from_grid(1, 0) - self.grid.get_coord_from_grid(0, 0)) / 2.0;
+            // Draw vertical lines
+            for x in 0..=grid_width {
+                let start = self.grid.get_coord_from_grid(x, 0) - x_delta;
+                let end = self.grid.get_coord_from_grid(x, grid_height) - x_delta;
+                let start = self.get_scaled_pos(start.x, start.y);
+                let end = self.get_scaled_pos(end.x, end.y);
+                draw_line(start.0, start.1, end.0, end.1, 2.0, grid_color);
+            }
+
+            let y_delta =
+                (self.grid.get_coord_from_grid(0, 1) - self.grid.get_coord_from_grid(0, 0)) / 2.0;
+            // Draw horizontal lines
+            for y in 0..=grid_height {
+                let start = self.grid.get_coord_from_grid(0, y) - y_delta;
+                let end = self.grid.get_coord_from_grid(grid_width, y) - y_delta;
+                let start = self.get_scaled_pos(start.x, start.y);
+                let end = self.get_scaled_pos(end.x, end.y);
+                draw_line(start.0, start.1, end.0, end.1, 2.0, grid_color);
+            }
+
+            // Draw grid coordinates
+            let font_size = 15.0 * scale;
+            for x in 0..=grid_width {
+                for y in 0..=grid_height {
+                    let pos = self.grid.get_coord_from_grid(x, y);
+                    let (draw_x, draw_y) = self.get_scaled_pos(pos.x, pos.y);
+                    draw_text(&format!("{},{}", x, y), draw_x, draw_y, font_size, WHITE);
+                }
+            }
+        }
     }
 
     fn draw(&self) {
@@ -366,6 +514,8 @@ impl Game {
         } else {
             self.draw_error_message("Scene not found");
         }
+
+        self.draw_debug_grid();
 
         let scale = self.get_scale();
         for character in &self.characters {
