@@ -182,9 +182,10 @@ struct Game {
 
 impl Game {
     async fn new() -> Result<Self, String> {
-        let json_path = Path::new("static/level_data.json");
-        let json = std::fs::read_to_string(json_path)
-            .map_err(|e| format!("Failed to read JSON file: {}", e))?;
+        // let json_path = Path::new("static/level_data.json");
+        // let json = std::fs::read_to_string(json_path)
+        //     .map_err(|e| format!("Failed to read JSON file: {}", e))?;
+        let json = load_string("static/level_data.json").await.unwrap();
         let game_data: GameData =
             serde_json::from_str(&json).map_err(|e| format!("Failed to parse JSON: {}", e))?;
 
@@ -269,8 +270,10 @@ impl Game {
         }
 
         self.loading_textures.insert(bg.to_string());
-        let texture_path = Path::new("static/resources").join(bg);
-        match load_texture(texture_path.to_str().unwrap()).await {
+        // let texture_path = Path::new("static/resources").join(bg);
+        // match load_texture(texture_path.to_str().unwrap()).await {
+        let texture_path = format!("static/resources/{}", bg);
+        match load_texture(&texture_path).await {
             Ok(texture) => {
                 self.textures.insert(bg.to_string(), texture);
                 self.loading_textures.remove(bg);
@@ -396,16 +399,24 @@ impl Game {
     fn get_character_movement(&self) -> Vec2 {
         let mut movement = Vec2::new(0.0, 0.0);
         if is_key_down(KeyCode::Left) || is_key_down(KeyCode::A) {
-            movement.x -= 1.0;
+            let c = 0.4472;
+            movement.x -= c * 2.0;
+            movement.y -= c * 1.0;
         }
         if is_key_down(KeyCode::Right) || is_key_down(KeyCode::D) {
-            movement.x += 1.0;
+            let c = 0.4472;
+            movement.x += c * 2.0;
+            movement.y += c * 1.0;
         }
         if is_key_down(KeyCode::Up) || is_key_down(KeyCode::W) {
-            movement.y -= 1.0;
+            let c = 0.4452;
+            movement.x -= c * -2.016;
+            movement.y -= c * 1.0;
         }
         if is_key_down(KeyCode::Down) || is_key_down(KeyCode::S) {
-            movement.y += 1.0;
+            let c = 0.4452;
+            movement.x += c * -2.016;
+            movement.y += c * 1.0;
         }
         movement
     }
@@ -419,12 +430,6 @@ impl Game {
     }
 
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
-        let grid_coord = self.grid.get_grid_from_coord(game_pos);
-        println!(
-            "Clicked at coordinates: ({:.2}, {:.2}), Grid: ({}, {})",
-            game_pos.x, game_pos.y, grid_coord.0, grid_coord.1
-        );
-
         if let Some(area) = self.find_clicked_area(game_pos) {
             self.current_scene = area.target_scene;
             self.load_current_and_adjacent_scenes().await;
