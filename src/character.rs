@@ -27,6 +27,8 @@ pub struct Character {
     pub animation_index: usize,
     animation_timer: f32,
     pub animation_speed: f32,
+    pub path: Option<Vec<(i32, i32)>>,
+    pub target: Option<(i32, i32)>,
 }
 
 impl Character {
@@ -38,6 +40,8 @@ impl Character {
             animation_index: 0,
             animation_timer: 0.0,
             animation_speed: 0.1,
+            path: None,
+            target: None,
         }
     }
 
@@ -84,5 +88,10 @@ impl Character {
 
     pub fn set_animation_speed(&mut self, speed: f32) {
         self.animation_speed = speed;
+    }
+
+    pub fn set_path(&mut self, path: Option<Vec<(i32, i32)>>, target: Option<(i32, i32)>) {
+        self.path = path;
+        self.target = target;
     }
 }

@@ -1,7 +1,6 @@
 use macroquad::prelude::*;
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
-use std::path::Path;
 mod character;
 use character::{Character, CharacterData};
 
@@ -177,6 +176,7 @@ struct Game {
     debug_tools: Option<DebugTools>,
     characters: Vec<Character>,
     character_textures: HashMap<String, Texture2D>,
+    active_character: Option<usize>,
     grid: Grid,
 }
 
@@ -203,6 +203,7 @@ impl Game {
             debug_tools: Some(DebugTools::new()),
             characters: Vec::new(),
             character_textures: HashMap::new(),
+            active_character: Some(0),
             grid: Grid::new(),
         };
 
@@ -388,11 +389,13 @@ impl Game {
             }
         }
 
-        // Update characters
-        let movement = self.get_character_movement();
-        let delta_time = get_frame_time();
-        for character in &mut self.characters {
-            character.update(movement, delta_time);
+        // Update only the active character
+        if let Some(active_index) = self.active_character {
+            let movement = self.get_character_movement();
+            let delta_time = get_frame_time();
+            if let Some(character) = self.characters.get_mut(active_index) {
+                character.update(movement, delta_time);
+            }
         }
     }
 
@@ -430,10 +433,31 @@ impl Game {
     }
 
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
+        // Check if a character was clicked
+        for (index, character) in self.characters.iter().enumerate() {
+            if self.is_point_in_character(game_pos, character) {
+                self.active_character = Some(index);
+                println!("Character {} selected", character.data.name);
+                return;
+            }
+        }
+
+        // If no character was clicked, check for clickable areas
         if let Some(area) = self.find_clicked_area(game_pos) {
             self.current_scene = area.target_scene;
             self.load_current_and_adjacent_scenes().await;
         }
+    }
+
+    fn is_point_in_character(&self, point: Vec2, character: &Character) -> bool {
+        // You may need to adjust these values based on your character size
+        let character_width = 55.0;
+        let character_height = 120.0;
+
+        point.x >= character.position.x - character_width / 2.0
+            && point.x <= character.position.x + character_width / 2.0
+            && point.y >= character.position.y - character_height / 2.0
+            && point.y <= character.position.y + character_height / 2.0
     }
 
     fn find_clicked_area(&self, game_pos: Vec2) -> Option<&ClickableArea> {
@@ -522,9 +546,15 @@ impl Game {
 
         self.draw_debug_grid();
 
+        // let scale = self.get_scale();
+        // for character in &self.characters {
+        //     self.draw_character(character, scale);
+        // }
+
         let scale = self.get_scale();
-        for character in &self.characters {
-            self.draw_character(character, scale);
+        for (index, character) in self.characters.iter().enumerate() {
+            let is_active = self.active_character == Some(index);
+            self.draw_character(character, scale, is_active);
         }
 
         let (text_x, text_y) = self.get_scaled_pos(20.0, 60.0);
@@ -554,7 +584,7 @@ impl Game {
         }
     }
 
-    fn draw_character(&self, character: &Character, scale: f32) {
+    fn draw_character(&self, character: &Character, scale: f32, is_active: bool) {
         let (x, y) = self.get_scaled_pos(character.position.x, character.position.y);
 
         let cycle = if character.animation_index < 4 { 0 } else { 7 };
@@ -596,6 +626,11 @@ impl Game {
                 // Draw a placeholder rectangle for debugging
                 draw_rectangle(x, y, 50.0 * scale, 50.0 * scale, RED);
             }
+        }
+
+        if is_active {
+            let indicator_size = 10.0 * scale;
+            draw_circle(x, y - 60.0 * scale, indicator_size, GREEN);
         }
 
         // Debug info
