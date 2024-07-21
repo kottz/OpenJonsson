@@ -1,8 +1,9 @@
 use macroquad::prelude::*;
 use serde::Deserialize;
-use std::collections::{HashMap, HashSet};
+use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet};
 mod character;
-use character::{Character, CharacterData};
+use character::{Character, CharacterData, Direction};
 
 #[derive(Deserialize, Debug, Clone)]
 struct ClickableArea {
@@ -30,10 +31,64 @@ struct Level {
     scenes: Vec<Scene>,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Deserialize)]
+pub enum CursorType {
+    #[serde(rename = "normal")]
+    Normal,
+    #[serde(rename = "move")]
+    Move,
+    #[serde(rename = "take")]
+    Take,
+    #[serde(rename = "talk")]
+    Talk,
+}
+
 #[derive(Deserialize, Debug, Clone)]
-struct GameData {
-    levels: Vec<Level>,
-    characters: Vec<CharacterData>,
+pub struct Cursor {
+    pub cursor_type: CursorType,
+    pub texture: String,
+    pub hotspot: [i32; 2],
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct MenuItem {
+    pub name: String,
+    pub texture: String,
+    pub position: [f32; 2],
+    pub size: [f32; 2],
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct UI {
+    pub cursors: Vec<Cursor>,
+    #[serde(rename = "menuItems")]
+    pub menu_items: Vec<MenuItem>,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct GameData {
+    pub levels: Vec<Level>,
+    pub characters: Vec<CharacterData>,
+    pub ui: UI,
+}
+
+#[derive(Clone, Eq, PartialEq)]
+struct Node {
+    position: (i32, i32),
+    f_score: i32,
+    g_score: i32,
+}
+
+impl Ord for Node {
+    fn cmp(&self, other: &Self) -> Ordering {
+        other.f_score.cmp(&self.f_score)
+    }
+}
+
+impl PartialOrd for Node {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 struct Grid {
@@ -178,13 +233,15 @@ struct Game {
     character_textures: HashMap<String, Texture2D>,
     active_character: Option<usize>,
     grid: Grid,
+    cursor_textures: HashMap<CursorType, Texture2D>,
+    menu_item_textures: HashMap<String, Texture2D>,
+    current_cursor: CursorType,
+    debug_instant_move: bool,
+    changing_scene: bool,
 }
 
 impl Game {
     async fn new() -> Result<Self, String> {
-        // let json_path = Path::new("static/level_data.json");
-        // let json = std::fs::read_to_string(json_path)
-        //     .map_err(|e| format!("Failed to read JSON file: {}", e))?;
         let json = load_string("static/level_data.json").await.unwrap();
         let game_data: GameData =
             serde_json::from_str(&json).map_err(|e| format!("Failed to parse JSON: {}", e))?;
@@ -205,11 +262,17 @@ impl Game {
             character_textures: HashMap::new(),
             active_character: Some(0),
             grid: Grid::new(),
+            cursor_textures: HashMap::new(),
+            menu_item_textures: HashMap::new(),
+            current_cursor: CursorType::Normal,
+            debug_instant_move: false,
+            changing_scene: false,
         };
 
         game.load_current_and_adjacent_scenes().await;
         game.load_characters().await;
         game.load_debug_textures().await;
+        game.load_ui_textures().await;
 
         Ok(game)
     }
@@ -271,8 +334,6 @@ impl Game {
         }
 
         self.loading_textures.insert(bg.to_string());
-        // let texture_path = Path::new("static/resources").join(bg);
-        // match load_texture(texture_path.to_str().unwrap()).await {
         let texture_path = format!("static/resources/{}", bg);
         match load_texture(&texture_path).await {
             Ok(texture) => {
@@ -342,12 +403,87 @@ impl Game {
         }
     }
 
+    async fn load_ui_textures(&mut self) {
+        for cursor in &self.game_data.ui.cursors {
+            if let Ok(texture) = load_texture(&format!("static/resources/{}", cursor.texture)).await
+            {
+                self.cursor_textures.insert(cursor.cursor_type, texture);
+            }
+        }
+
+        for menu_item in &self.game_data.ui.menu_items {
+            if let Ok(texture) =
+                load_texture(&format!("static/resources/{}", menu_item.texture)).await
+            {
+                self.menu_item_textures
+                    .insert(menu_item.name.clone(), texture);
+            }
+        }
+    }
+
+    fn set_cursor(&mut self, cursor_type: CursorType) {
+        if self.cursor_textures.contains_key(&cursor_type) {
+            self.current_cursor = cursor_type;
+        }
+    }
+
+    fn draw_ui(&self) {
+        // Draw menu items (unchanged)
+        for menu_item in &self.game_data.ui.menu_items {
+            if let Some(texture) = self.menu_item_textures.get(&menu_item.name) {
+                let (x, y) = self.get_scaled_pos(menu_item.position[0], menu_item.position[1]);
+                let scale = self.get_scale();
+                draw_texture_ex(
+                    texture,
+                    x,
+                    y,
+                    WHITE,
+                    DrawTextureParams {
+                        dest_size: Some(Vec2::new(
+                            menu_item.size[0] * scale,
+                            menu_item.size[1] * scale,
+                        )),
+                        ..Default::default()
+                    },
+                );
+            }
+        }
+
+        // Draw custom cursor
+        if let Some(cursor_texture) = self.cursor_textures.get(&self.current_cursor) {
+            let cursor_pos = mouse_position();
+            if let Some(cursor) = self
+                .game_data
+                .ui
+                .cursors
+                .iter()
+                .find(|c| c.cursor_type == self.current_cursor)
+            {
+                let scale = self.get_scale();
+                draw_texture_ex(
+                    cursor_texture,
+                    cursor_pos.0 - (cursor.hotspot[0] as f32 * scale),
+                    cursor_pos.1 - (cursor.hotspot[1] as f32 * scale),
+                    WHITE,
+                    DrawTextureParams {
+                        dest_size: Some(Vec2::new(
+                            cursor_texture.width() * scale,
+                            cursor_texture.height() * scale,
+                        )),
+                        ..Default::default()
+                    },
+                );
+            }
+        }
+    }
+
     async fn update(&mut self) {
         self.update_window_size();
 
+        let mouse_pos = Vec2::from(mouse_position());
+        let game_pos = self.get_game_coordinates(mouse_pos);
+
         if is_mouse_button_pressed(MouseButton::Left) {
-            let mouse_pos = Vec2::from(mouse_position());
-            let game_pos = self.get_game_coordinates(mouse_pos);
             self.handle_mouse_click(game_pos).await;
         }
 
@@ -355,6 +491,13 @@ impl Game {
             if let Some(debug_tools) = &mut self.debug_tools {
                 debug_tools.toggle_grid();
             }
+        }
+
+        // Toggle debug mode
+        if is_key_pressed(KeyCode::F3) {
+            // You can change F3 to any key you prefer
+            self.debug_instant_move = !self.debug_instant_move;
+            println!("Debug instant move: {}", self.debug_instant_move);
         }
 
         if is_key_pressed(KeyCode::B) {
@@ -375,6 +518,13 @@ impl Game {
             }
         }
 
+        let new_cursor_type = self.determine_cursor(game_pos);
+
+        // Set the new cursor type if it has changed
+        if new_cursor_type != self.current_cursor {
+            self.set_cursor(new_cursor_type);
+        }
+
         if is_mouse_button_pressed(MouseButton::Left) {
             let game_coordinates = self.get_game_coordinates(mouse_position().into());
 
@@ -389,16 +539,162 @@ impl Game {
             }
         }
 
-        // Update only the active character
-        if let Some(active_index) = self.active_character {
-            let movement = self.get_character_movement();
-            let delta_time = get_frame_time();
-            if let Some(character) = self.characters.get_mut(active_index) {
-                character.update(movement, delta_time);
+        let delta_time = get_frame_time();
+        let grid = &self.grid; // Create a reference to avoid borrowing issues
+
+        for character in &mut self.characters {
+            let mut remove_first = false;
+
+            if let Some(path) = &character.path {
+                if !path.is_empty() {
+                    let target = grid.get_coord_from_grid(path[0].0, path[0].1);
+                    let direction = (target - character.position).normalize();
+                    let speed =
+                        if is_key_down(KeyCode::LeftShift) || is_key_down(KeyCode::RightShift) {
+                            character.data.run_speed
+                        } else {
+                            character.data.speed
+                        };
+
+                    character.position += direction * speed * delta_time;
+                    character.direction = Self::vec_to_direction(direction);
+
+                    character.animation_timer += delta_time;
+                    if character.animation_timer >= character.animation_speed {
+                        character.animation_timer -= character.animation_speed;
+                        character.animation_index = (character.animation_index + 1) % 8;
+                    }
+
+                    if (character.position - target).length() < 5.0 {
+                        remove_first = true;
+                    }
+                }
+            }
+
+            if remove_first {
+                if let Some(path) = &mut character.path {
+                    path.remove(0);
+                    if path.is_empty() {
+                        character.path = None;
+                        character.target = None;
+                        character.animation_index = 0;
+                    }
+                }
             }
         }
     }
 
+    fn determine_cursor(&self, game_pos: Vec2) -> CursorType {
+        if let Some(current_scene) = self.current_scene() {
+            for area in &current_scene.clickable_areas {
+                if game_pos.x >= area.x
+                    && game_pos.x <= area.x + area.width
+                    && game_pos.y >= area.y
+                    && game_pos.y <= area.y + area.height
+                {
+                    return CursorType::Move;
+                }
+            }
+        }
+        CursorType::Normal
+    }
+    // Move vec_to_direction out of Character impl and make it a standalone function
+    fn vec_to_direction(vec: Vec2) -> Direction {
+        if vec.x == 0.0 && vec.y == 0.0 {
+            return Direction::South; // Default direction
+        }
+        let angle = vec.y.atan2(vec.x);
+        let angle_deg = angle.to_degrees();
+        let adjusted_angle = (angle_deg + 360.0) % 360.0;
+        match adjusted_angle as u32 {
+            338..=360 | 0..=22 => Direction::East,
+            23..=67 => Direction::SouthEast,
+            68..=112 => Direction::South,
+            113..=157 => Direction::SouthWest,
+            158..=202 => Direction::West,
+            203..=247 => Direction::NorthWest,
+            248..=292 => Direction::North,
+            293..=337 => Direction::NorthEast,
+            _ => unreachable!(),
+        }
+    }
+    fn pathfind(&self, start: (i32, i32), goal: (i32, i32)) -> Option<Vec<(i32, i32)>> {
+        let mut open_set = BinaryHeap::new();
+        let mut came_from = HashMap::new();
+        let mut g_score = HashMap::new();
+        let mut f_score = HashMap::new();
+
+        g_score.insert(start, 0);
+        f_score.insert(start, self.heuristic(start, goal));
+        open_set.push(Node {
+            position: start,
+            f_score: f_score[&start],
+            g_score: 0,
+        });
+
+        while let Some(current) = open_set.pop() {
+            if current.position == goal {
+                return Some(self.reconstruct_path(came_from, current.position));
+            }
+
+            for neighbor in self.get_neighbors(current.position) {
+                let tentative_g_score = g_score[&current.position] + 1;
+
+                if tentative_g_score < *g_score.get(&neighbor).unwrap_or(&i32::MAX) {
+                    came_from.insert(neighbor, current.position);
+                    g_score.insert(neighbor, tentative_g_score);
+                    let f = tentative_g_score + self.heuristic(neighbor, goal);
+                    f_score.insert(neighbor, f);
+                    open_set.push(Node {
+                        position: neighbor,
+                        f_score: f,
+                        g_score: tentative_g_score,
+                    });
+                }
+            }
+        }
+
+        None
+    }
+
+    fn heuristic(&self, a: (i32, i32), b: (i32, i32)) -> i32 {
+        let dx = (a.0 - b.0).abs();
+        let dy = (a.1 - b.1).abs();
+        (dx + dy) + (1414 - 1000) * dx.min(dy)
+    }
+
+    fn get_neighbors(&self, pos: (i32, i32)) -> Vec<(i32, i32)> {
+        let directions = [
+            (-1, -1),
+            (0, -1),
+            (1, -1),
+            (-1, 0),
+            (1, 0),
+            (-1, 1),
+            (0, 1),
+            (1, 1),
+        ];
+
+        directions
+            .iter()
+            .map(|&(dx, dy)| (pos.0 + dx, pos.1 + dy))
+            .filter(|&(x, y)| x >= 0 && x < 41 && y >= 0 && y < 41) // Adjust grid size as needed
+            .collect()
+    }
+
+    fn reconstruct_path(
+        &self,
+        came_from: HashMap<(i32, i32), (i32, i32)>,
+        mut current: (i32, i32),
+    ) -> Vec<(i32, i32)> {
+        let mut path = vec![current];
+        while let Some(&prev) = came_from.get(&current) {
+            path.push(prev);
+            current = prev;
+        }
+        path.reverse();
+        path
+    }
     fn get_character_movement(&self) -> Vec2 {
         let mut movement = Vec2::new(0.0, 0.0);
         if is_key_down(KeyCode::Left) || is_key_down(KeyCode::A) {
@@ -433,20 +729,96 @@ impl Game {
     }
 
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
-        // Check if a character was clicked
-        for (index, character) in self.characters.iter().enumerate() {
-            if self.is_point_in_character(game_pos, character) {
+        if is_mouse_button_pressed(MouseButton::Left) {
+            // Check if a character was clicked
+            if let Some(index) = self
+                .characters
+                .iter()
+                .position(|character| self.is_point_in_character(game_pos, character))
+            {
                 self.active_character = Some(index);
-                println!("Character {} selected", character.data.name);
+                println!("Character {} selected", self.characters[index].data.name);
                 return;
+            }
+
+            // Check for clickable areas and handle scene changes
+            if let Some(area) = self.find_clicked_area(game_pos) {
+                if self.debug_instant_move || self.is_active_character_in_area(&area) {
+                    // Perform scene change
+                    let current_scene_id = self.current_scene;
+                    self.current_scene = area.target_scene;
+                    self.changing_scene = true;
+                    self.transition_to_new_scene(current_scene_id).await;
+
+                    return; // Exit after scene change
+                } else {
+                }
+            }
+
+            // If we haven't returned yet, handle pathfinding
+            if !self.changing_scene {
+                self.handle_pathfinding(game_pos).await;
+            }
+            self.changing_scene = false;
+        }
+    }
+
+    async fn handle_pathfinding(&mut self, target_pos: Vec2) {
+        if let Some(active_index) = self.active_character {
+            let target_grid = self.grid.get_grid_from_coord(target_pos);
+            let start_grid = self
+                .grid
+                .get_grid_from_coord(self.characters[active_index].position);
+
+            if let Some(path) = self.pathfind(start_grid, target_grid) {
+                self.characters[active_index].path = Some(path);
+                self.characters[active_index].target = Some(target_grid);
+            }
+        }
+    }
+
+    async fn transition_to_new_scene(&mut self, previous_scene_id: u32) {
+        if let Some(spawn_point) = self.find_spawn_point(previous_scene_id) {
+            let spawn_positions = self.generate_spawn_positions(spawn_point, self.characters.len());
+
+            // Move characters to their respective spawn positions
+            for (character, &position) in self.characters.iter_mut().zip(spawn_positions.iter()) {
+                character.position = position;
+                character.direction = Direction::South;
+                character.path = None;
+                character.target = None;
             }
         }
 
-        // If no character was clicked, check for clickable areas
-        if let Some(area) = self.find_clicked_area(game_pos) {
-            self.current_scene = area.target_scene;
-            self.load_current_and_adjacent_scenes().await;
+        self.load_current_and_adjacent_scenes().await;
+    }
+
+    fn find_spawn_point(&self, previous_scene_id: u32) -> Option<Vec2> {
+        if let Some(current_scene) = self.get_scene(self.current_scene) {
+            for area in &current_scene.clickable_areas {
+                if area.target_scene == previous_scene_id {
+                    // Return the center of the clickable area
+                    return Some(Vec2::new(
+                        area.x + area.width / 2.0,
+                        area.y + area.height / 2.0,
+                    ));
+                }
+            }
         }
+        None
+    }
+
+    fn generate_spawn_positions(&self, center: Vec2, count: usize) -> Vec<Vec2> {
+        let mut positions = Vec::with_capacity(count);
+        let spacing = 80.0;
+
+        for i in 0..count {
+            let x_offset = (i as f32 - (count - 1) as f32 / 2.0) * spacing;
+            let pos = Vec2::new(center.x + x_offset, center.y);
+            positions.push(pos);
+        }
+
+        positions
     }
 
     fn is_point_in_character(&self, point: Vec2, character: &Character) -> bool {
@@ -458,6 +830,18 @@ impl Game {
             && point.x <= character.position.x + character_width / 2.0
             && point.y >= character.position.y - character_height / 2.0
             && point.y <= character.position.y + character_height / 2.0
+    }
+
+    fn is_active_character_in_area(&self, area: &ClickableArea) -> bool {
+        if let Some(active_index) = self.active_character {
+            let character = &self.characters[active_index];
+            character.position.x >= area.x
+                && character.position.x <= area.x + area.width
+                && character.position.y >= area.y
+                && character.position.y <= area.y + area.height
+        } else {
+            false
+        }
     }
 
     fn find_clicked_area(&self, game_pos: Vec2) -> Option<&ClickableArea> {
@@ -546,16 +930,13 @@ impl Game {
 
         self.draw_debug_grid();
 
-        // let scale = self.get_scale();
-        // for character in &self.characters {
-        //     self.draw_character(character, scale);
-        // }
-
         let scale = self.get_scale();
         for (index, character) in self.characters.iter().enumerate() {
             let is_active = self.active_character == Some(index);
             self.draw_character(character, scale, is_active);
         }
+
+        self.draw_ui();
 
         let (text_x, text_y) = self.get_scaled_pos(20.0, 60.0);
         draw_text(
@@ -595,18 +976,18 @@ impl Game {
             character.data.name, character.direction as u8, frame, cycle
         );
 
+        let x_offset = 0.0;
+        //let y_offset = -65.0;
+        let y_offset = 0.0;
+
         match self.character_textures.get(&filename) {
             Some(texture) => {
-                //let x = self.window_size.x / 2.0;
                 // The character assets are centered, so we need to offset the x position
                 // by half the width of the texture
                 // The width of the textures are different, but the character is always centered
                 // Then we play around with an offset to make it look better
-                // Ideally
                 let xt = texture.width() / 2.0 * scale;
                 let yt = texture.height() / 2.0 * scale;
-                let x_offset = 0.0;
-                let y_offset = 0.0;
                 draw_texture_ex(
                     texture,
                     x - xt + x_offset,
@@ -630,15 +1011,20 @@ impl Game {
 
         if is_active {
             let indicator_size = 10.0 * scale;
-            draw_circle(x, y - 60.0 * scale, indicator_size, GREEN);
+            draw_circle(
+                x + x_offset,
+                y - 60.0 * scale + y_offset,
+                indicator_size,
+                GREEN,
+            );
         }
 
         // Debug info
         let (text_x, text_y) = self.get_scaled_pos(x, y - 20.0);
         draw_text(
             &format!("File: {}", filename),
-            text_x,
-            text_y,
+            text_x + x_offset,
+            text_y + y_offset,
             15.0 * scale,
             WHITE,
         );
@@ -734,6 +1120,7 @@ impl Game {
 
 #[macroquad::main("OpenJönsson")]
 async fn main() {
+    show_mouse(false);
     match Game::new().await {
         Ok(mut game) => loop {
             game.update().await;

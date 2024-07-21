@@ -25,7 +25,7 @@ pub struct Character {
     pub position: Vec2,
     pub direction: Direction,
     pub animation_index: usize,
-    animation_timer: f32,
+    pub animation_timer: f32,
     pub animation_speed: f32,
     pub path: Option<Vec<(i32, i32)>>,
     pub target: Option<(i32, i32)>,
@@ -66,7 +66,7 @@ impl Character {
         }
     }
 
-    fn vec_to_direction(&self, vec: Vec2) -> Direction {
+    pub fn vec_to_direction(&self, vec: Vec2) -> Direction {
         if vec.x == 0.0 && vec.y == 0.0 {
             return self.direction;
         }

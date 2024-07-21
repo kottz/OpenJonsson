@@ -1782,5 +1782,43 @@
       "speed": 200.0,
       "run_speed": 200.4
     }
-  ]
+  ],
+  "ui": {
+      "cursors": [
+        {
+          "cursor_type": "normal",
+          "texture": "anslagstavla/inventory/norm-578_fix.png",
+          "hotspot": [10, 10]
+        },
+        {
+          "cursor_type": "move",
+          "texture": "anslagstavla/inventory/out-588_fix.png",
+          "hotspot": [15, 15]
+        },
+        {
+          "cursor_type": "take",
+          "texture": "anslagstavla/inventory/take-580.png",
+          "hotspot": [5, 5]
+        },
+        {
+          "cursor_type": "talk",
+          "texture": "anslagstavla/inventory/talk-584.png",
+          "hotspot": [5, 5]
+        }
+      ],
+      "menuItems": [
+        {
+          "name": "start",
+          "texture": "menu/start_button.png",
+          "position": [100, 200],
+          "size": [200, 50]
+        },
+        {
+          "name": "options",
+          "texture": "menu/options_button.png",
+          "position": [100, 260],
+          "size": [200, 50]
+        }
+      ]
+    }
 }
