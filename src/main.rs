@@ -169,6 +169,7 @@ impl Grid {
 
 struct Game {
     characters: Characters,
+    levels: Vec<Level>,
     scenes: Scenes,
     textures: HashMap<String, Texture2D>,
     character_textures: HashMap<String, Texture2D>,
@@ -263,29 +264,19 @@ impl Game {
             characters.count += 1;
         }
 
-        let mut scenes = Scenes {
+        let scenes = Scenes {
             data: Vec::new(),
             clickable_areas: Vec::new(),
             clickable_area_counts: Vec::new(),
             count: 0,
         };
 
-        for level in &game_data.levels {
-            for scene in &level.scenes {
-                scenes.data.push(scene.clone());
-                scenes.clickable_areas.push(scene.clickable_areas.clone());
-                scenes
-                    .clickable_area_counts
-                    .push(scene.clickable_areas.len());
-                scenes.count += 1;
-            }
-        }
-
         let window_size = Vec2::new(screen_width(), screen_height());
         let game_rect = Game::calculate_game_rect(window_size);
 
         let mut game = Game {
             characters,
+            levels: game_data.levels,
             scenes,
             textures: HashMap::new(),
             character_textures: HashMap::new(),
@@ -304,6 +295,7 @@ impl Game {
             debug_instant_move: false,
         };
 
+        game.load_level_scenes(game.current_level);
         game.load_current_and_adjacent_scenes().await;
         game.load_characters().await;
         game.load_debug_textures().await;
@@ -415,6 +407,26 @@ impl Game {
                 self.menu_item_textures
                     .insert(menu_item.name.clone(), texture);
             }
+        }
+    }
+
+    fn load_level_scenes(&mut self, level_id: u32) {
+        if let Some(level) = self.levels.iter().find(|l| l.id == level_id) {
+            self.scenes = Scenes {
+                data: level.scenes.clone(),
+                clickable_areas: level
+                    .scenes
+                    .iter()
+                    .map(|s| s.clickable_areas.clone())
+                    .collect(),
+                clickable_area_counts: level
+                    .scenes
+                    .iter()
+                    .map(|s| s.clickable_areas.len())
+                    .collect(),
+                count: level.scenes.len(),
+            };
+            self.current_scene = 0; // Reset to the first scene of the new level
         }
     }
 
@@ -571,12 +583,20 @@ impl Game {
     }
 
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
+        if !self
+            .game_rect
+            .contains(self.get_scaled_pos(game_pos.x, game_pos.y).into())
+        {
+            return;
+        }
         // Check if a character was clicked
         if let Some(index) =
             (0..self.characters.count).find(|&i| self.is_point_in_character(game_pos, i))
         {
-            self.active_character = Some(index);
-            return;
+            if Some(index) != self.active_character {
+                self.active_character = Some(index);
+                return;
+            }
         }
 
         // Check for clickable areas and handle scene changes
@@ -874,15 +894,6 @@ impl Game {
                 GREEN,
             );
         }
-
-        let (text_x, text_y) = self.get_scaled_pos(x, y - 20.0);
-        draw_text(
-            &format!("File: {}", filename),
-            text_x + x_offset,
-            text_y + y_offset,
-            15.0 * scale,
-            WHITE,
-        );
     }
 
     fn draw_scene(&self, scene: &Scene) {
