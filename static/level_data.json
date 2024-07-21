@@ -1,12 +1,12 @@
 {
   "levels": [
     {
-      "id": 1,
+      "id": 0,
       "name": "Stockholm",
       "scenes": [
         {
-          "id": 1,
-	  "description": "Attic",
+          "id": 0,
+          "description": "Attic",
           "background": "stockholm/Internal/GHV/B GHV-210.png",
           "clickableAreas": [
             {
@@ -14,13 +14,13 @@
               "y": 220,
               "width": 131,
               "height": 236,
-              "targetScene": 2
+              "targetScene": 1
             }
           ]
         },
         {
-          "id": 2,
-	  "description": "Outside the house",
+          "id": 1,
+          "description": "Outside the house",
           "background": "stockholm/Internal/GHU/B GHU-191.png",
           "clickableAreas": [
             {
@@ -28,20 +28,20 @@
               "y": 204,
               "width": 102,
               "height": 149,
-              "targetScene": 1
+              "targetScene": 0
             },
             {
               "x": 1705,
               "y": 1146,
               "width": 214,
               "height": 289,
-              "targetScene": 3
+              "targetScene": 2
             }
           ]
         },
         {
-          "id": 3,
-	  "description": "At the car",
+          "id": 2,
+          "description": "At the car",
           "background": "stockholm/Internal/Bilscen/B Bilscen-229.png",
           "clickableAreas": [
             {
@@ -49,20 +49,20 @@
               "y": 1185,
               "width": 551,
               "height": 253,
-              "targetScene": 2 
+              "targetScene": 1
             },
             {
               "x": 990,
               "y": 649,
               "width": 234,
               "height": 190,
-              "targetScene": 4 
+              "targetScene": 3
             }
           ]
         },
         {
-          "id": 4,
-	  "description": "Amundsen's house - Front",
+          "id": 3,
+          "description": "Amundsen's house - Front",
           "background": "stockholm/Internal/AFF/B AFF-286.png",
           "clickableAreas": [
             {
@@ -70,27 +70,27 @@
               "y": 709,
               "width": 340,
               "height": 256,
-              "targetScene": 3 
+              "targetScene": 2
             },
             {
               "x": 1582,
               "y": 350,
               "width": 340,
               "height": 256,
-              "targetScene": 11
+              "targetScene": 10
             },
             {
               "x": 0,
               "y": 956,
               "width": 272,
               "height": 352,
-              "targetScene": 5 
+              "targetScene": 4
             }
           ]
         },
         {
-          "id": 5,
-	  "description": "Amundsen's house - Back",
+          "id": 4,
+          "description": "Amundsen's house - Back",
           "background": "stockholm/Internal/AFB/B AFB-305.png",
           "clickableAreas": [
             {
@@ -98,20 +98,20 @@
               "y": 730,
               "width": 245,
               "height": 256,
-              "targetScene": 4 
+              "targetScene": 3
             },
             {
               "x": 734,
               "y": 882,
               "width": 176,
               "height": 239,
-              "targetScene": 6 
+              "targetScene": 5
             }
           ]
         },
         {
-          "id": 6,
-	  "description": "Amundsen's house - Downstairs",
+          "id": 5,
+          "description": "Amundsen's house - Downstairs",
           "background": "stockholm/Internal/AFN/B AFN-324.png",
           "clickableAreas": [
             {
@@ -119,20 +119,20 @@
               "y": 575,
               "width": 275,
               "height": 353,
-              "targetScene": 5 
+              "targetScene": 4
             },
             {
               "x": 774,
               "y": 121,
               "width": 122,
               "height": 259,
-              "targetScene": 7 
+              "targetScene": 6
             }
           ]
         },
         {
-          "id": 7,
-	  "description": "Amundsen's house - Upstairs - First hallway",
+          "id": 6,
+          "description": "Amundsen's house - Upstairs - First hallway",
           "background": "stockholm/Internal/AFUE/B AFUE-343.png",
           "clickableAreas": [
             {
@@ -140,27 +140,27 @@
               "y": 622,
               "width": 224,
               "height": 312,
-              "targetScene": 8
+              "targetScene": 7
             },
             {
               "x": 286,
               "y": 874,
               "width": 133,
               "height": 205,
-              "targetScene": 10
+              "targetScene": 9
             },
             {
               "x": 1270,
               "y": 1174,
               "width": 650,
               "height": 262,
-              "targetScene": 6
+              "targetScene": 5
             }
           ]
         },
         {
-          "id": 8,
-	  "description": "Amundsen's house - Upstairs - Second hallway",
+          "id": 7,
+          "description": "Amundsen's house - Upstairs - Second hallway",
           "background": "stockholm/Internal/AFU/B AFU-382.png",
           "clickableAreas": [
             {
@@ -168,20 +168,20 @@
               "y": 493,
               "width": 174,
               "height": 368,
-              "targetScene": 7 
+              "targetScene": 6
             },
             {
               "x": 334,
               "y": 764,
               "width": 120,
               "height": 239,
-              "targetScene": 9 
+              "targetScene": 8
             }
           ]
         },
         {
-          "id": 9,
-	  "description": "Amundsen's house - Upstairs -  Amundsen's office",
+          "id": 8,
+          "description": "Amundsen's house - Upstairs -  Amundsen's office",
           "background": "stockholm/Internal/AFK/B AFK-400.png",
           "clickableAreas": [
             {
@@ -189,13 +189,13 @@
               "y": 391,
               "width": 114,
               "height": 281,
-              "targetScene": 8
+              "targetScene": 7
             }
           ]
         },
         {
-          "id": 10,
-	  "description": "Amundsen's house - Upstairs -  2nd office",
+          "id": 9,
+          "description": "Amundsen's house - Upstairs -  2nd office",
           "background": "stockholm/Internal/AFKE/B AFKE-362.png",
           "clickableAreas": [
             {
@@ -203,13 +203,13 @@
               "y": 408,
               "width": 133,
               "height": 277,
-              "targetScene": 7
+              "targetScene": 6
             }
           ]
         },
         {
-          "id": 11,
-	  "description": "Wall-Enberg street outside office",
+          "id": 10,
+          "description": "Wall-Enberg street outside office",
           "background": "stockholm/Internal/WEG/B WEG-609.png",
           "clickableAreas": [
             {
@@ -217,13 +217,13 @@
               "y": 334,
               "width": 224,
               "height": 412,
-              "targetScene": 12
+              "targetScene": 11
             }
           ]
         },
         {
-          "id": 12,
-	  "description": "Wall-Enberg office secretary",
+          "id": 11,
+          "description": "Wall-Enberg office secretary",
           "background": "stockholm/Internal/Whall/B Whall-438.png",
           "clickableAreas": [
             {
@@ -231,20 +231,20 @@
               "y": 571,
               "width": 234,
               "height": 242,
-              "targetScene": 11
+              "targetScene": 10
             },
             {
               "x": 1359,
               "y": 543,
               "width": 121,
               "height": 287,
-              "targetScene": 13
+              "targetScene": 12
             }
           ]
         },
         {
-          "id": 13,
-	  "description": "Wall-Enberg office",
+          "id": 12,
+          "description": "Wall-Enberg office",
           "background": "stockholm/Internal/WEK/B WEK-454.png",
           "clickableAreas": [
             {
@@ -252,18 +252,18 @@
               "y": 1233,
               "width": 714,
               "height": 203,
-              "targetScene": 12
+              "targetScene": 11
             }
           ]
         }
       ]
     },
     {
-      "id": 2,
+      "id": 1,
       "name": "Paris",
       "scenes": [
         {
-          "id": 1,
+          "id": 0,
           "description": "Start - Painter's street",
           "background": "paris/Internal/B PG2-217.png",
           "clickableAreas": [
@@ -272,19 +272,19 @@
               "y": 698,
               "width": 161,
               "height": 629,
-              "targetScene": 2
+              "targetScene": 1
             },
             {
               "x": 1751,
               "y": 78,
               "width": 166,
               "height": 756,
-              "targetScene": 5
+              "targetScene": 4
             }
           ]
         },
         {
-          "id": 2,
+          "id": 1,
           "description": "Outside the Louvre",
           "background": "paris/Internal/B PUL-235.png",
           "clickableAreas": [
@@ -293,19 +293,19 @@
               "y": 270,
               "width": 100,
               "height": 216,
-              "targetScene": 3
+              "targetScene": 2
             },
             {
               "x": 1775,
               "y": 90,
               "width": 145,
               "height": 612,
-              "targetScene": 1
+              "targetScene": 0
             }
           ]
         },
         {
-          "id": 3,
+          "id": 2,
           "description": "Inside the Louvre - Outer Room",
           "background": "paris/Internal/B PL-253.png",
           "clickableAreas": [
@@ -314,19 +314,19 @@
               "y": 1285,
               "width": 595,
               "height": 152,
-              "targetScene": 2
+              "targetScene": 1
             },
             {
               "x": 1818,
               "y": 520,
               "width": 105,
               "height": 301,
-              "targetScene": 4
+              "targetScene": 3
             }
           ]
         },
         {
-          "id": 4,
+          "id": 3,
           "description": "Inside the Louvre - Mona Lisa Room",
           "background": "paris/Internal/B PLL-271.png",
           "clickableAreas": [
@@ -335,12 +335,12 @@
               "y": 1015,
               "width": 138,
               "height": 420,
-              "targetScene": 3
+              "targetScene": 2
             }
           ]
         },
         {
-          "id": 5,
+          "id": 4,
           "description": "Souvenir stand street",
           "background": "paris/Internal/B PG1-181.png",
           "clickableAreas": [
@@ -349,19 +349,19 @@
               "y": 1160,
               "width": 436,
               "height": 280,
-              "targetScene": 1
+              "targetScene": 0
             },
             {
               "x": 171,
               "y": 473,
               "width": 110,
               "height": 220,
-              "targetScene": 6 
+              "targetScene": 5
             }
           ]
         },
         {
-          "id": 6,
+          "id": 5,
           "description": "Butcher shop",
           "background": "paris/Internal/B PGK-199.png",
           "clickableAreas": [
@@ -370,18 +370,18 @@
               "y": 1243,
               "width": 571,
               "height": 196,
-              "targetScene": 5
+              "targetScene": 4
             }
           ]
         }
       ]
     },
     {
-      "id": 3,
+      "id": 2,
       "name": "London",
       "scenes": [
         {
-          "id": 1,
+          "id": 0,
           "description": "Start street corner",
           "background": "london/Internal/B LHG2-176.png",
           "clickableAreas": [
@@ -390,26 +390,26 @@
               "y": 314,
               "width": 112,
               "height": 274,
-              "targetScene": 2
+              "targetScene": 1
             },
             {
               "x": 1807,
               "y": 649,
               "width": 113,
               "height": 568,
-              "targetScene": 4
+              "targetScene": 3
             },
             {
               "x": 0,
               "y": 341,
               "width": 139,
               "height": 362,
-              "targetScene": 11
+              "targetScene": 10
             }
           ]
         },
         {
-          "id": 2,
+          "id": 1,
           "description": "Hotel Lobby",
           "background": "london/Internal/B LHK-222.png",
           "clickableAreas": [
@@ -418,19 +418,19 @@
               "y": 1311,
               "width": 611,
               "height": 126,
-              "targetScene": 1
+              "targetScene": 0
             },
             {
               "x": 262,
               "y": 260,
               "width": 103,
               "height": 194,
-              "targetScene": 3
+              "targetScene": 2
             }
           ]
         },
         {
-          "id": 3,
+          "id": 2,
           "description": "Hotel Room",
           "background": "london/Internal/B LHR-205.png",
           "clickableAreas": [
@@ -439,12 +439,12 @@
               "y": 555,
               "width": 125,
               "height": 222,
-              "targetScene": 2
+              "targetScene": 1
             }
           ]
         },
         {
-          "id": 4,
+          "id": 3,
           "description": "Shop street - Royal beds",
           "background": "london/Internal/B LHF-239.png",
           "clickableAreas": [
@@ -453,33 +453,33 @@
               "y": 1277,
               "width": 742,
               "height": 161,
-              "targetScene": 1 
+              "targetScene": 0
             },
             {
               "x": 320,
               "y": 781,
               "width": 122,
               "height": 240,
-              "targetScene": 5
+              "targetScene": 4
             },
             {
               "x": 1339,
               "y": 296,
               "width": 104,
               "height": 267,
-              "targetScene": 6 
+              "targetScene": 5
             },
             {
               "x": 786,
               "y": 0,
               "width": 123,
               "height": 737,
-              "targetScene": 7 
+              "targetScene": 6
             }
           ]
         },
         {
-          "id": 5,
+          "id": 4,
           "description": "Royal Beds",
           "background": "london/Internal/B LHM-256.png",
           "clickableAreas": [
@@ -488,12 +488,12 @@
               "y": 504,
               "width": 115,
               "height": 198,
-              "targetScene": 4
+              "targetScene": 3
             }
           ]
         },
         {
-          "id": 6,
+          "id": 5,
           "description": "Tailor",
           "background": "london/Internal/B LHS-273.png",
           "clickableAreas": [
@@ -502,12 +502,12 @@
               "y": 1084,
               "width": 190,
               "height": 355,
-              "targetScene": 4
+              "targetScene": 3
             }
           ]
         },
         {
-          "id": 7,
+          "id": 6,
           "description": "Second street",
           "background": "london/Internal/B LMS-375.png",
           "clickableAreas": [
@@ -516,19 +516,19 @@
               "y": 1289,
               "width": 796,
               "height": 146,
-              "targetScene": 4
+              "targetScene": 3
             },
             {
               "x": 1091,
               "y": 0,
               "width": 281,
               "height": 108,
-              "targetScene": 8
+              "targetScene": 7
             }
           ]
         },
         {
-          "id": 8,
+          "id": 7,
           "description": "Outside Buckingham Palace",
           "background": "london/Internal/B LUS-392.png",
           "clickableAreas": [
@@ -537,19 +537,19 @@
               "y": 1030,
               "width": 262,
               "height": 407,
-              "targetScene": 4
+              "targetScene": 3
             },
             {
               "x": 40,
               "y": 181,
               "width": 159,
               "height": 359,
-              "targetScene": 9 
+              "targetScene": 8
             }
           ]
         },
         {
-          "id": 9,
+          "id": 8,
           "description": "Inside Buckingham Palace - Stairs",
           "background": "london/Internal/B LUDR-426.png",
           "clickableAreas": [
@@ -558,19 +558,19 @@
               "y": 1304,
               "width": 376,
               "height": 130,
-              "targetScene": 8
+              "targetScene": 7
             },
             {
               "x": 23,
               "y": 446,
               "width": 109,
               "height": 196,
-              "targetScene": 10
+              "targetScene": 9
             }
           ]
         },
         {
-          "id": 10,
+          "id": 9,
           "description": "Queen's Room",
           "background": "london/Internal/B LTR-290.png",
           "clickableAreas": [
@@ -579,12 +579,12 @@
               "y": 1246,
               "width": 465,
               "height": 193,
-              "targetScene": 9
+              "targetScene": 8
             }
           ]
         },
         {
-          "id": 11,
+          "id": 10,
           "description": "Grass path to bar",
           "background": "london/Internal/B LPH-307.png",
           "clickableAreas": [
@@ -593,19 +593,19 @@
               "y": 1261,
               "width": 332,
               "height": 176,
-              "targetScene": 1
+              "targetScene": 0
             },
             {
               "x": 682,
               "y": 82,
               "width": 382,
               "height": 237,
-              "targetScene": 12
+              "targetScene": 11
             }
           ]
         },
         {
-          "id": 12,
+          "id": 11,
           "description": "Outside bar",
           "background": "london/Internal/B LPU-324.png",
           "clickableAreas": [
@@ -614,19 +614,19 @@
               "y": 1270,
               "width": 608,
               "height": 169,
-              "targetScene": 11
+              "targetScene": 10
             },
             {
               "x": 1216,
               "y": 486,
               "width": 149,
               "height": 257,
-              "targetScene": 13
+              "targetScene": 12
             }
           ]
         },
         {
-          "id": 13,
+          "id": 12,
           "description": "Bar",
           "background": "london/Internal/B LPP-341.png",
           "clickableAreas": [
@@ -635,19 +635,19 @@
               "y": 512,
               "width": 118,
               "height": 204,
-              "targetScene": 12
+              "targetScene": 11
             },
             {
               "x": 806,
               "y": 388,
               "width": 124,
               "height": 218,
-              "targetScene": 14
+              "targetScene": 13
             }
           ]
         },
         {
-          "id": 14,
+          "id": 13,
           "description": "Bar Office",
           "background": "london/Internal/B LPR-358.png",
           "clickableAreas": [
@@ -656,18 +656,18 @@
               "y": 439,
               "width": 103,
               "height": 266,
-              "targetScene": 13
+              "targetScene": 12
             }
           ]
         }
       ]
     },
     {
-      "id": 4,
+      "id": 3,
       "name": "Berlin",
       "scenes": [
         {
-          "id": 1,
+          "id": 0,
           "description": "Start street - T-junction",
           "background": "berlin/Internal/B BMB-217.png",
           "clickableAreas": [
@@ -676,19 +676,19 @@
               "y": 95,
               "width": 167,
               "height": 562,
-              "targetScene": 2 
+              "targetScene": 1
             },
             {
               "x": 0,
               "y": 1220,
               "width": 470,
               "height": 217,
-              "targetScene": 4
+              "targetScene": 3
             }
           ]
         },
         {
-          "id": 2,
+          "id": 1,
           "description": "Street - Top Left",
           "background": "berlin/Internal/B BMA-199.png",
           "clickableAreas": [
@@ -697,19 +697,19 @@
               "y": 785,
               "width": 110,
               "height": 374,
-              "targetScene": 1
+              "targetScene": 0
             },
             {
               "x": 0,
               "y": 796,
               "width": 160,
               "height": 404,
-              "targetScene": 3
+              "targetScene": 2
             }
           ]
         },
         {
-          "id": 3,
+          "id": 2,
           "description": "Souvenir Stand",
           "background": "berlin/Internal/B BMG-181.png",
           "clickableAreas": [
@@ -718,19 +718,19 @@
               "y": 0,
               "width": 469,
               "height": 151,
-              "targetScene": 2 
+              "targetScene": 1
             },
             {
               "x": 1772,
               "y": 1019,
               "width": 145,
               "height": 419,
-              "targetScene": 4 
+              "targetScene": 3
             }
           ]
         },
         {
-          "id": 4,
+          "id": 3,
           "description": "Bottom left junction",
           "background": "berlin/Internal/B BMC-235.png",
           "clickableAreas": [
@@ -739,26 +739,26 @@
               "y": 65,
               "width": 200,
               "height": 535,
-              "targetScene": 1 
+              "targetScene": 0
             },
             {
               "x": 0,
               "y": 509,
               "width": 143,
               "height": 666,
-              "targetScene": 3 
+              "targetScene": 2
             },
             {
               "x": 1520,
               "y": 1007,
               "width": 400,
               "height": 427,
-              "targetScene": 5 
+              "targetScene": 4
             }
           ]
         },
         {
-          "id": 5,
+          "id": 4,
           "description": "Mountain Entrance",
           "background": "berlin/Internal/B BJM-253.png",
           "clickableAreas": [
@@ -767,19 +767,19 @@
               "y": 1179,
               "width": 121,
               "height": 258,
-              "targetScene": 4 
+              "targetScene": 3
             },
             {
               "x": 1411,
               "y": 274,
               "width": 166,
               "height": 178,
-              "targetScene": 6 
+              "targetScene": 5
             }
           ]
         },
         {
-          "id": 6,
+          "id": 5,
           "description": "Mountain - First T-junction",
           "background": "berlin/Internal/B BJM1-379.png",
           "clickableAreas": [
@@ -788,26 +788,26 @@
               "y": 1294,
               "width": 676,
               "height": 142,
-              "targetScene": 5 
+              "targetScene": 4
             },
             {
               "x": 0,
               "y": 320,
               "width": 133,
               "height": 464,
-              "targetScene": 7 
+              "targetScene": 6
             },
             {
               "x": 798,
               "y": 0,
               "width": 392,
               "height": 160,
-              "targetScene": 8 
+              "targetScene": 7
             }
           ]
         },
         {
-          "id": 7,
+          "id": 6,
           "description": "Mountain - First Left pass",
           "background": "berlin/Internal/B BJM15-631.png",
           "clickableAreas": [
@@ -816,19 +816,19 @@
               "y": 1294,
               "width": 676,
               "height": 142,
-              "targetScene": 6 
+              "targetScene": 5
             },
             {
               "x": 798,
               "y": 0,
               "width": 392,
               "height": 160,
-              "targetScene": 9 
+              "targetScene": 8
             }
           ]
         },
         {
-          "id": 8,
+          "id": 7,
           "description": "Mountain - 5-way Junction",
           "background": "berlin/Internal/B BJM14-613.png",
           "clickableAreas": [
@@ -837,40 +837,40 @@
               "y": 1327,
               "width": 600,
               "height": 110,
-              "targetScene": 6 
+              "targetScene": 5
             },
             {
               "x": 0,
               "y": 447,
               "width": 103,
               "height": 334,
-              "targetScene": 9 
+              "targetScene": 8
             },
             {
               "x": 609,
               "y": 0,
               "width": 248,
               "height": 102,
-              "targetScene": 10 
+              "targetScene": 9
             },
             {
               "x": 1264,
               "y": 0,
               "width": 204,
               "height": 107,
-              "targetScene": 11 
+              "targetScene": 10
             },
             {
               "x": 1816,
               "y": 517,
               "width": 102,
               "height": 368,
-              "targetScene": 12 
+              "targetScene": 11
             }
           ]
         },
         {
-          "id": 9,
+          "id": 8,
           "description": "Mountain - Fat T-Junction - Left from 5-way",
           "background": "berlin/Internal/B BJM4-433.png",
           "clickableAreas": [
@@ -879,26 +879,26 @@
               "y": 114,
               "width": 199,
               "height": 367,
-              "targetScene": 8 
+              "targetScene": 7
             },
             {
               "x": 357,
               "y": 1312,
               "width": 972,
               "height": 127,
-              "targetScene": 7 
+              "targetScene": 6
             },
             {
               "x": 701,
               "y": 0,
               "width": 422,
               "height": 138,
-              "targetScene": 10 
+              "targetScene": 9
             }
           ]
         },
         {
-          "id": 10,
+          "id": 9,
           "description": "Mountain - Top T-Junction - Top Left from 5-way",
           "background": "berlin/Internal/B BJM12-577.png",
           "clickableAreas": [
@@ -907,26 +907,26 @@
               "y": 1321,
               "width": 538,
               "height": 118,
-              "targetScene": 9 
+              "targetScene": 8
             },
             {
               "x": 0,
               "y": 254,
               "width": 127,
               "height": 526,
-              "targetScene": 14 
+              "targetScene": 13
             },
             {
               "x": 1755,
               "y": 872,
               "width": 164,
               "height": 563,
-              "targetScene": 8
+              "targetScene": 7
             }
           ]
         },
         {
-          "id": 11,
+          "id": 10,
           "description": "Mountain - Passage with traveller - Top Right from 5-way",
           "background": "berlin/Internal/B BJM13-595.png",
           "clickableAreas": [
@@ -935,14 +935,35 @@
               "y": 1319,
               "width": 842,
               "height": 120,
-              "targetScene": 8 
+              "targetScene": 7
             },
             {
               "x": 695,
               "y": 0,
               "width": 340,
               "height": 126,
-              "targetScene": 15
+              "targetScene": 14
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "description": "Mountain - Passage - Right from 5-way",
+          "background": "berlin/Internal/B BJM8-505.png",
+          "clickableAreas": [
+            {
+              "x": 0,
+              "y": 1292,
+              "width": 868,
+              "height": 144,
+              "targetScene": 7
+            },
+            {
+              "x": 703,
+              "y": 0,
+              "width": 454,
+              "height": 125,
+              "targetScene": 16
             }
           ]
         },
@@ -956,40 +977,19 @@
               "y": 1292,
               "width": 868,
               "height": 144,
-              "targetScene": 8 
+              "targetScene": 7
             },
             {
               "x": 703,
               "y": 0,
               "width": 454,
               "height": 125,
-              "targetScene": 17
+              "targetScene": 5
             }
           ]
         },
         {
           "id": 13,
-          "description": "Mountain - Passage - Right from 5-way",
-          "background": "berlin/Internal/B BJM8-505.png",
-          "clickableAreas": [
-            {
-              "x": 0,
-              "y": 1292,
-              "width": 868,
-              "height": 144,
-              "targetScene": 8 
-            },
-            {
-              "x": 703,
-              "y": 0,
-              "width": 454,
-              "height": 125,
-              "targetScene": 6 
-            }
-          ]
-        },
-        {
-          "id": 14,
           "description": "Mountain - Top Left Stop with Piece - Left->Up->Left from 5-way",
           "background": "berlin/Internal/B BJM7-487.png",
           "clickableAreas": [
@@ -998,12 +998,12 @@
               "y": 1262,
               "width": 641,
               "height": 175,
-              "targetScene": 10 
+              "targetScene": 9
             }
           ]
         },
         {
-          "id": 15,
+          "id": 14,
           "description": "Mountain - Top T-Junction ABOVE TRAVELLER - Top Right->Up from 5-way #1",
           "background": "berlin/Internal/B BJM12-577.png",
           "clickableAreas": [
@@ -1012,26 +1012,26 @@
               "y": 1321,
               "width": 538,
               "height": 118,
-              "targetScene": 11 
+              "targetScene": 10
             },
             {
               "x": 0,
               "y": 254,
               "width": 127,
               "height": 526,
-              "targetScene": 27
+              "targetScene": 26
             },
             {
               "x": 1755,
               "y": 872,
               "width": 164,
               "height": 563,
-              "targetScene": 16
+              "targetScene": 15
             }
           ]
         },
         {
-          "id": 16,
+          "id": 15,
           "description": "Mountain - T-junction with bottom right piece - Above traveller and then right",
           "background": "berlin/Internal/B BJM1-379.png",
           "clickableAreas": [
@@ -1040,26 +1040,26 @@
               "y": 1294,
               "width": 676,
               "height": 142,
-              "targetScene": 17 
+              "targetScene": 16
             },
             {
               "x": 0,
               "y": 320,
               "width": 133,
               "height": 464,
-              "targetScene": 15 
+              "targetScene": 14
             },
             {
               "x": 798,
               "y": 0,
               "width": 392,
               "height": 160,
-              "targetScene": 19
+              "targetScene": 18
             }
           ]
         },
         {
-          "id": 17,
+          "id": 16,
           "description": "Mountain - Fat T-Junction - Above Traveller->Right->Down",
           "background": "berlin/Internal/B BJM4-433.png",
           "clickableAreas": [
@@ -1068,26 +1068,26 @@
               "y": 114,
               "width": 199,
               "height": 367,
-              "targetScene": 18 
+              "targetScene": 17
             },
             {
               "x": 357,
               "y": 1312,
               "width": 972,
               "height": 127,
-              "targetScene": 12 
+              "targetScene": 11
             },
             {
               "x": 701,
               "y": 0,
               "width": 422,
               "height": 138,
-              "targetScene": 16 
+              "targetScene": 15
             }
           ]
         },
         {
-          "id": 18,
+          "id": 17,
           "description": "Mountain - Fat T-Junction - Above Traveller->Right->Down->Right OR First T-junction->Right->Up->Right",
           "background": "berlin/Internal/B BJM10-541.png",
           "clickableAreas": [
@@ -1096,12 +1096,12 @@
               "y": 1270,
               "width": 662,
               "height": 169,
-              "targetScene": 17
+              "targetScene": 16
             }
           ]
         },
         {
-          "id": 19,
+          "id": 18,
           "description": "Mountain - above traveller->right->up",
           "background": "berlin/Internal/B BJM13-595.png",
           "clickableAreas": [
@@ -1110,19 +1110,19 @@
               "y": 1319,
               "width": 842,
               "height": 120,
-              "targetScene": 16 
+              "targetScene": 15
             },
             {
               "x": 695,
               "y": 0,
               "width": 340,
               "height": 126,
-              "targetScene": 20
+              "targetScene": 19
             }
           ]
         },
         {
-          "id": 20,
+          "id": 19,
           "description": "Mountain - Above Traveller->Right->Up->Up",
           "background": "berlin/Internal/B BJM1-379.png",
           "clickableAreas": [
@@ -1131,26 +1131,26 @@
               "y": 1294,
               "width": 676,
               "height": 142,
-              "targetScene": 19
+              "targetScene": 18
             },
             {
               "x": 0,
               "y": 320,
               "width": 133,
               "height": 464,
-              "targetScene": 22
+              "targetScene": 21
             },
             {
               "x": 798,
               "y": 0,
               "width": 392,
               "height": 160,
-              "targetScene": 21
+              "targetScene": 20
             }
           ]
         },
         {
-          "id": 21,
+          "id": 20,
           "description": "Mountain - Exit to Castle - Above Traveller->Right->Up->Up->Up",
           "background": "berlin/Internal/B BJM24-793.png",
           "clickableAreas": [
@@ -1159,19 +1159,19 @@
               "y": 1298,
               "width": 944,
               "height": 140,
-              "targetScene": 20
+              "targetScene": 19
             },
             {
               "x": 1568,
               "y": 0,
               "width": 253,
               "height": 179,
-              "targetScene": 32
+              "targetScene": 31
             }
           ]
         },
         {
-          "id": 22,
+          "id": 21,
           "description": "Mountain - 3-way to ?? - Above Traveller->Right->Up->Up->Left",
           "background": "berlin/Internal/B BJM20-721.png",
           "clickableAreas": [
@@ -1180,26 +1180,26 @@
               "y": 0,
               "width": 407,
               "height": 122,
-              "targetScene": 23
+              "targetScene": 22
             },
             {
               "x": 410,
               "y": 1300,
               "width": 490,
               "height": 139,
-              "targetScene": 26
+              "targetScene": 25
             },
             {
               "x": 1730,
               "y": 920,
               "width": 190,
               "height": 517,
-              "targetScene": 20
+              "targetScene": 19
             }
           ]
         },
         {
-          "id": 23,
+          "id": 22,
           "description": "Mountain - Passage way - Above 3-way to ??",
           "background": "berlin/Internal/B BJM13-595.png",
           "clickableAreas": [
@@ -1208,19 +1208,19 @@
               "y": 1319,
               "width": 842,
               "height": 120,
-              "targetScene": 22 
+              "targetScene": 21
             },
             {
               "x": 695,
               "y": 0,
               "width": 340,
               "height": 126,
-              "targetScene": 24
+              "targetScene": 23
             }
           ]
         },
         {
-          "id": 24,
+          "id": 23,
           "description": "Mountain - Passage way - Above Above 3-way to ??",
           "background": "berlin/Internal/B BJM17-667.png",
           "clickableAreas": [
@@ -1229,19 +1229,19 @@
               "y": 1322,
               "width": 912,
               "height": 115,
-              "targetScene": 23 
+              "targetScene": 22
             },
             {
               "x": 870,
               "y": 0,
               "width": 356,
               "height": 124,
-              "targetScene": 25
+              "targetScene": 24
             }
           ]
         },
         {
-          "id": 25,
+          "id": 24,
           "description": "Mountain - Dead end with Top-Left piece -Above Above Above 3-way to ??",
           "background": "berlin/Internal/B BJM23-775.png",
           "clickableAreas": [
@@ -1250,12 +1250,12 @@
               "y": 1296,
               "width": 895,
               "height": 142,
-              "targetScene": 24
+              "targetScene": 23
             }
           ]
         },
         {
-          "id": 26,
+          "id": 25,
           "description": "Mountain - Passage way - Under 3-way to ??",
           "background": "berlin/Internal/B BJM17-667.png",
           "clickableAreas": [
@@ -1264,19 +1264,19 @@
               "y": 1322,
               "width": 912,
               "height": 115,
-              "targetScene": 27 
+              "targetScene": 26
             },
             {
               "x": 870,
               "y": 0,
               "width": 356,
               "height": 124,
-              "targetScene": 22
+              "targetScene": 21
             }
           ]
         },
         {
-          "id": 27,
+          "id": 26,
           "description": "Mountain - SECOND 5-way Junction",
           "background": "berlin/Internal/B BJM14-613.png",
           "clickableAreas": [
@@ -1285,40 +1285,40 @@
               "y": 1327,
               "width": 600,
               "height": 110,
-              "targetScene": 15 
+              "targetScene": 14
             },
             {
               "x": 0,
               "y": 447,
               "width": 103,
               "height": 334,
-              "targetScene": 29 
+              "targetScene": 28
             },
             {
               "x": 609,
               "y": 0,
               "width": 248,
               "height": 102,
-              "targetScene": 31 
+              "targetScene": 30
             },
             {
               "x": 1264,
               "y": 0,
               "width": 204,
               "height": 107,
-              "targetScene": 26 
+              "targetScene": 25
             },
             {
               "x": 1816,
               "y": 517,
               "width": 102,
               "height": 368,
-              "targetScene": 28 
+              "targetScene": 27
             }
           ]
         },
         {
-          "id": 28,
+          "id": 27,
           "description": "Mountain - Dead End to the right - Right of SECOND 5-way junction",
           "background": "berlin/Internal/B BJM10-541.png",
           "clickableAreas": [
@@ -1327,12 +1327,12 @@
               "y": 1270,
               "width": 662,
               "height": 169,
-              "targetScene": 27
+              "targetScene": 26
             }
           ]
         },
         {
-          "id": 29,
+          "id": 28,
           "description": "Mountain - Left pass with woman - Left of SECOND 5-way junction",
           "background": "berlin/Internal/B BJM15-631.png",
           "clickableAreas": [
@@ -1341,19 +1341,19 @@
               "y": 1294,
               "width": 676,
               "height": 142,
-              "targetScene": 27
+              "targetScene": 26
             },
             {
               "x": 798,
               "y": 0,
               "width": 392,
               "height": 160,
-              "targetScene": 30
+              "targetScene": 29
             }
           ]
         },
         {
-          "id": 30,
+          "id": 29,
           "description": "Mountain - Right bend with top-right piece - Above Woman - Left->up of SECOND 5-way junction",
           "background": "berlin/Internal/B BJM19-703.png",
           "clickableAreas": [
@@ -1362,19 +1362,19 @@
               "y": 1237,
               "width": 576,
               "height": 200,
-              "targetScene": 29
+              "targetScene": 28
             },
             {
               "x": 1764,
               "y": 661,
               "width": 158,
               "height": 398,
-              "targetScene": 31
+              "targetScene": 30
             }
           ]
         },
         {
-          "id": 31,
+          "id": 30,
           "description": "Mountain - Horizontal Passage - Left->up->Right of SECOND 5-way junction",
           "background": "berlin/Internal/B BJM18-685.png",
           "clickableAreas": [
@@ -1383,19 +1383,19 @@
               "y": 491,
               "width": 133,
               "height": 476,
-              "targetScene": 30
+              "targetScene": 29
             },
             {
               "x": 1764,
               "y": 904,
               "width": 157,
               "height": 534,
-              "targetScene": 27
+              "targetScene": 26
             }
           ]
         },
         {
-          "id": 32,
+          "id": 31,
           "description": "Castle - Outside",
           "background": "berlin/Internal/B BJS-271.png",
           "clickableAreas": [
@@ -1404,19 +1404,19 @@
               "y": 1302,
               "width": 196,
               "height": 136,
-              "targetScene": 21
+              "targetScene": 20
             },
             {
               "x": 272,
               "y": 689,
               "width": 158,
               "height": 203,
-              "targetScene": 33
+              "targetScene": 32
             }
           ]
         },
         {
-          "id": 33,
+          "id": 32,
           "description": "Castle - Basement",
           "background": "berlin/Internal/B BJB-289.png",
           "clickableAreas": [
@@ -1425,19 +1425,19 @@
               "y": 1302,
               "width": 196,
               "height": 136,
-              "targetScene": 32
+              "targetScene": 31
             },
             {
               "x": 362,
               "y": 445,
               "width": 134,
               "height": 287,
-              "targetScene": 34
+              "targetScene": 33
             }
           ]
         },
         {
-          "id": 34,
+          "id": 33,
           "description": "Castle - Hallway",
           "background": "berlin/Internal/B BJH-325.png",
           "clickableAreas": [
@@ -1446,47 +1446,47 @@
               "y": 673,
               "width": 103,
               "height": 450,
-              "targetScene": 35
+              "targetScene": 34
             },
             {
               "x": 426,
               "y": 474,
               "width": 138,
               "height": 313,
-              "targetScene": 33
+              "targetScene": 32
             },
             {
               "x": 81,
               "y": 311,
               "width": 122,
               "height": 289,
-              "targetScene": 36
+              "targetScene": 35
             },
             {
               "x": 793,
               "y": 657,
               "width": 144,
               "height": 319,
-              "targetScene": 36
+              "targetScene": 35
             },
             {
               "x": 1147,
               "y": 834,
               "width": 134,
               "height": 313,
-              "targetScene": 35
+              "targetScene": 34
             },
             {
               "x": 1486,
               "y": 1007,
               "width": 136,
               "height": 309,
-              "targetScene": 36
+              "targetScene": 35
             }
           ]
         },
         {
-          "id": 35,
+          "id": 34,
           "description": "Castle - Hallway 2 - At the shield on the wall",
           "background": "berlin/Internal/B BJH2-343.png",
           "clickableAreas": [
@@ -1495,33 +1495,33 @@
               "y": 1319,
               "width": 499,
               "height": 120,
-              "targetScene": 34
+              "targetScene": 33
             },
             {
               "x": 919,
               "y": 732,
               "width": 136,
               "height": 283,
-              "targetScene": 35
+              "targetScene": 34
             },
             {
               "x": 1279,
               "y": 897,
               "width": 142,
               "height": 340,
-              "targetScene": 36
+              "targetScene": 35
             },
             {
               "x": 1643,
               "y": 1084,
               "width": 124,
               "height": 272,
-              "targetScene": 34
+              "targetScene": 33
             }
           ]
         },
         {
-          "id": 36,
+          "id": 35,
           "description": "Castle - Slip'n'Slide away",
           "background": "berlin/Internal/B LAB-363.png",
           "clickableAreas": [
@@ -1530,18 +1530,18 @@
               "y": 1278,
               "width": 434,
               "height": 161,
-              "targetScene": 16
+              "targetScene": 15
             }
           ]
         }
-      ]   
+      ]
     },
     {
-      "id": 5,
+      "id": 4,
       "name": "Rom",
       "scenes": [
         {
-          "id": 1,
+          "id": 0,
           "description": "Start street - Dog and Shady guy",
           "background": "rom/Internal/B RHG-191.png",
           "clickableAreas": [
@@ -1550,26 +1550,26 @@
               "y": 1274,
               "width": 434,
               "height": 160,
-              "targetScene": 2 
+              "targetScene": 1
             },
             {
               "x": 0,
               "y": 473,
               "width": 151,
               "height": 283,
-              "targetScene": 5 
+              "targetScene": 4
             },
             {
               "x": 613,
               "y": 331,
               "width": 112,
               "height": 296,
-              "targetScene": 8
+              "targetScene": 7
             }
           ]
         },
         {
-          "id": 2,
+          "id": 1,
           "description": "INTER INTER INTER",
           "background": "rom/Internal/B RHC-267.png",
           "clickableAreas": [
@@ -1578,26 +1578,26 @@
               "y": 1284,
               "width": 808,
               "height": 154,
-              "targetScene": 1 
+              "targetScene": 0
             },
             {
               "x": 230,
               "y": 754,
               "width": 116,
               "height": 216,
-              "targetScene": 3
+              "targetScene": 2
             },
             {
               "x": 931,
               "y": 0,
               "width": 205,
               "height": 239,
-              "targetScene": 4 
+              "targetScene": 3
             }
           ]
         },
         {
-          "id": 3,
+          "id": 2,
           "description": "Pizzeria",
           "background": "rom/Internal/B RHP-304.png",
           "clickableAreas": [
@@ -1606,12 +1606,12 @@
               "y": 1202,
               "width": 558,
               "height": 236,
-              "targetScene": 2 
+              "targetScene": 1
             }
           ]
         },
         {
-          "id": 4,
+          "id": 3,
           "description": "Alley with window",
           "background": "rom/Internal/B RHA-362.png",
           "clickableAreas": [
@@ -1620,19 +1620,19 @@
               "y": 1274,
               "width": 952,
               "height": 164,
-              "targetScene": 2 
+              "targetScene": 1
             },
             {
               "x": 771,
               "y": 395,
               "width": 140,
               "height": 335,
-              "targetScene": 5 
+              "targetScene": 4
             }
           ]
         },
         {
-          "id": 5,
+          "id": 4,
           "description": "Open Square with fountain",
           "background": "rom/Internal/B RHB-305.png",
           "clickableAreas": [
@@ -1641,33 +1641,33 @@
               "y": 797,
               "width": 82,
               "height": 272,
-              "targetScene": 4 
+              "targetScene": 3
             },
             {
               "x": 35,
               "y": 431,
               "width": 79,
               "height": 221,
-              "targetScene": 6 
+              "targetScene": 5
             },
             {
               "x": 467,
               "y": 149,
               "width": 116,
               "height": 211,
-              "targetScene": 7 
+              "targetScene": 6
             },
             {
               "x": 1002,
               "y": 0,
               "width": 191,
               "height": 286,
-              "targetScene": 1 
+              "targetScene": 0
             }
           ]
         },
         {
-          "id": 6,
+          "id": 5,
           "description": "Piano shop",
           "background": "rom/Internal/B RHI-324.png",
           "clickableAreas": [
@@ -1676,12 +1676,12 @@
               "y": 1094,
               "width": 242,
               "height": 344,
-              "targetScene": 5 
+              "targetScene": 4
             }
           ]
         },
         {
-          "id": 7,
+          "id": 6,
           "description": "Glass shop",
           "background": "rom/Internal/B RHM-343.png",
           "clickableAreas": [
@@ -1690,12 +1690,12 @@
               "y": 1285,
               "width": 616,
               "height": 150,
-              "targetScene": 5 
+              "targetScene": 4
             }
           ]
         },
         {
-          "id": 8,
+          "id": 7,
           "description": "Hotel Lobby",
           "background": "rom/Internal/B RHK-210.png",
           "clickableAreas": [
@@ -1704,26 +1704,26 @@
               "y": 1285,
               "width": 616,
               "height": 150,
-              "targetScene": 1 
+              "targetScene": 0
             },
             {
               "x": 250,
               "y": 246,
               "width": 122,
               "height": 210,
-              "targetScene": 9 
+              "targetScene": 8
             },
             {
               "x": 858,
               "y": 0,
               "width": 247,
               "height": 137,
-              "targetScene": 10
+              "targetScene": 9
             }
           ]
         },
         {
-          "id": 9,
+          "id": 8,
           "description": "Hotel Room",
           "background": "rom/Internal/B RHR-229.png",
           "clickableAreas": [
@@ -1732,12 +1732,12 @@
               "y": 545,
               "width": 139,
               "height": 223,
-              "targetScene": 8
+              "targetScene": 7
             }
           ]
         },
         {
-          "id": 10,
+          "id": 9,
           "description": "Roof",
           "background": "rom/Internal/B RHT-248.png",
           "clickableAreas": [
@@ -1746,19 +1746,19 @@
               "y": 502,
               "width": 222,
               "height": 181,
-              "targetScene": 8
+              "targetScene": 7
             },
             {
               "x": 388,
               "y": 199,
               "width": 390,
               "height": 340,
-              "targetScene": 11
+              "targetScene": 10
             }
           ]
         },
         {
-          "id": 11,
+          "id": 10,
           "description": "Tower",
           "background": "rom/Internal/B RPK-381.png",
           "clickableAreas": []
@@ -1784,41 +1784,65 @@
     }
   ],
   "ui": {
-      "cursors": [
-        {
-          "cursor_type": "normal",
-          "texture": "anslagstavla/inventory/norm-578_fix.png",
-          "hotspot": [10, 10]
-        },
-        {
-          "cursor_type": "move",
-          "texture": "anslagstavla/inventory/out-588_fix.png",
-          "hotspot": [15, 15]
-        },
-        {
-          "cursor_type": "take",
-          "texture": "anslagstavla/inventory/take-580.png",
-          "hotspot": [5, 5]
-        },
-        {
-          "cursor_type": "talk",
-          "texture": "anslagstavla/inventory/talk-584.png",
-          "hotspot": [5, 5]
-        }
-      ],
-      "menuItems": [
-        {
-          "name": "start",
-          "texture": "menu/start_button.png",
-          "position": [100, 200],
-          "size": [200, 50]
-        },
-        {
-          "name": "options",
-          "texture": "menu/options_button.png",
-          "position": [100, 260],
-          "size": [200, 50]
-        }
-      ]
-    }
+    "cursors": [
+      {
+        "cursor_type": "normal",
+        "texture": "anslagstavla/inventory/norm-578_fix.png",
+        "hotspot": [
+          10,
+          10
+        ]
+      },
+      {
+        "cursor_type": "move",
+        "texture": "anslagstavla/inventory/out-588_fix.png",
+        "hotspot": [
+          15,
+          15
+        ]
+      },
+      {
+        "cursor_type": "take",
+        "texture": "anslagstavla/inventory/take-580.png",
+        "hotspot": [
+          5,
+          5
+        ]
+      },
+      {
+        "cursor_type": "talk",
+        "texture": "anslagstavla/inventory/talk-584.png",
+        "hotspot": [
+          5,
+          5
+        ]
+      }
+    ],
+    "menuItems": [
+      {
+        "name": "start",
+        "texture": "menu/start_button.png",
+        "position": [
+          100,
+          200
+        ],
+        "size": [
+          200,
+          50
+        ]
+      },
+      {
+        "name": "options",
+        "texture": "menu/options_button.png",
+        "position": [
+          100,
+          260
+        ],
+        "size": [
+          200,
+          50
+        ]
+      }
+    ]
+  }
 }
