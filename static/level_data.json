@@ -16,6 +16,14 @@
               "height": 236,
               "targetScene": 1
             }
+          ],
+          "overlay_assets": [
+            {
+              "texture_path": "stockholm/Internal/GHV/213.png",
+              "x": 132,
+              "y": 0,
+              "z_value": 3
+            }
           ]
         },
         {
@@ -37,7 +45,8 @@
               "height": 289,
               "targetScene": 2
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 2,
@@ -58,7 +67,8 @@
               "height": 190,
               "targetScene": 3
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 3,
@@ -86,7 +96,8 @@
               "height": 352,
               "targetScene": 4
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 4,
@@ -107,7 +118,8 @@
               "height": 239,
               "targetScene": 5
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 5,
@@ -128,7 +140,8 @@
               "height": 259,
               "targetScene": 6
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 6,
@@ -156,7 +169,8 @@
               "height": 262,
               "targetScene": 5
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 7,
@@ -177,7 +191,8 @@
               "height": 239,
               "targetScene": 8
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 8,
@@ -191,7 +206,8 @@
               "height": 281,
               "targetScene": 7
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 9,
@@ -205,7 +221,8 @@
               "height": 277,
               "targetScene": 6
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 10,
@@ -219,7 +236,8 @@
               "height": 412,
               "targetScene": 11
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 11,
@@ -240,7 +258,8 @@
               "height": 287,
               "targetScene": 12
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 12,
@@ -254,7 +273,8 @@
               "height": 203,
               "targetScene": 11
             }
-          ]
+          ],
+          "overlay_assets": []
         }
       ]
     },
@@ -281,7 +301,8 @@
               "height": 756,
               "targetScene": 4
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 1,
@@ -302,7 +323,8 @@
               "height": 612,
               "targetScene": 0
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 2,
@@ -323,7 +345,8 @@
               "height": 301,
               "targetScene": 3
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 3,
@@ -337,7 +360,8 @@
               "height": 420,
               "targetScene": 2
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 4,
@@ -358,7 +382,8 @@
               "height": 220,
               "targetScene": 5
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 5,
@@ -372,7 +397,8 @@
               "height": 196,
               "targetScene": 4
             }
-          ]
+          ],
+          "overlay_assets": []
         }
       ]
     },
@@ -406,7 +432,8 @@
               "height": 362,
               "targetScene": 10
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 1,
@@ -427,7 +454,8 @@
               "height": 194,
               "targetScene": 2
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 2,
@@ -441,7 +469,8 @@
               "height": 222,
               "targetScene": 1
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 3,
@@ -476,7 +505,8 @@
               "height": 737,
               "targetScene": 6
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 4,
@@ -490,7 +520,8 @@
               "height": 198,
               "targetScene": 3
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 5,
@@ -504,7 +535,8 @@
               "height": 355,
               "targetScene": 3
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 6,
@@ -525,7 +557,8 @@
               "height": 108,
               "targetScene": 7
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 7,
@@ -546,7 +579,8 @@
               "height": 359,
               "targetScene": 8
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 8,
@@ -567,7 +601,8 @@
               "height": 196,
               "targetScene": 9
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 9,
@@ -581,7 +616,8 @@
               "height": 193,
               "targetScene": 8
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 10,
@@ -602,7 +638,8 @@
               "height": 237,
               "targetScene": 11
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 11,
@@ -623,7 +660,8 @@
               "height": 257,
               "targetScene": 12
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 12,
@@ -644,7 +682,8 @@
               "height": 218,
               "targetScene": 13
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 13,
@@ -658,7 +697,8 @@
               "height": 266,
               "targetScene": 12
             }
-          ]
+          ],
+          "overlay_assets": []
         }
       ]
     },
@@ -685,7 +725,8 @@
               "height": 217,
               "targetScene": 3
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 1,
@@ -706,7 +747,8 @@
               "height": 404,
               "targetScene": 2
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 2,
@@ -727,7 +769,8 @@
               "height": 419,
               "targetScene": 3
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 3,
@@ -755,7 +798,8 @@
               "height": 427,
               "targetScene": 4
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 4,
@@ -776,7 +820,8 @@
               "height": 178,
               "targetScene": 5
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 5,
@@ -804,7 +849,8 @@
               "height": 160,
               "targetScene": 7
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 6,
@@ -825,7 +871,8 @@
               "height": 160,
               "targetScene": 8
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 7,
@@ -867,7 +914,8 @@
               "height": 368,
               "targetScene": 11
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 8,
@@ -895,7 +943,8 @@
               "height": 138,
               "targetScene": 9
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 9,
@@ -923,7 +972,8 @@
               "height": 563,
               "targetScene": 7
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 10,
@@ -944,7 +994,8 @@
               "height": 126,
               "targetScene": 14
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 11,
@@ -965,7 +1016,8 @@
               "height": 125,
               "targetScene": 16
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 12,
@@ -986,7 +1038,8 @@
               "height": 125,
               "targetScene": 5
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 13,
@@ -1000,7 +1053,8 @@
               "height": 175,
               "targetScene": 9
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 14,
@@ -1028,7 +1082,8 @@
               "height": 563,
               "targetScene": 15
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 15,
@@ -1056,7 +1111,8 @@
               "height": 160,
               "targetScene": 18
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 16,
@@ -1084,7 +1140,8 @@
               "height": 138,
               "targetScene": 15
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 17,
@@ -1098,7 +1155,8 @@
               "height": 169,
               "targetScene": 16
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 18,
@@ -1119,7 +1177,8 @@
               "height": 126,
               "targetScene": 19
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 19,
@@ -1147,7 +1206,8 @@
               "height": 160,
               "targetScene": 20
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 20,
@@ -1168,7 +1228,8 @@
               "height": 179,
               "targetScene": 31
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 21,
@@ -1196,7 +1257,8 @@
               "height": 517,
               "targetScene": 19
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 22,
@@ -1217,7 +1279,8 @@
               "height": 126,
               "targetScene": 23
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 23,
@@ -1238,7 +1301,8 @@
               "height": 124,
               "targetScene": 24
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 24,
@@ -1252,7 +1316,8 @@
               "height": 142,
               "targetScene": 23
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 25,
@@ -1273,7 +1338,8 @@
               "height": 124,
               "targetScene": 21
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 26,
@@ -1315,7 +1381,8 @@
               "height": 368,
               "targetScene": 27
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 27,
@@ -1329,7 +1396,8 @@
               "height": 169,
               "targetScene": 26
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 28,
@@ -1350,7 +1418,8 @@
               "height": 160,
               "targetScene": 29
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 29,
@@ -1371,7 +1440,8 @@
               "height": 398,
               "targetScene": 30
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 30,
@@ -1392,7 +1462,8 @@
               "height": 534,
               "targetScene": 26
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 31,
@@ -1413,7 +1484,8 @@
               "height": 203,
               "targetScene": 32
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 32,
@@ -1434,7 +1506,8 @@
               "height": 287,
               "targetScene": 33
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 33,
@@ -1483,7 +1556,8 @@
               "height": 309,
               "targetScene": 35
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 34,
@@ -1518,7 +1592,8 @@
               "height": 272,
               "targetScene": 33
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 35,
@@ -1532,7 +1607,8 @@
               "height": 161,
               "targetScene": 15
             }
-          ]
+          ],
+          "overlay_assets": []
         }
       ]
     },
@@ -1566,7 +1642,8 @@
               "height": 296,
               "targetScene": 7
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 1,
@@ -1594,7 +1671,8 @@
               "height": 239,
               "targetScene": 3
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 2,
@@ -1608,7 +1686,8 @@
               "height": 236,
               "targetScene": 1
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 3,
@@ -1629,7 +1708,8 @@
               "height": 335,
               "targetScene": 4
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 4,
@@ -1664,7 +1744,8 @@
               "height": 286,
               "targetScene": 0
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 5,
@@ -1678,7 +1759,8 @@
               "height": 344,
               "targetScene": 4
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 6,
@@ -1692,7 +1774,8 @@
               "height": 150,
               "targetScene": 4
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 7,
@@ -1720,7 +1803,8 @@
               "height": 137,
               "targetScene": 9
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 8,
@@ -1734,7 +1818,8 @@
               "height": 223,
               "targetScene": 7
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 9,
@@ -1755,13 +1840,15 @@
               "height": 340,
               "targetScene": 10
             }
-          ]
+          ],
+          "overlay_assets": []
         },
         {
           "id": 10,
           "description": "Tower",
           "background": "rom/Internal/B RPK-381.png",
-          "clickableAreas": []
+          "clickableAreas": [],
+          "overlay_assets": []
         }
       ]
     }

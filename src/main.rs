@@ -45,12 +45,21 @@ pub struct ClickableArea {
 }
 
 #[derive(Deserialize, Debug, Clone)]
+pub struct OverlayAsset {
+    pub texture_path: String,
+    pub x: f32,
+    pub y: f32,
+    pub z_value: usize,
+}
+
+#[derive(Deserialize, Debug, Clone)]
 pub struct Scene {
     pub id: u32,
     pub description: String,
     pub background: String,
     #[serde(rename = "clickableAreas")]
     pub clickable_areas: Vec<ClickableArea>,
+    pub overlay_assets: Vec<OverlayAsset>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -321,49 +330,54 @@ impl Game {
         }
     }
 
-    async fn load_texture(&mut self, bg: &str) -> Result<(), String> {
-        if self.textures.contains_key(bg) || self.loading_textures.contains(bg) {
-            return Ok(());
+    async fn load_current_and_adjacent_scenes(&mut self) {
+        let mut textures_to_load = Vec::new();
+
+        if let Some(current_scene) = self.get_current_scene() {
+            textures_to_load.push(current_scene.background.clone());
+
+            for overlay_asset in &current_scene.overlay_assets {
+                textures_to_load.push(overlay_asset.texture_path.clone());
+            }
+
+            for i in 0..self.scenes.clickable_area_counts[self.current_scene as usize] {
+                let area = &self.scenes.clickable_areas[self.current_scene as usize][i];
+                if let Some(target_scene) = self.get_scene(area.target_scene) {
+                    textures_to_load.push(target_scene.background.clone());
+                }
+            }
         }
 
-        self.loading_textures.insert(bg.to_string());
-        let texture_path = format!("static/resources/{}", bg);
-        match load_texture(&texture_path).await {
-            Ok(texture) => {
-                self.textures.insert(bg.to_string(), texture);
-                self.loading_textures.remove(bg);
-                Ok(())
-            }
-            Err(e) => {
-                self.loading_textures.remove(bg);
-                Err(format!("Failed to load texture {}: {}", bg, e))
-            }
-        }
+        self.load_textures(textures_to_load).await;
     }
 
-    async fn load_textures(&mut self, backgrounds: Vec<String>) {
-        for bg in backgrounds {
-            if let Err(e) = self.load_texture(&bg).await {
+    async fn load_textures(&mut self, textures: Vec<String>) {
+        for texture_path in textures {
+            if let Err(e) = self.load_texture(&texture_path).await {
                 eprintln!("{}", e);
             }
         }
     }
 
-    async fn load_current_and_adjacent_scenes(&mut self) {
-        let mut backgrounds_to_load = Vec::new();
-
-        if let Some(current_scene) = self.get_current_scene() {
-            backgrounds_to_load.push(current_scene.background.clone());
-
-            for i in 0..self.scenes.clickable_area_counts[self.current_scene as usize] {
-                let area = &self.scenes.clickable_areas[self.current_scene as usize][i];
-                if let Some(target_scene) = self.get_scene(area.target_scene) {
-                    backgrounds_to_load.push(target_scene.background.clone());
-                }
-            }
+    async fn load_texture(&mut self, texture_path: &str) -> Result<(), String> {
+        if self.textures.contains_key(texture_path) || self.loading_textures.contains(texture_path)
+        {
+            return Ok(());
         }
 
-        self.load_textures(backgrounds_to_load).await;
+        self.loading_textures.insert(texture_path.to_string());
+        let full_path = format!("static/resources/{}", texture_path);
+        match load_texture(&full_path).await {
+            Ok(texture) => {
+                self.textures.insert(texture_path.to_string(), texture);
+                self.loading_textures.remove(texture_path);
+                Ok(())
+            }
+            Err(e) => {
+                self.loading_textures.remove(texture_path);
+                Err(format!("Failed to load texture {}: {}", texture_path, e))
+            }
+        }
     }
 
     async fn load_characters(&mut self) {
@@ -803,41 +817,8 @@ impl Game {
         }
 
         self.draw_debug_grid();
-
-        let scale = self.get_scale();
-        for i in 0..self.characters.count {
-            let is_active = self.active_character == Some(i);
-            self.draw_character(i, scale, is_active);
-        }
-
         self.draw_ui();
-
-        let (text_x, text_y) = self.get_scaled_pos(20.0, 60.0);
-        draw_text(
-            &format!("Characters: {}", self.characters.count),
-            text_x,
-            text_y,
-            20.0 * self.get_scale(),
-            WHITE,
-        );
-
-        if self.characters.count > 0 {
-            let (text_x, text_y) = self.get_scaled_pos(20.0, 90.0);
-            draw_text(
-                &format!(
-                    "Animation Speed: {:.2}",
-                    self.characters.animation_speeds[0]
-                ),
-                text_x,
-                text_y,
-                20.0 * self.get_scale(),
-                WHITE,
-            );
-        }
-
-        if self.debug_tools.bounding_box_mode {
-            self.draw_bounding_box_info();
-        }
+        self.draw_debug_info();
     }
 
     fn draw_character(&self, index: usize, scale: f32, is_active: bool) {
@@ -899,10 +880,58 @@ impl Game {
     fn draw_scene(&self, scene: &Scene) {
         if let Some(texture) = self.textures.get(&scene.background) {
             self.draw_background(texture);
+
+            let scale = self.get_scale();
+            for i in 0..self.characters.count {
+
+                // TODO: some overlays rely on the character's y position
+                let _character_y = self.characters.positions[i].y;
+
+                let is_active = self.active_character == Some(i);
+                self.draw_character(i, scale, is_active);
+
+                // // Draw overlays that should appear in front of this character
+                // for overlay in &sorted_overlays {
+                //     if overlay.z_value > character_y as usize {
+                //         self.draw_overlay_asset(overlay);
+                //     }
+                // }
+            }
+
+            // TODO: More sophisticated overlay sorting
+            for overlay in &scene.overlay_assets {
+                self.draw_overlay_asset(overlay);
+            }
+
             self.draw_clickable_areas(scene);
             self.draw_scene_description(scene);
         } else {
             self.draw_loading_message(&scene.background);
+        }
+    }
+
+    fn draw_overlay_asset(&self, overlay: &OverlayAsset) {
+        if let Some(texture) = self.textures.get(&overlay.texture_path) {
+            
+            // We are gathering the overlay positions
+            // from the original low-res .bmp files.
+            // We need to scale them up to match
+            // the high-res textures.
+            let (ox, oy) = (overlay.x * 3.0, overlay.y * 3.0);
+            let (x, y) = self.get_scaled_pos(ox, oy);
+            let scale = self.get_scale();
+            draw_texture_ex(
+                texture,
+                x,
+                y,
+                WHITE,
+                DrawTextureParams {
+                    dest_size: Some(Vec2::new(texture.width() * scale, texture.height() * scale)),
+                    ..Default::default()
+                },
+            );
+        } else {
+            println!("Overlay texture not found: {}", overlay.texture_path);
         }
     }
 
@@ -1028,6 +1057,35 @@ impl Game {
                     },
                 );
             }
+        }
+    }
+
+    fn draw_debug_info(&self) {
+        let (text_x, text_y) = self.get_scaled_pos(20.0, 60.0);
+        draw_text(
+            &format!("Characters: {}", self.characters.count),
+            text_x,
+            text_y,
+            20.0 * self.get_scale(),
+            WHITE,
+        );
+
+        if self.characters.count > 0 {
+            let (text_x, text_y) = self.get_scaled_pos(20.0, 90.0);
+            draw_text(
+                &format!(
+                    "Animation Speed: {:.2}",
+                    self.characters.animation_speeds[0]
+                ),
+                text_x,
+                text_y,
+                20.0 * self.get_scale(),
+                WHITE,
+            );
+        }
+
+        if self.debug_tools.bounding_box_mode {
+            self.draw_bounding_box_info();
         }
     }
 
