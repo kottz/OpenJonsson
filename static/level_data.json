@@ -24,6 +24,15 @@
               "y": 0,
               "z_value": 3
             }
+          ],
+          "items": [
+            {
+              "item_id": 1,
+              "x": 100,
+              "y": 200,
+              "width": 50,
+              "height": 50
+            }
           ]
         },
         {
@@ -46,7 +55,8 @@
               "targetScene": 2
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 2,
@@ -68,7 +78,8 @@
               "targetScene": 3
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 3,
@@ -97,7 +108,8 @@
               "targetScene": 4
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 4,
@@ -119,7 +131,8 @@
               "targetScene": 5
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 5,
@@ -141,7 +154,8 @@
               "targetScene": 6
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 6,
@@ -170,7 +184,8 @@
               "targetScene": 5
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 7,
@@ -192,7 +207,8 @@
               "targetScene": 8
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 8,
@@ -207,7 +223,8 @@
               "targetScene": 7
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 9,
@@ -222,7 +239,8 @@
               "targetScene": 6
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 10,
@@ -237,7 +255,8 @@
               "targetScene": 11
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 11,
@@ -259,7 +278,8 @@
               "targetScene": 12
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 12,
@@ -274,7 +294,8 @@
               "targetScene": 11
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         }
       ]
     },
@@ -302,7 +323,8 @@
               "targetScene": 4
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 1,
@@ -324,7 +346,8 @@
               "targetScene": 0
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 2,
@@ -346,7 +369,8 @@
               "targetScene": 3
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 3,
@@ -361,7 +385,8 @@
               "targetScene": 2
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 4,
@@ -383,7 +408,8 @@
               "targetScene": 5
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 5,
@@ -398,7 +424,8 @@
               "targetScene": 4
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         }
       ]
     },
@@ -433,7 +460,8 @@
               "targetScene": 10
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 1,
@@ -455,7 +483,8 @@
               "targetScene": 2
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 2,
@@ -470,7 +499,8 @@
               "targetScene": 1
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 3,
@@ -506,7 +536,8 @@
               "targetScene": 6
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 4,
@@ -521,7 +552,8 @@
               "targetScene": 3
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 5,
@@ -536,7 +568,8 @@
               "targetScene": 3
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 6,
@@ -558,7 +591,8 @@
               "targetScene": 7
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 7,
@@ -580,7 +614,8 @@
               "targetScene": 8
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 8,
@@ -602,7 +637,8 @@
               "targetScene": 9
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 9,
@@ -617,7 +653,8 @@
               "targetScene": 8
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 10,
@@ -639,7 +676,8 @@
               "targetScene": 11
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 11,
@@ -661,7 +699,8 @@
               "targetScene": 12
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 12,
@@ -683,7 +722,8 @@
               "targetScene": 13
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 13,
@@ -698,7 +738,8 @@
               "targetScene": 12
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         }
       ]
     },
@@ -726,7 +767,8 @@
               "targetScene": 3
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 1,
@@ -748,7 +790,8 @@
               "targetScene": 2
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 2,
@@ -770,7 +813,8 @@
               "targetScene": 3
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 3,
@@ -799,7 +843,8 @@
               "targetScene": 4
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 4,
@@ -821,7 +866,8 @@
               "targetScene": 5
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 5,
@@ -850,7 +896,8 @@
               "targetScene": 7
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 6,
@@ -872,7 +919,8 @@
               "targetScene": 8
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 7,
@@ -915,7 +963,8 @@
               "targetScene": 11
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 8,
@@ -944,7 +993,8 @@
               "targetScene": 9
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 9,
@@ -973,7 +1023,8 @@
               "targetScene": 7
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 10,
@@ -995,7 +1046,8 @@
               "targetScene": 14
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 11,
@@ -1017,7 +1069,8 @@
               "targetScene": 16
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 12,
@@ -1039,7 +1092,8 @@
               "targetScene": 5
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 13,
@@ -1054,7 +1108,8 @@
               "targetScene": 9
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 14,
@@ -1083,7 +1138,8 @@
               "targetScene": 15
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 15,
@@ -1112,7 +1168,8 @@
               "targetScene": 18
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 16,
@@ -1141,7 +1198,8 @@
               "targetScene": 15
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 17,
@@ -1156,7 +1214,8 @@
               "targetScene": 16
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 18,
@@ -1178,7 +1237,8 @@
               "targetScene": 19
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 19,
@@ -1207,7 +1267,8 @@
               "targetScene": 20
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 20,
@@ -1229,7 +1290,8 @@
               "targetScene": 31
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 21,
@@ -1258,7 +1320,8 @@
               "targetScene": 19
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 22,
@@ -1280,7 +1343,8 @@
               "targetScene": 23
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 23,
@@ -1302,7 +1366,8 @@
               "targetScene": 24
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 24,
@@ -1317,7 +1382,8 @@
               "targetScene": 23
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 25,
@@ -1339,7 +1405,8 @@
               "targetScene": 21
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 26,
@@ -1382,7 +1449,8 @@
               "targetScene": 27
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 27,
@@ -1397,7 +1465,8 @@
               "targetScene": 26
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 28,
@@ -1419,7 +1488,8 @@
               "targetScene": 29
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 29,
@@ -1441,7 +1511,8 @@
               "targetScene": 30
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 30,
@@ -1463,7 +1534,8 @@
               "targetScene": 26
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 31,
@@ -1485,7 +1557,8 @@
               "targetScene": 32
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 32,
@@ -1507,7 +1580,8 @@
               "targetScene": 33
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 33,
@@ -1557,7 +1631,8 @@
               "targetScene": 35
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 34,
@@ -1593,7 +1668,8 @@
               "targetScene": 33
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 35,
@@ -1608,7 +1684,8 @@
               "targetScene": 15
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         }
       ]
     },
@@ -1643,7 +1720,8 @@
               "targetScene": 7
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 1,
@@ -1672,7 +1750,8 @@
               "targetScene": 3
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 2,
@@ -1687,7 +1766,8 @@
               "targetScene": 1
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 3,
@@ -1709,7 +1789,8 @@
               "targetScene": 4
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 4,
@@ -1745,7 +1826,8 @@
               "targetScene": 0
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 5,
@@ -1760,7 +1842,8 @@
               "targetScene": 4
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 6,
@@ -1775,7 +1858,8 @@
               "targetScene": 4
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 7,
@@ -1804,7 +1888,8 @@
               "targetScene": 9
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 8,
@@ -1819,7 +1904,8 @@
               "targetScene": 7
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 9,
@@ -1841,14 +1927,16 @@
               "targetScene": 10
             }
           ],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         },
         {
           "id": 10,
           "description": "Tower",
           "background": "rom/Internal/B RPK-381.png",
           "clickableAreas": [],
-          "overlay_assets": []
+          "overlay_assets": [],
+          "items": []
         }
       ]
     }
@@ -1890,7 +1978,7 @@
       },
       {
         "cursor_type": "take",
-        "texture": "anslagstavla/inventory/take-580.png",
+        "texture": "anslagstavla/inventory/take-580_fix.png",
         "hotspot": [
           5,
           5
@@ -1898,7 +1986,7 @@
       },
       {
         "cursor_type": "talk",
-        "texture": "anslagstavla/inventory/talk-584.png",
+        "texture": "anslagstavla/inventory/talk-584_fix.png",
         "hotspot": [
           5,
           5
@@ -1931,5 +2019,57 @@
         ]
       }
     ]
-  }
+  },
+  "items": [
+    {
+      "id": 0,
+      "name": "Dynamit 1",
+      "textures": {
+        "in_world": "stockholm/Internal/GHV/Dynamit1Boxen-31.png",
+        "mouse_over": "stockholm/Internal/GHV/Dynamit1BoxenR-32.png",
+        "in_inventory": "anslagstavla/inventory/Dynamit1Inven-9.png",
+        "in_inventory_text": "anslagstavla/inventory/Dynamit1InvenR-404.png"
+      }
+    },
+    {
+      "id": 1,
+      "name": "Dynamit 2",
+      "textures": {
+        "in_world": "stockholm/Internal/GHV/Dynamit1Boxen-31.png",
+        "mouse_over": "stockholm/Internal/GHV/Dynamit1BoxenR-32.png",
+        "in_inventory": "anslagstavla/inventory/Dynamit1Inven-9.png",
+        "in_inventory_text": "anslagstavla/inventory/Dynamit1InvenR-404.png"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Dynamit 3",
+      "textures": {
+        "in_world": "stockholm/Internal/GHV/Dynamit1Boxen-31.png",
+        "mouse_over": "stockholm/Internal/GHV/Dynamit1BoxenR-32.png",
+        "in_inventory": "anslagstavla/inventory/Dynamit1Inven-9.png",
+        "in_inventory_text": "anslagstavla/inventory/Dynamit1InvenR-404.png"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Dynamit 4",
+      "textures": {
+        "in_world": "stockholm/Internal/GHV/Dynamit1Boxen-31.png",
+        "mouse_over": "stockholm/Internal/GHV/Dynamit1BoxenR-32.png",
+        "in_inventory": "anslagstavla/inventory/Dynamit1Inven-9.png",
+        "in_inventory_text": "anslagstavla/inventory/Dynamit1InvenR-404.png"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Dynamit 5",
+      "textures": {
+        "in_world": "stockholm/Internal/GHV/Dynamit1Boxen-31.png",
+        "mouse_over": "stockholm/Internal/GHV/Dynamit1BoxenR-32.png",
+        "in_inventory": "anslagstavla/inventory/Dynamit1Inven-9.png",
+        "in_inventory_text": "anslagstavla/inventory/Dynamit1InvenR-404.png"
+      }
+    }
+  ]
 }

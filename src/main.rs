@@ -60,6 +60,7 @@ pub struct Scene {
     #[serde(rename = "clickableAreas")]
     pub clickable_areas: Vec<ClickableArea>,
     pub overlay_assets: Vec<OverlayAsset>,
+    pub items: Vec<ItemInstance>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -67,6 +68,29 @@ pub struct Level {
     pub id: u32,
     pub name: String,
     pub scenes: Vec<Scene>,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct ItemTextures {
+    pub in_world: String,
+    pub mouse_over: String,
+    pub in_inventory: String,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct Item {
+    pub id: u32,
+    pub name: String,
+    pub textures: ItemTextures,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct ItemInstance {
+    pub item_id: u32,
+    pub x: f32,
+    pub y: f32,
+    pub width: f32,
+    pub height: f32,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -96,6 +120,7 @@ pub struct GameData {
     pub levels: Vec<Level>,
     pub characters: Vec<CharacterData>,
     pub ui: UI,
+    pub items: Vec<Item>,
 }
 
 struct Characters {
@@ -195,6 +220,9 @@ struct Game {
     loading_textures: HashSet<String>,
     debug_tools: DebugTools,
     debug_instant_move: bool,
+    items: Vec<Item>,
+    inventory: Vec<u32>,
+    world_items: Vec<Vec<ItemInstance>>,
 }
 
 struct DebugTools {
@@ -302,6 +330,9 @@ impl Game {
             loading_textures: HashSet::new(),
             debug_tools: DebugTools::new(),
             debug_instant_move: false,
+            items: game_data.items,
+            inventory: Vec::new(),
+            world_items: Vec::new(),
         };
 
         game.load_level_scenes(game.current_level);
@@ -309,6 +340,7 @@ impl Game {
         game.load_characters().await;
         game.load_debug_textures().await;
         game.load_ui_textures().await;
+        game.load_item_textures().await;
 
         Ok(game)
     }
@@ -424,6 +456,18 @@ impl Game {
         }
     }
 
+    async fn load_item_textures(&mut self) {
+        let mut textures_to_load = Vec::new();
+
+        for item in &self.items {
+            textures_to_load.push(item.textures.in_world.clone());
+            textures_to_load.push(item.textures.mouse_over.clone());
+            textures_to_load.push(item.textures.in_inventory.clone());
+        }
+
+        self.load_textures(textures_to_load).await;
+    }
+
     fn load_level_scenes(&mut self, level_id: u32) {
         if let Some(level) = self.levels.iter().find(|l| l.id == level_id) {
             self.scenes = Scenes {
@@ -440,6 +484,7 @@ impl Game {
                     .collect(),
                 count: level.scenes.len(),
             };
+            self.world_items = level.scenes.iter().map(|s| s.items.clone()).collect();
             self.current_scene = 0; // Reset to the first scene of the new level
         }
     }
@@ -476,6 +521,19 @@ impl Game {
     }
 
     fn determine_cursor(&self, game_pos: Vec2) -> CursorType {
+        // Check for items first
+        let current_scene_items = &self.world_items[self.current_scene as usize];
+        for item in current_scene_items {
+            if game_pos.x >= item.x
+                && game_pos.x <= item.x + item.width
+                && game_pos.y >= item.y
+                && game_pos.y <= item.y + item.height
+            {
+                return CursorType::Take;
+            }
+        }
+
+        // Then check for clickable areas
         if let Some(current_scene) = self.get_current_scene() {
             for area in &current_scene.clickable_areas {
                 if game_pos.x >= area.x
@@ -487,6 +545,8 @@ impl Game {
                 }
             }
         }
+
+        // Default to normal cursor
         CursorType::Normal
     }
 
@@ -596,6 +656,23 @@ impl Game {
         }
     }
 
+    fn handle_item_click(&mut self, game_pos: Vec2) {
+        let current_scene_items = &mut self.world_items[self.current_scene as usize];
+        if let Some(index) = current_scene_items.iter().position(|item| {
+            game_pos.x >= item.x
+                && game_pos.x <= item.x + item.width
+                && game_pos.y >= item.y
+                && game_pos.y <= item.y + item.height
+        }) {
+            let item = current_scene_items.remove(index);
+            self.inventory.push(item.item_id);
+        }
+    }
+
+    fn is_item_in_inventory(&self, item_id: u32) -> bool {
+        self.inventory.contains(&item_id)
+    }
+
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
         if !self
             .game_rect
@@ -612,6 +689,8 @@ impl Game {
                 return;
             }
         }
+
+        self.handle_item_click(game_pos);
 
         // Check for clickable areas and handle scene changes
         if let Some(area) = self.find_clicked_area(game_pos) {
@@ -762,6 +841,7 @@ impl Game {
             }
         }
 
+        // Update cursor based on game position
         let new_cursor_type = self.determine_cursor(game_pos);
         if new_cursor_type != self.current_cursor {
             self.set_cursor(new_cursor_type);
@@ -812,10 +892,12 @@ impl Game {
 
         if let Some(current_scene) = self.get_current_scene() {
             self.draw_scene(current_scene);
+            self.draw_world_items();
         } else {
             self.draw_error_message("Scene not found");
         }
 
+        self.draw_inventory();
         self.draw_debug_grid();
         self.draw_ui();
         self.draw_debug_info();
@@ -883,7 +965,6 @@ impl Game {
 
             let scale = self.get_scale();
             for i in 0..self.characters.count {
-
                 // TODO: some overlays rely on the character's y position
                 let _character_y = self.characters.positions[i].y;
 
@@ -912,7 +993,6 @@ impl Game {
 
     fn draw_overlay_asset(&self, overlay: &OverlayAsset) {
         if let Some(texture) = self.textures.get(&overlay.texture_path) {
-            
             // We are gathering the overlay positions
             // from the original low-res .bmp files.
             // We need to scale them up to match
@@ -946,6 +1026,77 @@ impl Game {
                 ..Default::default()
             },
         );
+    }
+
+    fn draw_world_items(&self) {
+        let current_scene_items = &self.world_items[self.current_scene as usize];
+        let mouse_pos = Vec2::from(mouse_position());
+        let game_pos = self.get_game_coordinates(mouse_pos);
+
+        for item_instance in current_scene_items {
+            let item = self
+                .items
+                .iter()
+                .find(|i| i.id == item_instance.item_id)
+                .unwrap();
+            let texture_path = if self.is_mouse_over_item(game_pos, item_instance) {
+                &item.textures.mouse_over
+            } else {
+                &item.textures.in_world
+            };
+
+            if let Some(texture) = self.textures.get(texture_path) {
+                let (x, y) = self.get_scaled_pos(item_instance.x, item_instance.y);
+                let scale = self.get_scale();
+                draw_texture_ex(
+                    texture,
+                    x,
+                    y,
+                    WHITE,
+                    DrawTextureParams {
+                        dest_size: Some(Vec2::new(
+                            item_instance.width * scale,
+                            item_instance.height * scale,
+                        )),
+                        ..Default::default()
+                    },
+                );
+            }
+        }
+    }
+
+    fn is_mouse_over_item(&self, game_pos: Vec2, item: &ItemInstance) -> bool {
+        game_pos.x >= item.x
+            && game_pos.x <= item.x + item.width
+            && game_pos.y >= item.y
+            && game_pos.y <= item.y + item.height
+    }
+
+    fn draw_inventory(&self) {
+        let inventory_start_x = 20.0;
+        let inventory_start_y = self.game_rect.h - 100.0;
+        let item_size = 60.0;
+        let item_spacing = 10.0;
+
+        for (index, item_id) in self.inventory.iter().enumerate() {
+            if let Some(item) = self.items.iter().find(|i| i.id == *item_id) {
+                if let Some(texture) = self.textures.get(&item.textures.in_inventory) {
+                    let x = inventory_start_x + (item_size + item_spacing) * index as f32;
+                    let (draw_x, draw_y) = self.get_scaled_pos(x, inventory_start_y);
+                    let scale = self.get_scale();
+                    draw_texture_ex(
+                        texture,
+                        draw_x,
+                        draw_y,
+                        WHITE,
+                        DrawTextureParams {
+                            dest_size: Some(Vec2::new(item_size * scale, item_size * scale)),
+                            ..Default::default()
+                        },
+                    );
+                }
+            }
+        }
     }
 
     fn draw_clickable_areas(&self, _scene: &Scene) {
