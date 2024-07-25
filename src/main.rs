@@ -52,6 +52,18 @@ pub struct SceneTransition {
 }
 
 #[derive(Deserialize, Debug, Clone)]
+pub struct BlockedNodeDataCollection {
+    blocked_node_data: Vec<BlockedNodeData>,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct BlockedNodeData {
+    level_id: u32,
+    scene_id: u32,
+    blocked_nodes: Vec<(i32, i32)>,
+}
+
+#[derive(Deserialize, Debug, Clone)]
 pub struct Scene {
     pub id: u32,
     pub description: String,
@@ -60,6 +72,7 @@ pub struct Scene {
     pub scene_transitions: Vec<SceneTransition>,
     pub overlay_assets: Vec<OverlayAsset>,
     pub items: Vec<ItemInstance>,
+    #[serde(skip)]
     pub blocked_nodes: Vec<(i32, i32)>,
 }
 
@@ -136,6 +149,8 @@ pub struct GameData {
     pub characters: Vec<CharacterData>,
     pub ui: UI,
     pub items: Vec<Item>,
+    #[serde(skip_deserializing)]
+    pub blocked_nodes: Vec<BlockedNodeData>,
 }
 
 struct Characters {
@@ -273,6 +288,7 @@ struct DebugTools {
     bounding_box_mode: bool,
     bounding_box_start: Option<Vec2>,
     current_bounding_box: Option<Rect>,
+    active: bool,
     draw_grid: bool,
 }
 
@@ -282,6 +298,7 @@ impl DebugTools {
             bounding_box_mode: false,
             bounding_box_start: None,
             current_bounding_box: None,
+            active: false,
             draw_grid: false,
         }
     }
@@ -316,8 +333,26 @@ impl DebugTools {
 impl Game {
     async fn new() -> Result<Self, String> {
         let json = load_string("static/level_data.json").await.unwrap();
-        let game_data: GameData =
+        let mut game_data: GameData =
             serde_json::from_str(&json).map_err(|e| format!("Failed to parse JSON: {}", e))?;
+
+        let blocked_nodes_json = load_string("static/blocked_nodes.json").await.unwrap();
+        let blocked_nodes: BlockedNodeDataCollection = serde_json::from_str(&blocked_nodes_json)
+            .map_err(|e| format!("Failed to parse blocked nodes JSON: {}", e))?;
+
+        game_data.blocked_nodes = blocked_nodes.blocked_node_data;
+
+        for level in &mut game_data.levels {
+            for scene in &mut level.scenes {
+                let blocked_node_data = game_data
+                    .blocked_nodes
+                    .iter()
+                    .find(|b| b.level_id == level.id && b.scene_id == scene.id)
+                    .map(|b| b.blocked_nodes.clone())
+                    .unwrap_or_default();
+                scene.blocked_nodes = blocked_node_data;
+            }
+        }
 
         let mut characters = Characters {
             data: Vec::new(),
@@ -935,6 +970,9 @@ impl Game {
         }
 
         if is_key_pressed(KeyCode::G) {
+            self.debug_tools.active = !self.debug_tools.active;
+        }
+        if is_key_pressed(KeyCode::J) {
             self.debug_tools.draw_grid = !self.debug_tools.draw_grid;
         }
 
@@ -1028,9 +1066,17 @@ impl Game {
             self.draw_error_message("Scene not found");
         }
 
-        self.draw_debug_grid();
+        self.draw_debug();
         self.draw_ui();
-        self.draw_debug_info();
+    }
+
+    fn draw_debug(&self) {
+        if self.debug_tools.active {
+            if self.debug_tools.draw_grid {
+                self.draw_debug_grid();
+            }
+            self.draw_debug_info();
+        }
     }
 
     fn draw_character(&self, index: usize, scale: f32, is_active: bool) {
@@ -1384,9 +1430,7 @@ impl Game {
             self.draw_bounding_box_info();
         }
 
-        if self.debug_tools.draw_grid {
-            self.draw_scene_transitions();
-        }
+        self.draw_scene_transitions();
     }
 
     fn draw_scene_transitions(&self) {
@@ -1398,33 +1442,11 @@ impl Game {
 
                 // Draw transition area
                 draw_rectangle_lines(x, y, width, height, 2.0, BLUE);
-
-                // Draw center point of transition area
-                let center_x = x + width / 2.0;
-                let center_y = y + height / 2.0;
-                draw_circle(center_x, center_y, 5.0, GREEN);
             }
         }
     }
 
     fn draw_debug_grid(&self) {
-        if !self.debug_tools.draw_grid {
-            return;
-        }
-
-        if let Some(texture) = self.textures.get("debug_grid") {
-            draw_texture_ex(
-                texture,
-                self.game_rect.x,
-                self.game_rect.y,
-                WHITE,
-                DrawTextureParams {
-                    dest_size: Some(Vec2::new(self.game_rect.w, self.game_rect.h)),
-                    ..Default::default()
-                },
-            );
-        }
-
         let grid_color = Color::new(0.0, 1.0, 0.0, 0.5);
         let scale = self.get_scale();
 
