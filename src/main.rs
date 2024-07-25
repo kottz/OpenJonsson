@@ -877,9 +877,24 @@ impl Game {
     async fn handle_pathfinding(&mut self, target_pos: Vec2) {
         if let Some(active_index) = self.active_character {
             let target_grid = self.grid.get_grid_from_coord(target_pos);
+            let mut final_target = target_grid;
 
-            // Check if the target node is walkable
-            if !self.grid.is_node_walkable(target_grid) {
+            // Check if the click is within a scene transition area
+            if let Some(transition) = self.find_clicked_transition(target_pos) {
+                if !self.grid.is_node_walkable(target_grid) {
+                    // Find the closest walkable node within the transition area
+                    if let Some(closest_node) =
+                        self.find_closest_walkable_node(target_grid, transition)
+                    {
+                        final_target = closest_node;
+                    } else {
+                        // No walkable nodes in the transition area, don't move
+                        self.stop_character(active_index);
+                        return;
+                    }
+                }
+            } else if !self.grid.is_node_walkable(target_grid) {
+                // If not in a transition area and not walkable, don't move
                 self.stop_character(active_index);
                 return;
             }
@@ -888,14 +903,45 @@ impl Game {
                 .grid
                 .get_grid_from_coord(self.characters.positions[active_index]);
 
-            if let Some(path) = self.pathfind(start_grid, target_grid) {
+            if let Some(path) = self.pathfind(start_grid, final_target) {
                 self.characters.paths[active_index] = Some(path);
-                self.characters.targets[active_index] = Some(target_grid);
+                self.characters.targets[active_index] = Some(final_target);
             } else {
                 // If no path is found, stop the character
                 self.stop_character(active_index);
             }
         }
+    }
+
+    fn find_closest_walkable_node(
+        &self,
+        target: (i32, i32),
+        transition: &SceneTransition,
+    ) -> Option<(i32, i32)> {
+        let start = self
+            .grid
+            .get_grid_from_coord(Vec2::new(transition.x, transition.y));
+        let end = self.grid.get_grid_from_coord(Vec2::new(
+            transition.x + transition.width,
+            transition.y + transition.height,
+        ));
+
+        let mut closest_node = None;
+        let mut min_distance = std::i32::MAX;
+
+        for x in start.0..=end.0 {
+            for y in start.1..=end.1 {
+                if self.grid.is_node_walkable((x, y)) {
+                    let distance = ((x - target.0).pow(2) + (y - target.1).pow(2)) as i32;
+                    if distance < min_distance {
+                        min_distance = distance;
+                        closest_node = Some((x, y));
+                    }
+                }
+            }
+        }
+
+        closest_node
     }
 
     async fn update(&mut self) {
@@ -1366,10 +1412,7 @@ impl Game {
 
                 // Draw transition area
                 draw_rectangle_lines(x, y, width, height, 2.0, BLUE);
-                let text = format!(
-                    "#{}",
-                    transition.target_scene
-                );
+                let text = format!("#{}", transition.target_scene);
                 draw_text(&text, x, y, 40.0 * self.get_scale(), WHITE);
             }
         }
