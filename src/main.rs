@@ -962,7 +962,9 @@ impl Game {
             self.debug_tools.active = !self.debug_tools.active;
         }
         if is_key_pressed(KeyCode::J) {
-            self.debug_tools.draw_grid = !self.debug_tools.draw_grid;
+            if self.debug_tools.active {
+                self.debug_tools.draw_grid = !self.debug_tools.draw_grid;
+            }
         }
 
         if is_key_pressed(KeyCode::F3) {
