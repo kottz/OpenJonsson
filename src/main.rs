@@ -27,15 +27,22 @@ pub enum CursorType {
     Talk,
 }
 
-#[derive(Debug, Clone, Deserialize)]
-pub struct CharacterData {
-    pub name: String,
-    pub speed: f32,
-    pub run_speed: f32,
+#[derive(Deserialize, Debug, Clone, Copy)]
+pub struct ClickableArea {
+    pub x: f32,
+    pub y: f32,
+    pub width: f32,
+    pub height: f32,
 }
 
 #[derive(Deserialize, Debug, Clone, Copy)]
-pub struct ClickableArea {
+pub struct SpawnPoint {
+    pub x: f32,
+    pub y: f32,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct SceneTransition {
     pub x: f32,
     pub y: f32,
     pub width: f32,
@@ -45,22 +52,30 @@ pub struct ClickableArea {
 }
 
 #[derive(Deserialize, Debug, Clone)]
+pub struct Scene {
+    pub id: u32,
+    pub description: String,
+    pub background: String,
+    #[serde(rename = "sceneTransitions")]
+    pub scene_transitions: Vec<SceneTransition>,
+    pub overlay_assets: Vec<OverlayAsset>,
+    pub items: Vec<ItemInstance>,
+    pub blocked_nodes: Vec<(i32, i32)>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct CharacterData {
+    pub name: String,
+    pub speed: f32,
+    pub run_speed: f32,
+}
+
+#[derive(Deserialize, Debug, Clone)]
 pub struct OverlayAsset {
     pub texture_path: String,
     pub x: f32,
     pub y: f32,
     pub z_value: usize,
-}
-
-#[derive(Deserialize, Debug, Clone)]
-pub struct Scene {
-    pub id: u32,
-    pub description: String,
-    pub background: String,
-    #[serde(rename = "clickableAreas")]
-    pub clickable_areas: Vec<ClickableArea>,
-    pub overlay_assets: Vec<OverlayAsset>,
-    pub items: Vec<ItemInstance>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -137,8 +152,6 @@ struct Characters {
 
 struct Scenes {
     data: Vec<Scene>,
-    clickable_areas: Vec<Vec<ClickableArea>>,
-    clickable_area_counts: Vec<usize>,
     count: usize,
 }
 
@@ -166,6 +179,7 @@ struct Grid {
     m: f32,
     stretch: (f32, f32),
     grid_offset: f32,
+    blocked_nodes: HashSet<(i32, i32)>,
 }
 
 impl Grid {
@@ -175,6 +189,7 @@ impl Grid {
             m: -1.744,
             stretch: (38.81, 10.32),
             grid_offset: 10.,
+            blocked_nodes: HashSet::new(),
         }
     }
 
@@ -198,6 +213,35 @@ impl Grid {
         let transformed_x = rotated_x + self.m * rotated_y;
         let transformed_y = rotated_y + self.grid_offset;
         Vec2::new(transformed_x * 3.0, transformed_y * 3.0)
+    }
+
+    fn update_blocked_nodes(&mut self, blocked_nodes: Vec<(i32, i32)>) {
+        self.blocked_nodes = blocked_nodes.into_iter().collect();
+    }
+
+    fn is_node_walkable(&self, node: (i32, i32)) -> bool {
+        let (x, y) = node;
+
+        // Check if the node is not blocked
+        if self.blocked_nodes.contains(&node) {
+            return false;
+        }
+
+        // Check boundary conditions
+        if x - y >= 16 {
+            return false;
+        }
+        if y - x >= 16 {
+            return false; // Off the screen on the left
+        }
+        if x + y > 64 {
+            return false; // Off the screen on the bottom
+        }
+        if x + y <= 17 {
+            return false; // Off the screen on the top
+        }
+
+        true
     }
 }
 
@@ -291,7 +335,7 @@ impl Game {
             characters.data.push(character_data);
             characters
                 .positions
-                .push(Vec2::new(100.0 + i as f32 * 100.0, 100.0));
+                .push(Vec2::new(1000.0 + i as f32 * 100.0, 800.0));
             characters.directions.push(Direction::South);
             characters.animation_indices.push(0);
             characters.animation_timers.push(0.0);
@@ -303,8 +347,6 @@ impl Game {
 
         let scenes = Scenes {
             data: Vec::new(),
-            clickable_areas: Vec::new(),
-            clickable_area_counts: Vec::new(),
             count: 0,
         };
 
@@ -364,22 +406,17 @@ impl Game {
 
     async fn load_current_and_adjacent_scenes(&mut self) {
         let mut textures_to_load = Vec::new();
-
         if let Some(current_scene) = self.get_current_scene() {
             textures_to_load.push(current_scene.background.clone());
-
             for overlay_asset in &current_scene.overlay_assets {
                 textures_to_load.push(overlay_asset.texture_path.clone());
             }
-
-            for i in 0..self.scenes.clickable_area_counts[self.current_scene as usize] {
-                let area = &self.scenes.clickable_areas[self.current_scene as usize][i];
-                if let Some(target_scene) = self.get_scene(area.target_scene) {
+            for transition in &current_scene.scene_transitions {
+                if let Some(target_scene) = self.get_scene(transition.target_scene) {
                     textures_to_load.push(target_scene.background.clone());
                 }
             }
         }
-
         self.load_textures(textures_to_load).await;
     }
 
@@ -472,20 +509,16 @@ impl Game {
         if let Some(level) = self.levels.iter().find(|l| l.id == level_id) {
             self.scenes = Scenes {
                 data: level.scenes.clone(),
-                clickable_areas: level
-                    .scenes
-                    .iter()
-                    .map(|s| s.clickable_areas.clone())
-                    .collect(),
-                clickable_area_counts: level
-                    .scenes
-                    .iter()
-                    .map(|s| s.clickable_areas.len())
-                    .collect(),
                 count: level.scenes.len(),
             };
             self.world_items = level.scenes.iter().map(|s| s.items.clone()).collect();
             self.current_scene = 0; // Reset to the first scene of the new level
+
+            // Update blocked nodes in the grid
+            if let Some(current_scene) = self.get_current_scene() {
+                self.grid
+                    .update_blocked_nodes(current_scene.blocked_nodes.clone());
+            }
         }
     }
 
@@ -535,11 +568,11 @@ impl Game {
 
         // Then check for clickable areas
         if let Some(current_scene) = self.get_current_scene() {
-            for area in &current_scene.clickable_areas {
-                if game_pos.x >= area.x
-                    && game_pos.x <= area.x + area.width
-                    && game_pos.y >= area.y
-                    && game_pos.y <= area.y + area.height
+            for st in &current_scene.scene_transitions {
+                if game_pos.x >= st.x
+                    && game_pos.x <= st.x + st.width
+                    && game_pos.y >= st.y
+                    && game_pos.y <= st.y + st.height
                 {
                     return CursorType::Move;
                 }
@@ -590,6 +623,10 @@ impl Game {
             }
 
             for neighbor in self.get_neighbors(current.position) {
+                if !self.grid.is_node_walkable(neighbor) {
+                    continue; // Skip non-walkable nodes
+                }
+
                 let tentative_g_score = g_score[&current.position] + 1;
 
                 if tentative_g_score < *g_score.get(&neighbor).unwrap_or(&i32::MAX) {
@@ -609,12 +646,6 @@ impl Game {
         None
     }
 
-    fn heuristic(&self, a: (i32, i32), b: (i32, i32)) -> i32 {
-        let dx = (a.0 - b.0).abs();
-        let dy = (a.1 - b.1).abs();
-        (dx + dy) + (1414 - 1000) * dx.min(dy)
-    }
-
     fn get_neighbors(&self, pos: (i32, i32)) -> Vec<(i32, i32)> {
         let directions = [
             (-1, -1),
@@ -630,8 +661,14 @@ impl Game {
         directions
             .iter()
             .map(|&(dx, dy)| (pos.0 + dx, pos.1 + dy))
-            .filter(|&(x, y)| x >= 0 && x < 41 && y >= 0 && y < 41)
+            .filter(|&pos| self.grid.is_node_walkable(pos))
             .collect()
+    }
+
+    fn heuristic(&self, a: (i32, i32), b: (i32, i32)) -> i32 {
+        let dx = (a.0 - b.0).abs();
+        let dy = (a.1 - b.1).abs();
+        (dx + dy) + (1414 - 1000) * dx.min(dy)
     }
 
     fn reconstruct_path(
@@ -680,6 +717,7 @@ impl Game {
         {
             return;
         }
+
         // Check if a character was clicked
         if let Some(index) =
             (0..self.characters.count).find(|&i| self.is_point_in_character(game_pos, i))
@@ -690,18 +728,20 @@ impl Game {
             }
         }
 
-        self.handle_item_click(game_pos);
-
-        // Check for clickable areas and handle scene changes
-        if let Some(area) = self.find_clicked_area(game_pos) {
-            if self.debug_instant_move || self.is_active_character_in_area(&area) {
+        // Check for scene transitions and handle scene changes
+        if let Some(transition) = self.find_clicked_transition(game_pos) {
+            if self.debug_instant_move || self.is_active_character_in_transition_area(transition) {
                 let current_scene_id = self.current_scene;
-                self.current_scene = area.target_scene;
+                self.current_scene = transition.target_scene;
                 self.transition_to_new_scene(current_scene_id).await;
                 return;
             }
         }
 
+        // Handle item clicks
+        self.handle_item_click(game_pos);
+
+        // Handle pathfinding
         self.handle_pathfinding(game_pos).await;
     }
 
@@ -722,57 +762,125 @@ impl Game {
             && point.y <= character_pos.y + character_height / 2.0
     }
 
-    fn is_active_character_in_area(&self, area: &ClickableArea) -> bool {
+    fn is_active_character_in_transition_area(&self, transition: &SceneTransition) -> bool {
         if let Some(active_index) = self.active_character {
             let character_pos = self.characters.positions[active_index];
-            character_pos.x >= area.x
-                && character_pos.x <= area.x + area.width
-                && character_pos.y >= area.y
-                && character_pos.y <= area.y + area.height
+            character_pos.x >= transition.x
+                && character_pos.x <= transition.x + transition.width
+                && character_pos.y >= transition.y
+                && character_pos.y <= transition.y + transition.height
         } else {
             false
         }
     }
 
-    fn find_clicked_area(&self, game_pos: Vec2) -> Option<&ClickableArea> {
+    fn find_clicked_transition(&self, game_pos: Vec2) -> Option<&SceneTransition> {
         self.get_current_scene().and_then(|current_scene| {
-            current_scene.clickable_areas.iter().find(|&area| {
-                game_pos.x >= area.x
-                    && game_pos.x <= area.x + area.width
-                    && game_pos.y >= area.y
-                    && game_pos.y <= area.y + area.height
+            current_scene.scene_transitions.iter().find(|transition| {
+                game_pos.x >= transition.x
+                    && game_pos.x <= transition.x + transition.width
+                    && game_pos.y >= transition.y
+                    && game_pos.y <= transition.y + transition.height
             })
         })
     }
 
     async fn transition_to_new_scene(&mut self, previous_scene_id: u32) {
-        if let Some(spawn_point) = self.find_spawn_point(previous_scene_id) {
-            let spawn_positions = self.generate_spawn_positions(spawn_point, self.characters.count);
+        let transition_data = self.get_transition_data(previous_scene_id);
 
-            for i in 0..self.characters.count {
-                self.characters.positions[i] = spawn_positions[i];
-                self.characters.directions[i] = Direction::South;
-                self.characters.paths[i] = None;
-                self.characters.targets[i] = None;
+        if let Some((transition_area, blocked_nodes)) = transition_data {
+            // Update character positions
+            let spawn_position = Vec2::new(
+                transition_area.x + transition_area.width / 2.0,
+                transition_area.y + transition_area.height / 2.0,
+            );
+            let spawn_positions =
+                self.generate_spawn_positions(spawn_position, self.characters.count);
+
+            for (i, pos) in spawn_positions.into_iter().enumerate() {
+                if i < self.characters.count {
+                    self.characters.positions[i] = pos;
+                    self.characters.directions[i] = Direction::South;
+                    self.characters.paths[i] = None;
+                    self.characters.targets[i] = None;
+                }
             }
+
+            // Update blocked nodes
+            self.grid.update_blocked_nodes(blocked_nodes);
         }
 
         self.load_current_and_adjacent_scenes().await;
     }
 
-    fn find_spawn_point(&self, previous_scene_id: u32) -> Option<Vec2> {
+    fn get_transition_data(
+        &self,
+        previous_scene_id: u32,
+    ) -> Option<(SceneTransition, Vec<(i32, i32)>)> {
         self.get_current_scene().and_then(|current_scene| {
-            current_scene.clickable_areas.iter().find_map(|area| {
-                if area.target_scene == previous_scene_id {
-                    Some(Vec2::new(
-                        area.x + area.width / 2.0,
-                        area.y + area.height / 2.0,
-                    ))
-                } else {
-                    None
-                }
+            current_scene
+                .scene_transitions
+                .iter()
+                .find(|t| t.target_scene == previous_scene_id)
+                .map(|transition| (transition.clone(), current_scene.blocked_nodes.clone()))
+        })
+    }
+
+    fn find_scene_transition(&self, game_pos: Vec2) -> Option<&SceneTransition> {
+        self.get_current_scene().and_then(|current_scene| {
+            current_scene.scene_transitions.iter().find(|transition| {
+                game_pos.x >= transition.x
+                    && game_pos.x <= transition.x + transition.width
+                    && game_pos.y >= transition.y
+                    && game_pos.y <= transition.y + transition.height
             })
         })
+    }
+
+    fn find_spawn_point(&self, previous_scene_id: u32) -> Option<Vec2> {
+        self.get_current_scene().and_then(|current_scene| {
+            current_scene
+                .scene_transitions
+                .iter()
+                .find_map(|transition| {
+                    if transition.target_scene == previous_scene_id {
+                        Some(Vec2::new(
+                            transition.x + transition.width / 2.0,
+                            transition.y + transition.height / 2.0,
+                        ))
+                    } else {
+                        None
+                    }
+                })
+        })
+    }
+
+    fn find_closest_unblocked_node(&self, start: (i32, i32)) -> (i32, i32) {
+        if self.grid.is_node_walkable(start) {
+            return start;
+        }
+
+        let mut queue = std::collections::VecDeque::new();
+        let mut visited = std::collections::HashSet::new();
+        queue.push_back(start);
+        visited.insert(start);
+
+        while let Some(current) = queue.pop_front() {
+            if self.grid.is_node_walkable(current) {
+                return current;
+            }
+
+            for &(dx, dy) in &[(0, 1), (1, 0), (0, -1), (-1, 0)] {
+                let next = (current.0 + dx, current.1 + dy);
+                if !visited.contains(&next) {
+                    visited.insert(next);
+                    queue.push_back(next);
+                }
+            }
+        }
+
+        // Fallback to start position if no walkable node is found (shouldn't happen in practice)
+        start
     }
 
     fn generate_spawn_positions(&self, center: Vec2, count: usize) -> Vec<Vec2> {
@@ -791,6 +899,13 @@ impl Game {
     async fn handle_pathfinding(&mut self, target_pos: Vec2) {
         if let Some(active_index) = self.active_character {
             let target_grid = self.grid.get_grid_from_coord(target_pos);
+
+            // Check if the target node is walkable
+            if !self.grid.is_node_walkable(target_grid) {
+                self.stop_character(active_index);
+                return;
+            }
+
             let start_grid = self
                 .grid
                 .get_grid_from_coord(self.characters.positions[active_index]);
@@ -798,6 +913,9 @@ impl Game {
             if let Some(path) = self.pathfind(start_grid, target_grid) {
                 self.characters.paths[active_index] = Some(path);
                 self.characters.targets[active_index] = Some(target_grid);
+            } else {
+                // If no path is found, stop the character
+                self.stop_character(active_index);
             }
         }
     }
@@ -877,14 +995,28 @@ impl Game {
                     if (self.characters.positions[i] - target).length() < 5.0 {
                         path.remove(0);
                         if path.is_empty() {
-                            self.characters.paths[i] = None;
-                            self.characters.targets[i] = None;
-                            self.characters.animation_indices[i] = 0;
+                            self.stop_character(i);
                         }
                     }
+                } else {
+                    self.stop_character(i);
                 }
+            } else {
+                // Ensure the animation is reset even if there was no path
+                self.reset_character_animation(i);
             }
         }
+    }
+
+    fn stop_character(&mut self, index: usize) {
+        self.characters.paths[index] = None;
+        self.characters.targets[index] = None;
+        self.reset_character_animation(index);
+    }
+
+    fn reset_character_animation(&mut self, index: usize) {
+        self.characters.animation_indices[index] = 0;
+        self.characters.animation_timers[index] = 0.0;
     }
 
     fn draw(&self) {
@@ -892,12 +1024,10 @@ impl Game {
 
         if let Some(current_scene) = self.get_current_scene() {
             self.draw_scene(current_scene);
-            self.draw_world_items();
         } else {
             self.draw_error_message("Scene not found");
         }
 
-        self.draw_inventory();
         self.draw_debug_grid();
         self.draw_ui();
         self.draw_debug_info();
@@ -984,7 +1114,7 @@ impl Game {
                 self.draw_overlay_asset(overlay);
             }
 
-            self.draw_clickable_areas(scene);
+            //self.draw_clickable_areas();
             self.draw_scene_description(scene);
         } else {
             self.draw_loading_message(&scene.background);
@@ -1099,13 +1229,28 @@ impl Game {
         }
     }
 
-    fn draw_clickable_areas(&self, _scene: &Scene) {
-        for i in 0..self.scenes.clickable_area_counts[self.current_scene as usize] {
-            let area = &self.scenes.clickable_areas[self.current_scene as usize][i];
-            self.draw_clickable_area(area);
-            self.draw_target_scene_description(area);
-        }
-    }
+    // fn draw_clickable_areas(&self) {
+    //     if let Some(current_scene) = self.get_current_scene() {
+    //         for area in &current_scene.clickable_areas {
+    //             let (x, y) = self.get_scaled_pos(area.x, area.y);
+    //             let width = area.width * self.get_scale();
+    //             let height = area.height * self.get_scale();
+    //
+    //             // Draw clickable area
+    //             draw_rectangle_lines(x, y, width, height, 2.0, YELLOW);
+    //         }
+    //
+    //         // Also draw scene transitions
+    //         for transition in &current_scene.scene_transitions {
+    //             let (x, y) = self.get_scaled_pos(transition.area.x, transition.area.y);
+    //             let width = transition.area.width * self.get_scale();
+    //             let height = transition.area.height * self.get_scale();
+    //
+    //             // Draw scene transition area
+    //             draw_rectangle_lines(x, y, width, height, 2.0, BLUE);
+    //         }
+    //     }
+    // }
 
     fn draw_clickable_area(&self, area: &ClickableArea) {
         let (x, y) = self.get_scaled_pos(area.x, area.y);
@@ -1114,10 +1259,10 @@ impl Game {
         draw_rectangle_lines(x, y, width, height, 2.0, RED);
     }
 
-    fn draw_target_scene_description(&self, area: &ClickableArea) {
-        if let Some(target_scene) = self.get_scene(area.target_scene) {
-            let (x, y) = self.get_scaled_pos(area.x, area.y);
-            let width = area.width * self.get_scale();
+    fn draw_target_scene_description(&self, transition: &SceneTransition) {
+        if let Some(target_scene) = self.get_scene(transition.target_scene) {
+            let (x, y) = self.get_scaled_pos(transition.x, transition.y);
+            let width = transition.width * self.get_scale();
             let text = &target_scene.description;
             let font_size = 15.0 * self.get_scale();
             let text_dim = measure_text(text, None, font_size as u16, 1.0);
@@ -1238,6 +1383,28 @@ impl Game {
         if self.debug_tools.bounding_box_mode {
             self.draw_bounding_box_info();
         }
+
+        if self.debug_tools.draw_grid {
+            self.draw_scene_transitions();
+        }
+    }
+
+    fn draw_scene_transitions(&self) {
+        if let Some(current_scene) = self.get_current_scene() {
+            for transition in &current_scene.scene_transitions {
+                let (x, y) = self.get_scaled_pos(transition.x, transition.y);
+                let width = transition.width * self.get_scale();
+                let height = transition.height * self.get_scale();
+
+                // Draw transition area
+                draw_rectangle_lines(x, y, width, height, 2.0, BLUE);
+
+                // Draw center point of transition area
+                let center_x = x + width / 2.0;
+                let center_y = y + height / 2.0;
+                draw_circle(center_x, center_y, 5.0, GREEN);
+            }
+        }
     }
 
     fn draw_debug_grid(&self) {
@@ -1284,12 +1451,32 @@ impl Game {
             draw_line(start.0, start.1, end.0, end.1, 2.0, grid_color);
         }
 
-        let font_size = 15.0 * scale;
+        let font_size = 20.0 * scale;
+        //let (x_offset, y_offset) = self.get_scaled_pos(25.0, 5.0);
+        let (x_offset, y_offset) = (0.0, 0.0);
         for x in 0..=grid_width {
             for y in 0..=grid_height {
                 let pos = self.grid.get_coord_from_grid(x, y);
                 let (draw_x, draw_y) = self.get_scaled_pos(pos.x, pos.y);
-                draw_text(&format!("{},{}", x, y), draw_x, draw_y, font_size, WHITE);
+
+                // Draw black circle for blocked nodes
+                if self.grid.blocked_nodes.contains(&(x, y)) {
+                    let circle_radius = 5.0 * scale;
+                    draw_circle(draw_x, draw_y, circle_radius, BLACK);
+                }
+
+                let color = if self.grid.is_node_walkable((x, y)) {
+                    WHITE
+                } else {
+                    RED
+                };
+                draw_text(
+                    &format!("{},{}", x, y),
+                    draw_x + x_offset,
+                    draw_y + y_offset,
+                    font_size,
+                    color,
+                );
             }
         }
     }
