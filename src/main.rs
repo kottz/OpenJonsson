@@ -861,63 +861,6 @@ impl Game {
         })
     }
 
-    fn find_scene_transition(&self, game_pos: Vec2) -> Option<&SceneTransition> {
-        self.get_current_scene().and_then(|current_scene| {
-            current_scene.scene_transitions.iter().find(|transition| {
-                game_pos.x >= transition.x
-                    && game_pos.x <= transition.x + transition.width
-                    && game_pos.y >= transition.y
-                    && game_pos.y <= transition.y + transition.height
-            })
-        })
-    }
-
-    fn find_spawn_point(&self, previous_scene_id: u32) -> Option<Vec2> {
-        self.get_current_scene().and_then(|current_scene| {
-            current_scene
-                .scene_transitions
-                .iter()
-                .find_map(|transition| {
-                    if transition.target_scene == previous_scene_id {
-                        Some(Vec2::new(
-                            transition.x + transition.width / 2.0,
-                            transition.y + transition.height / 2.0,
-                        ))
-                    } else {
-                        None
-                    }
-                })
-        })
-    }
-
-    fn find_closest_unblocked_node(&self, start: (i32, i32)) -> (i32, i32) {
-        if self.grid.is_node_walkable(start) {
-            return start;
-        }
-
-        let mut queue = std::collections::VecDeque::new();
-        let mut visited = std::collections::HashSet::new();
-        queue.push_back(start);
-        visited.insert(start);
-
-        while let Some(current) = queue.pop_front() {
-            if self.grid.is_node_walkable(current) {
-                return current;
-            }
-
-            for &(dx, dy) in &[(0, 1), (1, 0), (0, -1), (-1, 0)] {
-                let next = (current.0 + dx, current.1 + dy);
-                if !visited.contains(&next) {
-                    visited.insert(next);
-                    queue.push_back(next);
-                }
-            }
-        }
-
-        // Fallback to start position if no walkable node is found (shouldn't happen in practice)
-        start
-    }
-
     fn generate_spawn_positions(&self, center: Vec2, count: usize) -> Vec<Vec2> {
         let mut positions = Vec::with_capacity(count);
         let spacing = 80.0;
@@ -1066,6 +1009,7 @@ impl Game {
             self.draw_error_message("Scene not found");
         }
 
+        self.draw_inventory();
         self.draw_debug();
         self.draw_ui();
     }
@@ -1139,7 +1083,10 @@ impl Game {
         if let Some(texture) = self.textures.get(&scene.background) {
             self.draw_background(texture);
 
+            self.draw_world_items();
+
             let scale = self.get_scale();
+
             for i in 0..self.characters.count {
                 // TODO: some overlays rely on the character's y position
                 let _character_y = self.characters.positions[i].y;
@@ -1305,29 +1252,6 @@ impl Game {
         draw_rectangle_lines(x, y, width, height, 2.0, RED);
     }
 
-    fn draw_target_scene_description(&self, transition: &SceneTransition) {
-        if let Some(target_scene) = self.get_scene(transition.target_scene) {
-            let (x, y) = self.get_scaled_pos(transition.x, transition.y);
-            let width = transition.width * self.get_scale();
-            let text = &target_scene.description;
-            let font_size = 15.0 * self.get_scale();
-            let text_dim = measure_text(text, None, font_size as u16, 1.0);
-
-            let text_x = x + (width - text_dim.width) / 2.0;
-            let text_y = y - text_dim.height - 5.0 * self.get_scale();
-
-            draw_rectangle(
-                text_x - 5.0 * self.get_scale(),
-                text_y - 5.0 * self.get_scale(),
-                text_dim.width + 10.0 * self.get_scale(),
-                text_dim.height + 10.0 * self.get_scale(),
-                Color::new(0.0, 0.0, 0.0, 0.5),
-            );
-
-            draw_text(text, text_x, text_y + text_dim.height, font_size, WHITE);
-        }
-    }
-
     fn draw_scene_description(&self, scene: &Scene) {
         let (desc_x, desc_y) = self.get_scaled_pos(20.0, 20.0);
         draw_text(
@@ -1442,6 +1366,11 @@ impl Game {
 
                 // Draw transition area
                 draw_rectangle_lines(x, y, width, height, 2.0, BLUE);
+                let text = format!(
+                    "#{}",
+                    transition.target_scene
+                );
+                draw_text(&text, x, y, 40.0 * self.get_scale(), WHITE);
             }
         }
     }
