@@ -1993,32 +1993,7 @@
         ]
       }
     ],
-    "menuItems": [
-      {
-        "name": "start",
-        "texture": "menu/start_button.png",
-        "position": [
-          100,
-          200
-        ],
-        "size": [
-          200,
-          50
-        ]
-      },
-      {
-        "name": "options",
-        "texture": "menu/options_button.png",
-        "position": [
-          100,
-          260
-        ],
-        "size": [
-          200,
-          50
-        ]
-      }
-    ]
+    "menuItems": []
   },
   "items": [
     {

@@ -1,3 +1,4 @@
+use crate::asset_manager::AssetManager;
 use crate::{ClickableArea, Game, OverlayAsset, Scene};
 use macroquad::prelude::*;
 
@@ -13,11 +14,6 @@ impl Renderer {
             window_size,
             game_rect,
         }
-    }
-
-    pub fn is_in_game_area(&self, game_pos: Vec2) -> bool {
-        self.game_rect
-            .contains(self.get_scaled_pos(game_pos.x, game_pos.y).into())
     }
 
     pub fn update_window_size(&mut self, window_size: Vec2) {
@@ -59,35 +55,40 @@ impl Renderer {
         )
     }
 
-    pub fn draw(&self, game: &Game) {
+    pub fn is_in_game_area(&self, game_pos: Vec2) -> bool {
+        self.game_rect
+            .contains(self.get_scaled_pos(game_pos.x, game_pos.y).into())
+    }
+
+    pub fn draw(&self, game: &Game, asset_manager: &AssetManager) {
         clear_background(BLACK);
 
         if let Some(current_scene) = game.get_current_scene() {
-            self.draw_scene(game, current_scene);
+            self.draw_scene(game, current_scene, asset_manager);
         } else {
             self.draw_error_message("Scene not found");
         }
 
-        self.draw_inventory(game);
+        self.draw_inventory(game, asset_manager);
         self.draw_debug(game);
-        self.draw_ui(game);
+        self.draw_ui(game, asset_manager);
     }
 
-    fn draw_scene(&self, game: &Game, scene: &Scene) {
-        if let Some(texture) = game.textures.get(&scene.background) {
-            self.draw_background(texture);
+    fn draw_scene(&self, game: &Game, scene: &Scene, asset_manager: &AssetManager) {
+        if let Some(texture) = asset_manager.get_texture(&scene.background) {
+            self.draw_background(&texture);
 
-            self.draw_world_items(game);
+            self.draw_world_items(game, asset_manager);
 
             let scale = self.get_scale();
 
             for i in 0..game.characters.count {
                 let is_active = game.active_character == Some(i);
-                self.draw_character(game, i, scale, is_active);
+                self.draw_character(game, i, scale, is_active, asset_manager);
             }
 
             for overlay in &scene.overlay_assets {
-                self.draw_overlay_asset(game, overlay);
+                self.draw_overlay_asset(overlay, asset_manager);
             }
 
             self.draw_scene_description(scene);
@@ -109,7 +110,14 @@ impl Renderer {
         );
     }
 
-    fn draw_character(&self, game: &Game, index: usize, scale: f32, is_active: bool) {
+    fn draw_character(
+        &self,
+        game: &Game,
+        index: usize,
+        scale: f32,
+        is_active: bool,
+        asset_manager: &AssetManager,
+    ) {
         let (x, y) = self.get_scaled_pos(
             game.characters.positions[index].x,
             game.characters.positions[index].y,
@@ -126,32 +134,27 @@ impl Renderer {
             "{}{}{}{}.png",
             game.characters.data[index].name, game.characters.directions[index] as u8, frame, cycle
         );
+        let texture_path = format!("berlin/Gubbar/{}", filename);
 
         let x_offset = 0.0;
         let y_offset = 0.0;
 
-        match game.character_textures.get(&filename) {
-            Some(texture) => {
-                let xt = texture.width() / 2.0 * scale;
-                let yt = texture.height() / 2.0 * scale;
-                draw_texture_ex(
-                    texture,
-                    x - xt + x_offset,
-                    y - yt + y_offset,
-                    WHITE,
-                    DrawTextureParams {
-                        dest_size: Some(Vec2::new(
-                            texture.width() * scale,
-                            texture.height() * scale,
-                        )),
-                        ..Default::default()
-                    },
-                );
-            }
-            None => {
-                println!("Texture not found for filename: {}", filename);
-                draw_rectangle(x, y, 50.0 * scale, 50.0 * scale, RED);
-            }
+        if let Some(texture) = asset_manager.get_texture(&texture_path) {
+            let xt = texture.width() / 2.0 * scale;
+            let yt = texture.height() / 2.0 * scale;
+            draw_texture_ex(
+                &texture,
+                x - xt + x_offset,
+                y - yt + y_offset,
+                WHITE,
+                DrawTextureParams {
+                    dest_size: Some(Vec2::new(texture.width() * scale, texture.height() * scale)),
+                    ..Default::default()
+                },
+            );
+        } else {
+            println!("Texture not found for filename: {}", filename);
+            draw_rectangle(x, y, 50.0 * scale, 50.0 * scale, RED);
         }
 
         if is_active {
@@ -165,13 +168,13 @@ impl Renderer {
         }
     }
 
-    fn draw_overlay_asset(&self, game: &Game, overlay: &OverlayAsset) {
-        if let Some(texture) = game.textures.get(&overlay.texture_path) {
+    fn draw_overlay_asset(&self, overlay: &OverlayAsset, asset_manager: &AssetManager) {
+        if let Some(texture) = asset_manager.get_texture(&overlay.texture_path) {
             let (ox, oy) = (overlay.x * 3.0, overlay.y * 3.0);
             let (x, y) = self.get_scaled_pos(ox, oy);
             let scale = self.get_scale();
             draw_texture_ex(
-                texture,
+                &texture,
                 x,
                 y,
                 WHITE,
@@ -185,7 +188,7 @@ impl Renderer {
         }
     }
 
-    fn draw_world_items(&self, game: &Game) {
+    fn draw_world_items(&self, game: &Game, asset_manager: &AssetManager) {
         let current_scene_items = &game.world_items[game.current_scene as usize];
         let mouse_pos = Vec2::from(mouse_position());
         let game_pos = self.get_game_coordinates(mouse_pos);
@@ -202,11 +205,11 @@ impl Renderer {
                 &item.textures.in_world
             };
 
-            if let Some(texture) = game.textures.get(texture_path) {
+            if let Some(texture) = asset_manager.get_texture(texture_path) {
                 let (x, y) = self.get_scaled_pos(item_instance.x, item_instance.y);
                 let scale = self.get_scale();
                 draw_texture_ex(
-                    texture,
+                    &texture,
                     x,
                     y,
                     WHITE,
@@ -222,7 +225,7 @@ impl Renderer {
         }
     }
 
-    fn draw_inventory(&self, game: &Game) {
+    fn draw_inventory(&self, game: &Game, asset_manager: &AssetManager) {
         let inventory_start_x = 20.0;
         let inventory_start_y = self.game_rect.h - 100.0;
         let item_size = 60.0;
@@ -230,12 +233,12 @@ impl Renderer {
 
         for (index, item_id) in game.inventory.iter().enumerate() {
             if let Some(item) = game.items.iter().find(|i| i.id == *item_id) {
-                if let Some(texture) = game.textures.get(&item.textures.in_inventory) {
+                if let Some(texture) = asset_manager.get_texture(&item.textures.in_inventory) {
                     let x = inventory_start_x + (item_size + item_spacing) * index as f32;
                     let (draw_x, draw_y) = self.get_scaled_pos(x, inventory_start_y);
                     let scale = self.get_scale();
                     draw_texture_ex(
-                        texture,
+                        &texture,
                         draw_x,
                         draw_y,
                         WHITE,
@@ -283,13 +286,13 @@ impl Renderer {
         draw_text(message, text_x, text_y, 30.0 * self.get_scale(), RED);
     }
 
-    fn draw_ui(&self, game: &Game) {
+    fn draw_ui(&self, game: &Game, asset_manager: &AssetManager) {
         for menu_item in &game.ui.menu_items {
-            if let Some(texture) = game.menu_item_textures.get(&menu_item.name) {
+            if let Some(texture) = asset_manager.get_texture(&menu_item.texture) {
                 let (x, y) = self.get_scaled_pos(menu_item.position[0], menu_item.position[1]);
                 let scale = self.get_scale();
                 draw_texture_ex(
-                    texture,
+                    &texture,
                     x,
                     y,
                     WHITE,
@@ -304,7 +307,15 @@ impl Renderer {
             }
         }
 
-        if let Some(cursor_texture) = game.cursor_textures.get(&game.current_cursor) {
+        if let Some(cursor_texture) = asset_manager.get_texture(
+            &game
+                .ui
+                .cursors
+                .iter()
+                .find(|c| c.cursor_type == game.current_cursor)
+                .map(|c| &c.texture)
+                .unwrap_or(&String::new()),
+        ) {
             let cursor_pos = mouse_position();
             if let Some(cursor) = game
                 .ui
@@ -314,7 +325,7 @@ impl Renderer {
             {
                 let scale = self.get_scale();
                 draw_texture_ex(
-                    cursor_texture,
+                    &cursor_texture,
                     cursor_pos.0 - (cursor.hotspot[0] as f32 * scale),
                     cursor_pos.1 - (cursor.hotspot[1] as f32 * scale),
                     WHITE,
@@ -418,6 +429,7 @@ impl Renderer {
                 let pos = game.grid.get_coord_from_grid(x, y);
                 let (draw_x, draw_y) = self.get_scaled_pos(pos.x, pos.y);
 
+                // Draw black circle for blocked nodes
                 if game.grid.blocked_nodes.contains(&(x, y)) {
                     let circle_radius = 5.0 * scale;
                     draw_circle(draw_x, draw_y, circle_radius, BLACK);

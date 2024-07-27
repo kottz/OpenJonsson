@@ -1,5 +1,7 @@
+mod asset_manager;
 mod renderer;
 
+use asset_manager::AssetManager;
 use macroquad::prelude::*;
 use renderer::Renderer;
 use serde::Deserialize;
@@ -267,10 +269,6 @@ struct Game {
     characters: Characters,
     levels: Vec<Level>,
     scenes: Scenes,
-    textures: HashMap<String, Texture2D>,
-    character_textures: HashMap<String, Texture2D>,
-    cursor_textures: HashMap<CursorType, Texture2D>,
-    menu_item_textures: HashMap<String, Texture2D>,
     current_level: u32,
     current_scene: u32,
     window_size: Vec2,
@@ -278,13 +276,13 @@ struct Game {
     grid: Grid,
     current_cursor: CursorType,
     ui: UI,
-    loading_textures: HashSet<String>,
     debug_tools: DebugTools,
     debug_instant_move: bool,
     items: Vec<Item>,
     inventory: Vec<u32>,
     world_items: Vec<Vec<ItemInstance>>,
     renderer: Renderer,
+    asset_manager: AssetManager,
 }
 
 struct DebugTools {
@@ -390,15 +388,12 @@ impl Game {
 
         let window_size = Vec2::new(screen_width(), screen_height());
         let renderer = Renderer::new(window_size);
+        let asset_manager = AssetManager::new();
 
         let mut game = Game {
             characters,
             levels: game_data.levels,
             scenes,
-            textures: HashMap::new(),
-            character_textures: HashMap::new(),
-            cursor_textures: HashMap::new(),
-            menu_item_textures: HashMap::new(),
             current_level: 0,
             current_scene: 0,
             window_size,
@@ -406,13 +401,13 @@ impl Game {
             grid: Grid::new(),
             current_cursor: CursorType::Normal,
             ui: game_data.ui,
-            loading_textures: HashSet::new(),
             debug_tools: DebugTools::new(),
             debug_instant_move: false,
             items: game_data.items,
             inventory: Vec::new(),
             world_items: Vec::new(),
             renderer,
+            asset_manager,
         };
 
         game.load_level_scenes(game.current_level);
@@ -438,36 +433,7 @@ impl Game {
                 }
             }
         }
-        self.load_textures(textures_to_load).await;
-    }
-
-    async fn load_textures(&mut self, textures: Vec<String>) {
-        for texture_path in textures {
-            if let Err(e) = self.load_texture(&texture_path).await {
-                eprintln!("{}", e);
-            }
-        }
-    }
-
-    async fn load_texture(&mut self, texture_path: &str) -> Result<(), String> {
-        if self.textures.contains_key(texture_path) || self.loading_textures.contains(texture_path)
-        {
-            return Ok(());
-        }
-
-        self.loading_textures.insert(texture_path.to_string());
-        let full_path = format!("static/resources/{}", texture_path);
-        match load_texture(&full_path).await {
-            Ok(texture) => {
-                self.textures.insert(texture_path.to_string(), texture);
-                self.loading_textures.remove(texture_path);
-                Ok(())
-            }
-            Err(e) => {
-                self.loading_textures.remove(texture_path);
-                Err(format!("Failed to load texture {}: {}", texture_path, e))
-            }
-        }
+        self.asset_manager.load_textures(&textures_to_load).await;
     }
 
     async fn load_characters(&mut self) {
@@ -478,11 +444,9 @@ impl Game {
                     for state in [0, 7] {
                         let filename =
                             format!("{}{}{}{}.png", character_data.name, dir, frame, state);
-                        if let Ok(texture) =
-                            load_texture(&format!("static/resources/berlin/Gubbar/{}", filename))
-                                .await
-                        {
-                            self.character_textures.insert(filename, texture);
+                        let path = format!("berlin/Gubbar/{}", filename);
+                        if let Err(e) = self.asset_manager.load_texture(&path).await {
+                            eprintln!("{}", e);
                         }
                     }
                 }
@@ -491,25 +455,25 @@ impl Game {
     }
 
     async fn load_debug_textures(&mut self) {
-        if let Ok(texture) = load_texture("static/resources/berlin/Internal/-13.png").await {
-            self.textures.insert("debug_grid".to_string(), texture);
+        if let Err(e) = self
+            .asset_manager
+            .load_texture("berlin/Internal/-13.png")
+            .await
+        {
+            eprintln!("{}", e);
         }
     }
 
     async fn load_ui_textures(&mut self) {
         for cursor in &self.ui.cursors {
-            if let Ok(texture) = load_texture(&format!("static/resources/{}", cursor.texture)).await
-            {
-                self.cursor_textures.insert(cursor.cursor_type, texture);
+            if let Err(e) = self.asset_manager.load_texture(&cursor.texture).await {
+                eprintln!("{}", e);
             }
         }
 
         for menu_item in &self.ui.menu_items {
-            if let Ok(texture) =
-                load_texture(&format!("static/resources/{}", menu_item.texture)).await
-            {
-                self.menu_item_textures
-                    .insert(menu_item.name.clone(), texture);
+            if let Err(e) = self.asset_manager.load_texture(&menu_item.texture).await {
+                eprintln!("{}", e);
             }
         }
     }
@@ -523,7 +487,7 @@ impl Game {
             textures_to_load.push(item.textures.in_inventory.clone());
         }
 
-        self.load_textures(textures_to_load).await;
+        self.asset_manager.load_textures(&textures_to_load).await;
     }
 
     fn load_level_scenes(&mut self, level_id: u32) {
@@ -553,12 +517,6 @@ impl Game {
 
     fn get_game_coordinates(&self, mouse_pos: Vec2) -> Vec2 {
         self.renderer.get_game_coordinates(mouse_pos)
-    }
-
-    fn set_cursor(&mut self, cursor_type: CursorType) {
-        if self.cursor_textures.contains_key(&cursor_type) {
-            self.current_cursor = cursor_type;
-        }
     }
 
     fn determine_cursor(&self, game_pos: Vec2) -> CursorType {
@@ -961,7 +919,7 @@ impl Game {
         // Update cursor based on game position
         let new_cursor_type = self.determine_cursor(game_pos);
         if new_cursor_type != self.current_cursor {
-            self.set_cursor(new_cursor_type);
+            self.current_cursor = new_cursor_type;
         }
 
         let delta_time = get_frame_time();
@@ -1019,7 +977,7 @@ impl Game {
     }
 
     fn draw(&self) {
-        self.renderer.draw(self);
+        self.renderer.draw(self, &self.asset_manager);
     }
 
     fn is_mouse_over_item(&self, game_pos: Vec2, item: &ItemInstance) -> bool {
