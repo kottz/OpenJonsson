@@ -1,4 +1,5 @@
 use crate::asset_manager::AssetManager;
+use crate::config::character;
 use crate::{ClickableArea, Game, OverlayAsset, Scene};
 use macroquad::prelude::*;
 
@@ -118,6 +119,11 @@ impl Renderer {
         is_active: bool,
         asset_manager: &AssetManager,
     ) {
+        // In order for characters to line up on the grid
+        // we need to offset them up.
+        let x_offset = character::X_OFFSET * scale;
+        let y_offset = character::Y_OFFSET * scale;
+
         let (x, y) = self.get_scaled_pos(
             game.characters.positions[index].x,
             game.characters.positions[index].y,
@@ -136,16 +142,13 @@ impl Renderer {
         );
         let texture_path = format!("berlin/Gubbar/{}", filename);
 
-        let x_offset = 0.0;
-        let y_offset = 0.0;
-
         if let Some(texture) = asset_manager.get_texture(&texture_path) {
             let xt = texture.width() / 2.0 * scale;
             let yt = texture.height() / 2.0 * scale;
             draw_texture_ex(
                 &texture,
-                x - xt + x_offset,
-                y - yt + y_offset,
+                (x + x_offset) - xt,
+                (y + y_offset) - yt,
                 WHITE,
                 DrawTextureParams {
                     dest_size: Some(Vec2::new(texture.width() * scale, texture.height() * scale)),
@@ -154,14 +157,21 @@ impl Renderer {
             );
         } else {
             println!("Texture not found for filename: {}", filename);
-            draw_rectangle(x, y, 50.0 * scale, 50.0 * scale, RED);
+            let rect_size = 50.0 * scale;
+            draw_rectangle(
+                (x + x_offset) - rect_size / 2.0,
+                (y + y_offset) - rect_size / 2.0,
+                rect_size,
+                rect_size,
+                RED,
+            );
         }
 
         if is_active {
             let indicator_size = 10.0 * scale;
             draw_circle(
                 x + x_offset,
-                y - 60.0 * scale + y_offset,
+                y + y_offset - 40.0 * scale,
                 indicator_size,
                 GREEN,
             );

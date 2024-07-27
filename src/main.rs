@@ -1,6 +1,8 @@
 mod asset_manager;
+mod config;
 mod renderer;
 
+use crate::config::character;
 use asset_manager::AssetManager;
 use macroquad::prelude::*;
 use renderer::Renderer;
@@ -715,14 +717,12 @@ impl Game {
     }
 
     fn is_point_in_character(&self, point: Vec2, character_index: usize) -> bool {
-        let character_width = 55.0;
-        let character_height = 120.0;
         let character_pos = self.characters.positions[character_index];
 
-        point.x >= character_pos.x - character_width / 2.0
-            && point.x <= character_pos.x + character_width / 2.0
-            && point.y >= character_pos.y - character_height / 2.0
-            && point.y <= character_pos.y + character_height / 2.0
+        point.x >= character_pos.x + character::X_OFFSET - character::WIDTH / 2.0
+            && point.x <= character_pos.x + character::X_OFFSET + character::WIDTH / 2.0
+            && point.y >= character_pos.y + character::Y_OFFSET - character::HEIGHT / 2.0
+            && point.y <= character_pos.y + character::Y_OFFSET + character::HEIGHT / 2.0
     }
 
     fn is_active_character_in_transition_area(&self, transition: &SceneTransition) -> bool {
