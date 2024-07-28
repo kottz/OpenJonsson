@@ -91,8 +91,6 @@ impl Renderer {
             for overlay in &scene.overlay_assets {
                 self.draw_overlay_asset(overlay, asset_manager);
             }
-
-            self.draw_scene_description(scene);
         } else {
             self.draw_loading_message(&scene.background);
         }
@@ -361,6 +359,7 @@ impl Renderer {
     }
 
     fn draw_debug_info(&self, game: &Game) {
+        self.draw_scene_description(&game.scenes.data[game.current_scene as usize]);
         let (text_x, text_y) = self.get_scaled_pos(20.0, 60.0);
         draw_text(
             &format!("Characters: {}", game.characters.count),
