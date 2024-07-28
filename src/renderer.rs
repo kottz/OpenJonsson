@@ -371,17 +371,12 @@ impl Renderer {
         );
 
         if game.characters.count > 0 {
-            let (text_x, text_y) = self.get_scaled_pos(20.0, 90.0);
-            draw_text(
-                &format!(
-                    "Animation Speed: {:.2}",
-                    game.characters.animation_speeds[0]
-                ),
-                text_x,
-                text_y,
-                20.0 * self.get_scale(),
-                WHITE,
-            );
+            let pos = format!("Position: ({:.2}, {:.2})", game.characters.positions[0].x, game.characters.positions[0].y);
+            let anim_speed = format!("Animation Speed: {:.2}", game.characters.animation_speeds[0]);
+            for (i, text) in [pos, anim_speed].iter().enumerate() {
+                let (x, y) = self.get_scaled_pos(20.0, 90.0 + 30.0 * i as f32);
+                draw_text(text, x, y, 20.0 * self.get_scale(), WHITE);
+            }
         }
 
         if game.debug_tools.bounding_box_mode {

@@ -8,6 +8,7 @@ use macroquad::prelude::*;
 use renderer::Renderer;
 use serde::Deserialize;
 use std::cmp::Ordering;
+use std::collections::VecDeque;
 use std::collections::{BinaryHeap, HashMap, HashSet};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -567,7 +568,7 @@ impl Game {
             203..=247 => Direction::NorthWest,
             248..=292 => Direction::North,
             293..=337 => Direction::NorthEast,
-            _ => unreachable!(),
+            _ => Direction::South,
         }
     }
 
@@ -757,6 +758,9 @@ impl Game {
                 transition_area.x + transition_area.width / 2.0,
                 transition_area.y + transition_area.height / 2.0,
             );
+
+            self.grid.update_blocked_nodes(blocked_nodes);
+
             let spawn_positions =
                 self.generate_spawn_positions(spawn_position, self.characters.count);
 
@@ -768,9 +772,6 @@ impl Game {
                     self.characters.targets[i] = None;
                 }
             }
-
-            // Update blocked nodes
-            self.grid.update_blocked_nodes(blocked_nodes);
         }
 
         self.load_current_and_adjacent_scenes().await;
@@ -793,9 +794,12 @@ impl Game {
         let mut positions = Vec::with_capacity(count);
         let spacing = 80.0;
 
+        let spawn_positions = self.find_n_closest_walkable_grids(center, count).unwrap();
+
         for i in 0..count {
-            let x_offset = (i as f32 - (count - 1) as f32 / 2.0) * spacing;
-            let pos = Vec2::new(center.x + x_offset, center.y);
+            let pos = self
+                .grid
+                .get_coord_from_grid(spawn_positions[i].0, spawn_positions[i].1);
             positions.push(pos);
         }
 
@@ -839,6 +843,37 @@ impl Game {
                 self.stop_character(active_index);
             }
         }
+    }
+
+    fn find_n_closest_walkable_grids(&self, pixel_pos: Vec2, n: usize) -> Option<Vec<(i32, i32)>> {
+        let target_grid = self.grid.get_grid_from_coord(pixel_pos);
+        let mut walkable_grids = Vec::new();
+
+        let search_radius = 10;
+
+        for dx in -search_radius..=search_radius {
+            for dy in -search_radius..=search_radius {
+                let grid_pos = (target_grid.0 + dx, target_grid.1 + dy);
+
+                if self.grid.is_node_walkable(grid_pos) {
+                    let distance = (dx * dx + dy * dy) as f32;
+                    walkable_grids.push((grid_pos, distance));
+                }
+            }
+        }
+
+        if walkable_grids.is_empty() {
+            return None;
+        }
+
+        walkable_grids.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal));
+        Some(
+            walkable_grids
+                .into_iter()
+                .take(n)
+                .map(|(pos, _)| pos)
+                .collect(),
+        )
     }
 
     fn find_closest_walkable_node(
@@ -931,7 +966,8 @@ impl Game {
             if let Some(path) = &mut self.characters.paths[i] {
                 if !path.is_empty() {
                     let target = self.grid.get_coord_from_grid(path[0].0, path[0].1);
-                    let direction = (target - self.characters.positions[i]).normalize();
+                    let direction = (target - self.characters.positions[i]).normalize_or_zero();
+
                     let speed =
                         if is_key_down(KeyCode::LeftShift) || is_key_down(KeyCode::RightShift) {
                             self.characters.data[i].run_speed
@@ -939,9 +975,16 @@ impl Game {
                             self.characters.data[i].speed
                         };
 
-                    self.characters.positions[i] += direction * speed * delta_time;
-                    self.characters.directions[i] = Self::vec_to_direction(direction);
+                    let new_position =
+                        self.characters.positions[i] + direction * speed * delta_time;
+                    self.characters.positions[i] = new_position;
 
+                    // Update direction only if we're actually moving
+                    if direction != Vec2::ZERO {
+                        self.characters.directions[i] = Self::vec_to_direction(direction);
+                    }
+
+                    // Update animation
                     self.characters.animation_timers[i] += delta_time;
                     if self.characters.animation_timers[i] >= self.characters.animation_speeds[i] {
                         self.characters.animation_timers[i] -= self.characters.animation_speeds[i];
@@ -949,7 +992,8 @@ impl Game {
                             (self.characters.animation_indices[i] + 1) % 8;
                     }
 
-                    if (self.characters.positions[i] - target).length() < 5.0 {
+                    // Check if character has reached the current path node
+                    if (self.characters.positions[i] - target).length_squared() < 5.0 {
                         path.remove(0);
                         if path.is_empty() {
                             self.stop_character(i);
@@ -959,7 +1003,6 @@ impl Game {
                     self.stop_character(i);
                 }
             } else {
-                // Ensure the animation is reset even if there was no path
                 self.reset_character_animation(i);
             }
         }
