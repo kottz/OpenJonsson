@@ -1945,17 +1945,17 @@
     {
       "name": "sickan",
       "speed": 200.0,
-      "run_speed": 200.4
+      "run_speed": 400.0
     },
     {
       "name": "vanheden",
       "speed": 200.0,
-      "run_speed": 200.4
+      "run_speed": 400.0
     },
     {
       "name": "harry",
       "speed": 200.0,
-      "run_speed": 200.4
+      "run_speed": 400.0
     }
   ],
   "ui": {

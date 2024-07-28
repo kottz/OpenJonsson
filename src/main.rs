@@ -8,7 +8,6 @@ use macroquad::prelude::*;
 use renderer::Renderer;
 use serde::Deserialize;
 use std::cmp::Ordering;
-use std::collections::VecDeque;
 use std::collections::{BinaryHeap, HashMap, HashSet};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -171,6 +170,8 @@ struct Characters {
     paths: Vec<Option<Vec<(i32, i32)>>>,
     targets: Vec<Option<(i32, i32)>>,
     count: usize,
+    last_click_times: Vec<f64>,
+    is_running: Vec<bool>,
 }
 
 struct Scenes {
@@ -367,6 +368,8 @@ impl Game {
             animation_speeds: Vec::new(),
             paths: Vec::new(),
             targets: Vec::new(),
+            last_click_times: vec![0.0; game_data.characters.len()],
+            is_running: vec![false; game_data.characters.len()],
             count: 0,
         };
 
@@ -679,6 +682,14 @@ impl Game {
         self.inventory.contains(&item_id)
     }
 
+    fn is_double_click(&mut self, character_index: usize) -> bool {
+        let current_time = get_time();
+        let last_click_time = &mut self.characters.last_click_times[character_index];
+        let is_double = current_time - *last_click_time < 0.3; // 300ms threshold for double-click
+        *last_click_time = current_time;
+        is_double
+    }
+
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
         if !self.renderer.is_in_game_area(game_pos) {
             return;
@@ -707,7 +718,20 @@ impl Game {
         // Handle item clicks
         self.handle_item_click(game_pos);
 
-        // Handle pathfinding
+        // Handle double-clicks
+        if let Some(active_index) = self.active_character {
+            let is_running = self.is_double_click(active_index);
+            self.characters.is_running[active_index] = is_running;
+
+            let target_grid = self.grid.get_grid_from_coord(game_pos);
+
+            // Check if the clicked position is the same as the current target
+            if let Some(current_target) = self.characters.targets[active_index] {
+                if current_target == target_grid {
+                    return;
+                }
+            }
+        }
         self.handle_pathfinding(game_pos).await;
     }
 
@@ -792,7 +816,6 @@ impl Game {
 
     fn generate_spawn_positions(&self, center: Vec2, count: usize) -> Vec<Vec2> {
         let mut positions = Vec::with_capacity(count);
-        let spacing = 80.0;
 
         let spawn_positions = self.find_n_closest_walkable_grids(center, count).unwrap();
 
@@ -810,6 +833,15 @@ impl Game {
         if let Some(active_index) = self.active_character {
             let target_grid = self.grid.get_grid_from_coord(target_pos);
             let mut final_target = target_grid;
+
+            let grid_pos_player = self
+                .grid
+                .get_grid_from_coord(self.characters.positions[active_index]);
+
+            // Dont move if the player is already at the target
+            if grid_pos_player == target_grid {
+                return;
+            }
 
             // Check if the click is within a scene transition area
             if let Some(transition) = self.find_clicked_transition(target_pos) {
@@ -968,12 +1000,11 @@ impl Game {
                     let target = self.grid.get_coord_from_grid(path[0].0, path[0].1);
                     let direction = (target - self.characters.positions[i]).normalize_or_zero();
 
-                    let speed =
-                        if is_key_down(KeyCode::LeftShift) || is_key_down(KeyCode::RightShift) {
-                            self.characters.data[i].run_speed
-                        } else {
-                            self.characters.data[i].speed
-                        };
+                    let speed = if self.characters.is_running[i] {
+                        self.characters.data[i].run_speed
+                    } else {
+                        self.characters.data[i].speed
+                    };
 
                     let new_position =
                         self.characters.positions[i] + direction * speed * delta_time;
@@ -993,7 +1024,7 @@ impl Game {
                     }
 
                     // Check if character has reached the current path node
-                    if (self.characters.positions[i] - target).length_squared() < 5.0 {
+                    if (self.characters.positions[i] - target).length_squared() < 25.0 {
                         path.remove(0);
                         if path.is_empty() {
                             self.stop_character(i);
@@ -1011,6 +1042,7 @@ impl Game {
     fn stop_character(&mut self, index: usize) {
         self.characters.paths[index] = None;
         self.characters.targets[index] = None;
+        self.characters.is_running[index] = false;
         self.reset_character_animation(index);
     }
 
