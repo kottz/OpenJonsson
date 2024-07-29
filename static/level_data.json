@@ -94,10 +94,10 @@
               "targetScene": 2
             },
             {
-              "x": 1582,
-              "y": 350,
-              "width": 340,
-              "height": 256,
+              "x": 1443,
+              "y": 768,
+              "width": 194,
+              "height": 197,
               "targetScene": 10
             },
             {
@@ -251,7 +251,7 @@
               "x": 1182,
               "y": 334,
               "width": 224,
-              "height": 412,
+              "height": 432,
               "targetScene": 11
             }
           ],

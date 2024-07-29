@@ -718,19 +718,10 @@ impl Game {
         // Handle item clicks
         self.handle_item_click(game_pos);
 
-        // Handle double-clicks
+        // Handle double-clicks and pathfinding
         if let Some(active_index) = self.active_character {
             let is_running = self.is_double_click(active_index);
             self.characters.is_running[active_index] = is_running;
-
-            let target_grid = self.grid.get_grid_from_coord(game_pos);
-
-            // Check if the clicked position is the same as the current target
-            if let Some(current_target) = self.characters.targets[active_index] {
-                if current_target == target_grid {
-                    return;
-                }
-            }
         }
         self.handle_pathfinding(game_pos).await;
     }
@@ -753,10 +744,34 @@ impl Game {
     fn is_active_character_in_transition_area(&self, transition: &SceneTransition) -> bool {
         if let Some(active_index) = self.active_character {
             let character_pos = self.characters.positions[active_index];
-            character_pos.x >= transition.x
+            let in_area = character_pos.x >= transition.x
                 && character_pos.x <= transition.x + transition.width
                 && character_pos.y >= transition.y
-                && character_pos.y <= transition.y + transition.height
+                && character_pos.y <= transition.y + transition.height;
+
+            if in_area {
+                return true;
+            }
+
+            // Check if the character is at the closest possible position
+            self.is_character_at_closest_position(active_index, transition)
+        } else {
+            false
+        }
+    }
+
+    fn is_character_at_closest_position(
+        &self,
+        character_index: usize,
+        transition: &SceneTransition,
+    ) -> bool {
+        let character_grid_pos = self
+            .grid
+            .get_grid_from_coord(self.characters.positions[character_index]);
+        let closest_node = self.find_closest_walkable_node(character_grid_pos, transition);
+
+        if let Some(closest_node) = closest_node {
+            character_grid_pos == closest_node
         } else {
             false
         }
@@ -838,11 +853,6 @@ impl Game {
                 .grid
                 .get_grid_from_coord(self.characters.positions[active_index]);
 
-            // Dont move if the player is already at the target
-            if grid_pos_player == target_grid {
-                return;
-            }
-
             // Check if the click is within a scene transition area
             if let Some(transition) = self.find_clicked_transition(target_pos) {
                 if !self.grid.is_node_walkable(target_grid) {
@@ -860,6 +870,18 @@ impl Game {
             } else if !self.grid.is_node_walkable(target_grid) {
                 // If not in a transition area and not walkable, don't move
                 self.stop_character(active_index);
+                return;
+            }
+
+            // Check if the clicked position is the same as the current target
+            if let Some(current_target) = self.characters.targets[active_index] {
+                if current_target == final_target {
+                    return;
+                }
+            }
+
+            // Don't move if the player is already at the target
+            if grid_pos_player == final_target {
                 return;
             }
 
