@@ -452,7 +452,7 @@ impl Game {
                     for state in [0, 7] {
                         let filename =
                             format!("{}{}{}{}.png", character_data.name, dir, frame, state);
-                        let path = format!("berlin/Gubbar/{}", filename);
+                        let path = format!("Huvudmeny/Gubbar/{}", filename);
                         if let Err(e) = self.asset_manager.load_texture(&path).await {
                             eprintln!("{}", e);
                         }
@@ -465,7 +465,7 @@ impl Game {
     async fn load_debug_textures(&mut self) {
         if let Err(e) = self
             .asset_manager
-            .load_texture("berlin/Internal/-13.png")
+            .load_texture("berlin/Internal/13.png")
             .await
         {
             eprintln!("{}", e);

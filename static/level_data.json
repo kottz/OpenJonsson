@@ -7,7 +7,7 @@
         {
           "id": 0,
           "description": "Attic",
-          "background": "stockholm/Internal/GHV/B GHV-210.png",
+          "background": "stockholm/Internal/B GHV-210.png",
           "sceneTransitions": [
             {
               "x": 295,
@@ -19,7 +19,7 @@
           ],
           "overlay_assets": [
             {
-              "texture_path": "stockholm/Internal/GHV/213.png",
+              "texture_path": "stockholm/Internal/213.png",
               "x": 132,
               "y": 0,
               "z_value": 3
@@ -38,7 +38,7 @@
         {
           "id": 1,
           "description": "Outside the house",
-          "background": "stockholm/Internal/GHU/B GHU-191.png",
+          "background": "stockholm/Internal/B GHU-191.png",
           "sceneTransitions": [
             {
               "x": 790,
@@ -61,7 +61,7 @@
         {
           "id": 2,
           "description": "At the car",
-          "background": "stockholm/Internal/Bilscen/B Bilscen-229.png",
+          "background": "stockholm/Internal/B Bilscen-229.png",
           "sceneTransitions": [
             {
               "x": 0,
@@ -84,7 +84,7 @@
         {
           "id": 3,
           "description": "Amundsen's house - Front",
-          "background": "stockholm/Internal/AFF/B AFF-286.png",
+          "background": "stockholm/Internal/B AFF-286.png",
           "sceneTransitions": [
             {
               "x": 1582,
@@ -114,7 +114,7 @@
         {
           "id": 4,
           "description": "Amundsen's house - Back",
-          "background": "stockholm/Internal/AFB/B AFB-305.png",
+          "background": "stockholm/Internal/B AFB-305.png",
           "sceneTransitions": [
             {
               "x": 1105,
@@ -137,7 +137,7 @@
         {
           "id": 5,
           "description": "Amundsen's house - Downstairs",
-          "background": "stockholm/Internal/AFN/B AFN-324.png",
+          "background": "stockholm/Internal/B AFN-324.png",
           "sceneTransitions": [
             {
               "x": 287,
@@ -160,7 +160,7 @@
         {
           "id": 6,
           "description": "Amundsen's house - Upstairs - First hallway",
-          "background": "stockholm/Internal/AFUE/B AFUE-343.png",
+          "background": "stockholm/Internal/B AFUE-343.png",
           "sceneTransitions": [
             {
               "x": 1016,
@@ -190,7 +190,7 @@
         {
           "id": 7,
           "description": "Amundsen's house - Upstairs - Second hallway",
-          "background": "stockholm/Internal/AFU/B AFU-382.png",
+          "background": "stockholm/Internal/B AFU-382.png",
           "sceneTransitions": [
             {
               "x": 672,
@@ -213,7 +213,7 @@
         {
           "id": 8,
           "description": "Amundsen's house - Upstairs -  Amundsen's office",
-          "background": "stockholm/Internal/AFK/B AFK-400.png",
+          "background": "stockholm/Internal/B AFK-400.png",
           "sceneTransitions": [
             {
               "x": 1353,
@@ -229,7 +229,7 @@
         {
           "id": 9,
           "description": "Amundsen's house - Upstairs -  2nd office",
-          "background": "stockholm/Internal/AFKE/B AFKE-362.png",
+          "background": "stockholm/Internal/B AFKE-362.png",
           "sceneTransitions": [
             {
               "x": 1338,
@@ -245,7 +245,7 @@
         {
           "id": 10,
           "description": "Wall-Enberg street outside office",
-          "background": "stockholm/Internal/WEG/B WEG-609.png",
+          "background": "stockholm/Internal/B WEG-609.png",
           "sceneTransitions": [
             {
               "x": 1182,
@@ -261,7 +261,7 @@
         {
           "id": 11,
           "description": "Wall-Enberg office secretary",
-          "background": "stockholm/Internal/Whall/B Whall-438.png",
+          "background": "stockholm/Internal/B Whall-438.png",
           "sceneTransitions": [
             {
               "x": 344,
@@ -284,7 +284,7 @@
         {
           "id": 12,
           "description": "Wall-Enberg office",
-          "background": "stockholm/Internal/WEK/B WEK-454.png",
+          "background": "stockholm/Internal/B WEK-454.png",
           "sceneTransitions": [
             {
               "x": 0,
@@ -436,7 +436,7 @@
         {
           "id": 0,
           "description": "Start street corner",
-          "background": "london/Internal/B LHG2-176.png",
+          "background": "london/Internal/B LHG-158.png",
           "sceneTransitions": [
             {
               "x": 445,
@@ -1962,7 +1962,7 @@
     "cursors": [
       {
         "cursor_type": "normal",
-        "texture": "anslagstavla/inventory/norm-578_fix.png",
+        "texture": "Huvudmeny/inventory/norm-578_fix.png",
         "hotspot": [
           10,
           10
@@ -1970,7 +1970,7 @@
       },
       {
         "cursor_type": "move",
-        "texture": "anslagstavla/inventory/out-588_fix.png",
+        "texture": "Huvudmeny/inventory/out-588_fix.png",
         "hotspot": [
           15,
           15
@@ -1978,7 +1978,7 @@
       },
       {
         "cursor_type": "take",
-        "texture": "anslagstavla/inventory/take-580_fix.png",
+        "texture": "Huvudmeny/inventory/take-580_fix.png",
         "hotspot": [
           5,
           5
@@ -1986,7 +1986,7 @@
       },
       {
         "cursor_type": "talk",
-        "texture": "anslagstavla/inventory/talk-584_fix.png",
+        "texture": "Huvudmeny/inventory/talk-584_fix.png",
         "hotspot": [
           5,
           5
@@ -2000,50 +2000,50 @@
       "id": 0,
       "name": "Dynamit 1",
       "textures": {
-        "in_world": "stockholm/Internal/GHV/Dynamit1Boxen-31.png",
-        "mouse_over": "stockholm/Internal/GHV/Dynamit1BoxenR-32.png",
-        "in_inventory": "anslagstavla/inventory/Dynamit1Inven-9.png",
-        "in_inventory_text": "anslagstavla/inventory/Dynamit1InvenR-404.png"
+        "in_world": "Huvudmeny/inventory/Dynamit1Boxen-31.png",
+        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR-32.png",
+        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven-9.png",
+        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR-404.png"
       }
     },
     {
       "id": 1,
       "name": "Dynamit 2",
       "textures": {
-        "in_world": "stockholm/Internal/GHV/Dynamit1Boxen-31.png",
-        "mouse_over": "stockholm/Internal/GHV/Dynamit1BoxenR-32.png",
-        "in_inventory": "anslagstavla/inventory/Dynamit1Inven-9.png",
-        "in_inventory_text": "anslagstavla/inventory/Dynamit1InvenR-404.png"
+        "in_world": "Huvudmeny/inventory/Dynamit1Boxen-31.png",
+        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR-32.png",
+        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven-9.png",
+        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR-404.png"
       }
     },
     {
       "id": 2,
       "name": "Dynamit 3",
       "textures": {
-        "in_world": "stockholm/Internal/GHV/Dynamit1Boxen-31.png",
-        "mouse_over": "stockholm/Internal/GHV/Dynamit1BoxenR-32.png",
-        "in_inventory": "anslagstavla/inventory/Dynamit1Inven-9.png",
-        "in_inventory_text": "anslagstavla/inventory/Dynamit1InvenR-404.png"
+        "in_world": "Huvudmeny/inventory/Dynamit1Boxen-31.png",
+        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR-32.png",
+        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven-9.png",
+        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR-404.png"
       }
     },
     {
       "id": 3,
       "name": "Dynamit 4",
       "textures": {
-        "in_world": "stockholm/Internal/GHV/Dynamit1Boxen-31.png",
-        "mouse_over": "stockholm/Internal/GHV/Dynamit1BoxenR-32.png",
-        "in_inventory": "anslagstavla/inventory/Dynamit1Inven-9.png",
-        "in_inventory_text": "anslagstavla/inventory/Dynamit1InvenR-404.png"
+        "in_world": "Huvudmeny/inventory/Dynamit1Boxen-31.png",
+        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR-32.png",
+        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven-9.png",
+        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR-404.png"
       }
     },
     {
       "id": 4,
       "name": "Dynamit 5",
       "textures": {
-        "in_world": "stockholm/Internal/GHV/Dynamit1Boxen-31.png",
-        "mouse_over": "stockholm/Internal/GHV/Dynamit1BoxenR-32.png",
-        "in_inventory": "anslagstavla/inventory/Dynamit1Inven-9.png",
-        "in_inventory_text": "anslagstavla/inventory/Dynamit1InvenR-404.png"
+        "in_world": "Huvudmeny/inventory/Dynamit1Boxen-31.png",
+        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR-32.png",
+        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven-9.png",
+        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR-404.png"
       }
     }
   ]

@@ -138,7 +138,7 @@ impl Renderer {
             "{}{}{}{}.png",
             game.characters.data[index].name, game.characters.directions[index] as u8, frame, cycle
         );
-        let texture_path = format!("berlin/Gubbar/{}", filename);
+        let texture_path = format!("Huvudmeny/Gubbar/{}", filename);
 
         if let Some(texture) = asset_manager.get_texture(&texture_path) {
             let xt = texture.width() / 2.0 * scale;
