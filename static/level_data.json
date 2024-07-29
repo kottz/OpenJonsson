@@ -439,10 +439,10 @@
           "background": "london/Internal/B LHG2-176.png",
           "sceneTransitions": [
             {
-              "x": 465,
+              "x": 445,
               "y": 314,
-              "width": 112,
-              "height": 274,
+              "width": 132,
+              "height": 284,
               "targetScene": 1
             },
             {
@@ -495,7 +495,7 @@
               "x": 224,
               "y": 555,
               "width": 125,
-              "height": 222,
+              "height": 240,
               "targetScene": 1
             }
           ],
@@ -604,7 +604,7 @@
               "y": 1030,
               "width": 262,
               "height": 407,
-              "targetScene": 3
+              "targetScene": 6 
             },
             {
               "x": 40,
@@ -718,7 +718,7 @@
               "x": 806,
               "y": 388,
               "width": 124,
-              "height": 218,
+              "height": 273,
               "targetScene": 13
             }
           ],
@@ -734,7 +734,7 @@
               "x": 1060,
               "y": 439,
               "width": 103,
-              "height": 266,
+              "height": 265,
               "targetScene": 12
             }
           ],
