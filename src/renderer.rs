@@ -354,7 +354,23 @@ impl Renderer {
             if game.debug_tools.draw_grid {
                 self.draw_debug_grid(game);
             }
+            if game.debug_level_switch_mode {
+                self.draw_level_list(game);
+            }
             self.draw_debug_info(game);
+        }
+    }
+
+    fn draw_level_list(&self, game: &Game) {
+        let (text_x, text_y) = self.get_scaled_pos(20.0, 200.0);
+        let font_size = 35.0 * self.get_scale();
+        let line_height = font_size * 0.8;
+        let mut y = text_y;
+
+        for (i, level) in game.levels.iter().enumerate() {
+            let text = format!("{} - {}", i, level.name);
+            draw_text(&text, text_x, y, font_size, WHITE);
+            y += line_height;
         }
     }
 

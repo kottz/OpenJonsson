@@ -282,6 +282,7 @@ struct Game {
     ui: UI,
     debug_tools: DebugTools,
     debug_instant_move: bool,
+    debug_level_switch_mode: bool,
     items: Vec<Item>,
     inventory: Vec<u32>,
     world_items: Vec<Vec<ItemInstance>>,
@@ -409,6 +410,7 @@ impl Game {
             ui: game_data.ui,
             debug_tools: DebugTools::new(),
             debug_instant_move: false,
+            debug_level_switch_mode: false,
             items: game_data.items,
             inventory: Vec::new(),
             world_items: Vec::new(),
@@ -975,10 +977,10 @@ impl Game {
             self.handle_right_click(game_pos);
         }
 
-        if is_key_pressed(KeyCode::G) {
+        if is_key_pressed(KeyCode::D) {
             self.debug_tools.active = !self.debug_tools.active;
         }
-        if is_key_pressed(KeyCode::J) {
+        if is_key_pressed(KeyCode::G) {
             if self.debug_tools.active {
                 self.debug_tools.draw_grid = !self.debug_tools.draw_grid;
             }
@@ -1005,6 +1007,33 @@ impl Game {
             }
         }
 
+        if self.debug_tools.active {
+            if is_key_pressed(KeyCode::L) {
+                self.debug_level_switch_mode = !self.debug_level_switch_mode;
+            }
+
+            if self.debug_level_switch_mode {
+                for i in 0..10 {
+                    // Support up to 10 levels (0-9)
+                    if is_key_pressed(match i {
+                        0 => KeyCode::Key0,
+                        1 => KeyCode::Key1,
+                        2 => KeyCode::Key2,
+                        3 => KeyCode::Key3,
+                        4 => KeyCode::Key4,
+                        5 => KeyCode::Key5,
+                        6 => KeyCode::Key6,
+                        7 => KeyCode::Key7,
+                        8 => KeyCode::Key8,
+                        9 => KeyCode::Key9,
+                        _ => continue,
+                    }) {
+                        self.switch_to_level(i as u32).await;
+                        break;
+                    }
+                }
+            }
+        }
         // Update cursor based on game position
         let new_cursor_type = self.determine_cursor(game_pos);
         if new_cursor_type != self.current_cursor {
@@ -1015,6 +1044,34 @@ impl Game {
         self.update_characters(delta_time);
     }
 
+    async fn switch_to_level(&mut self, level_index: u32) {
+        if level_index < self.levels.len() as u32 {
+            self.current_level = level_index;
+            self.load_level_scenes(self.current_level);
+            self.current_scene = 0; // Reset to the first scene of the new level
+            self.load_current_and_adjacent_scenes().await;
+
+            // Reset character positions (you might want to adjust this based on your game's logic)
+            let spawn_position = Vec2::new(1000.0, 800.0); // Default spawn position
+            let spawn_positions =
+                self.generate_spawn_positions(spawn_position, self.characters.count);
+            for (i, pos) in spawn_positions.into_iter().enumerate() {
+                if i < self.characters.count {
+                    self.characters.positions[i] = pos;
+                    self.characters.directions[i] = Direction::South;
+                    self.characters.paths[i] = None;
+                    self.characters.targets[i] = None;
+                }
+            }
+
+            println!(
+                "Switched to level: {}",
+                self.levels[level_index as usize].name
+            );
+        } else {
+            println!("Invalid level index: {}", level_index);
+        }
+    }
     fn update_characters(&mut self, delta_time: f32) {
         for i in 0..self.characters.count {
             if let Some(path) = &mut self.characters.paths[i] {
