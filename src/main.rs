@@ -128,6 +128,27 @@ pub struct ItemInstance {
     pub height: f32,
 }
 
+#[derive(Clone, Debug)]
+pub struct InventoryData {
+    pub open: bool,
+    pub animation_frame: usize,
+    pub animation_timer: f32,
+    pub button_rect: Rect,
+    pub items: Vec<u32>,
+}
+
+impl InventoryData {
+    pub fn new() -> Self {
+        InventoryData {
+            open: false,
+            animation_frame: 0,
+            animation_timer: 0.0,
+            button_rect: Rect::new(1800.0, 1340.0, 100.0, 100.0), // Adjust these values as needed
+            items: Vec::new(),
+        }
+    }
+}
+
 #[derive(Deserialize, Debug, Clone)]
 pub struct Cursor {
     pub cursor_type: CursorType,
@@ -284,10 +305,10 @@ struct Game {
     debug_instant_move: bool,
     debug_level_switch_mode: bool,
     items: Vec<Item>,
-    inventory: Vec<u32>,
     world_items: Vec<Vec<ItemInstance>>,
     renderer: Renderer,
     asset_manager: AssetManager,
+    inventory: InventoryData,
 }
 
 struct DebugTools {
@@ -412,10 +433,10 @@ impl Game {
             debug_instant_move: false,
             debug_level_switch_mode: false,
             items: game_data.items,
-            inventory: Vec::new(),
             world_items: Vec::new(),
             renderer,
             asset_manager,
+            inventory: InventoryData::new(),
         };
 
         game.load_level_scenes(game.current_level);
@@ -423,6 +444,7 @@ impl Game {
         game.load_characters().await;
         game.load_debug_textures().await;
         game.load_ui_textures().await;
+        game.load_inventory_textures().await;
         game.load_item_textures().await;
 
         Ok(game)
@@ -496,6 +518,16 @@ impl Game {
         }
 
         self.asset_manager.load_textures(&textures_to_load).await;
+    }
+
+    async fn load_inventory_textures(&mut self) {
+        for i in 1..=13 {
+            let path = format!("Huvudmeny/inventory/väska{}.png", i);
+            if let Err(e) = self.asset_manager.load_texture(&path).await {
+                eprintln!("{}", e);
+            
+            }
+        }
     }
 
     fn load_level_scenes(&mut self, level_id: u32) {
@@ -676,14 +708,34 @@ impl Game {
                 && game_pos.y <= item.y + item.height
         }) {
             let item = current_scene_items.remove(index);
-            self.inventory.push(item.item_id);
+            self.inventory.items.push(item.item_id);
         }
     }
 
     fn is_item_in_inventory(&self, item_id: u32) -> bool {
-        self.inventory.contains(&item_id)
+        self.inventory.items.contains(&item_id)
     }
 
+    fn update_inventory_animation(&mut self, delta_time: f32) {
+        const ANIMATION_SPEED: f32 = 0.1; // Adjust this value to change animation speed
+        const TOTAL_FRAMES: usize = 13;
+
+        self.inventory.animation_timer += delta_time;
+
+        if self.inventory.animation_timer >= ANIMATION_SPEED {
+            self.inventory.animation_timer -= ANIMATION_SPEED;
+
+            if self.inventory.open {
+                if self.inventory.animation_frame < TOTAL_FRAMES - 1 {
+                    self.inventory.animation_frame += 1;
+                }
+            } else {
+                if self.inventory.animation_frame > 0 {
+                    self.inventory.animation_frame -= 1;
+                }
+            }
+        }
+    }
     fn is_double_click(&mut self, character_index: usize) -> bool {
         let current_time = get_time();
         let last_click_time = &mut self.characters.last_click_times[character_index];
@@ -694,6 +746,19 @@ impl Game {
 
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
         if !self.renderer.is_in_game_area(game_pos) {
+            return;
+        }
+
+        // Check if the inventory button was clicked
+        if self.inventory.button_rect.contains(game_pos) {
+            self.inventory.open = !self.inventory.open;
+            return;
+        }
+
+        // Close the inventory if clicked outside and it's open
+        if self.inventory.open && game_pos.y < 1340.0 {
+            // Adjust this value based on your inventory height
+            self.inventory.open = false;
             return;
         }
 
@@ -1042,6 +1107,7 @@ impl Game {
 
         let delta_time = get_frame_time();
         self.update_characters(delta_time);
+        self.update_inventory_animation(delta_time);
     }
 
     async fn switch_to_level(&mut self, level_index: u32) {

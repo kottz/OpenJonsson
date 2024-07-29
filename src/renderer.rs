@@ -234,27 +234,72 @@ impl Renderer {
     }
 
     fn draw_inventory(&self, game: &Game, asset_manager: &AssetManager) {
-        let inventory_start_x = 20.0;
-        let inventory_start_y = self.game_rect.h - 100.0;
-        let item_size = 60.0;
-        let item_spacing = 10.0;
+        // Draw the inventory button/background
+        let button_texture_path = format!(
+            "Huvudmeny/inventory/väska{}.png",
+            game.inventory.animation_frame + 1
+        );
+        if let Some(texture) = asset_manager.get_texture(&button_texture_path) {
+            let scale = self.get_scale();
 
-        for (index, item_id) in game.inventory.iter().enumerate() {
-            if let Some(item) = game.items.iter().find(|i| i.id == *item_id) {
-                if let Some(texture) = asset_manager.get_texture(&item.textures.in_inventory) {
-                    let x = inventory_start_x + (item_size + item_spacing) * index as f32;
-                    let (draw_x, draw_y) = self.get_scaled_pos(x, inventory_start_y);
-                    let scale = self.get_scale();
-                    draw_texture_ex(
-                        &texture,
-                        draw_x,
-                        draw_y,
-                        WHITE,
-                        DrawTextureParams {
-                            dest_size: Some(Vec2::new(item_size * scale, item_size * scale)),
-                            ..Default::default()
-                        },
-                    );
+            // Calculate the scaled dimensions
+            let scaled_width = texture.width() * scale;
+            let scaled_height = texture.height() * scale;
+
+            // Calculate the position in game coordinates (1920x1440)
+            let game_x = 1920.0 - texture.width();
+            let game_y = 1440.0 - texture.height();
+
+            // Convert game coordinates to screen coordinates
+            let (screen_x, screen_y) = self.get_scaled_pos(game_x, game_y);
+
+            draw_texture_ex(
+                &texture,
+                screen_x,
+                screen_y,
+                WHITE,
+                DrawTextureParams {
+                    dest_size: Some(Vec2::new(scaled_width, scaled_height)),
+                    ..Default::default()
+                },
+            );
+        } else {
+            println!(
+                "Inventory button texture not found: {}",
+                button_texture_path
+            );
+        }
+
+        // Draw the inventory items if the inventory is open
+        if game.inventory.open {
+            let inventory_start_x = 20.0; // Left margin in game coordinates
+            let inventory_start_y = 1260.0; // Adjust this value as needed, in game coordinates
+            let item_spacing = 10.0;
+
+            for (index, &item_id) in game.inventory.items.iter().enumerate() {
+                if let Some(item) = game.items.iter().find(|i| i.id == item_id) {
+                    if let Some(texture) = asset_manager.get_texture(&item.textures.in_inventory) {
+                        let scale = self.get_scale();
+                        let item_width = texture.width();
+                        let item_height = texture.height();
+
+                        // Calculate x position in game coordinates, moving from left to right
+                        let game_x = inventory_start_x + (item_width + item_spacing) * index as f32;
+                        let (screen_x, screen_y) = self.get_scaled_pos(game_x, inventory_start_y);
+
+                        draw_texture_ex(
+                            &texture,
+                            screen_x,
+                            screen_y,
+                            WHITE,
+                            DrawTextureParams {
+                                dest_size: Some(Vec2::new(item_width * scale, item_height * scale)),
+                                ..Default::default()
+                            },
+                        );
+                    } else {
+                        println!("Inventory item texture not found for item ID: {}", item_id);
+                    }
                 }
             }
         }
