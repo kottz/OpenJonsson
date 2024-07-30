@@ -234,7 +234,6 @@ impl Renderer {
     }
 
     fn draw_inventory(&self, game: &Game, asset_manager: &AssetManager) {
-        // Draw the inventory button/background
         let button_texture_path = format!(
             "Huvudmeny/inventory/väska{}.png",
             game.inventory.animation_frame + 1
@@ -242,15 +241,12 @@ impl Renderer {
         if let Some(texture) = asset_manager.get_texture(&button_texture_path) {
             let scale = self.get_scale();
 
-            // Calculate the scaled dimensions
             let scaled_width = texture.width() * scale;
             let scaled_height = texture.height() * scale;
 
-            // Calculate the position in game coordinates (1920x1440)
             let game_x = 1920.0 - texture.width();
             let game_y = 1440.0 - texture.height();
 
-            // Convert game coordinates to screen coordinates
             let (screen_x, screen_y) = self.get_scaled_pos(game_x, game_y);
 
             draw_texture_ex(
@@ -263,45 +259,63 @@ impl Renderer {
                     ..Default::default()
                 },
             );
+
+            if game.inventory.animation_frame > 0 {
+                let inventory_start_x = game_x + 60.0; // Left margin
+                let inventory_start_y = 1250.0; // top margin
+                let item_spacing = 13.0;
+
+                // Calculate the width of the visible part of the inventory
+                let visible_width =
+                    (game.inventory.animation_frame as f32 / 12.0) * texture.width();
+
+                for (index, &item_id) in game.inventory.items.iter().enumerate() {
+                    if let Some(item) = game.items.iter().find(|i| i.id == item_id) {
+                        if let Some(item_texture) =
+                            asset_manager.get_texture(&item.textures.in_inventory)
+                        {
+                            let item_width = item_texture.width();
+                            let item_height = item_texture.height();
+
+                            let item_x =
+                                inventory_start_x + (item_width + item_spacing) * index as f32;
+
+                            let item_visible_width =
+                                (visible_width - (item_x - game_x)).max(0.0).min(item_width);
+
+                            if item_visible_width > 0.0 {
+                                let (screen_x, screen_y) =
+                                    self.get_scaled_pos(item_x, inventory_start_y);
+
+                                let source_rect =
+                                    Rect::new(0.0, 0.0, item_visible_width, item_height);
+
+                                draw_texture_ex(
+                                    &item_texture,
+                                    screen_x,
+                                    screen_y,
+                                    WHITE,
+                                    DrawTextureParams {
+                                        dest_size: Some(Vec2::new(
+                                            item_visible_width * scale,
+                                            item_height * scale,
+                                        )),
+                                        source: Some(source_rect),
+                                        ..Default::default()
+                                    },
+                                );
+                            }
+                        } else {
+                            println!("Inventory item texture not found for item ID: {}", item_id);
+                        }
+                    }
+                }
+            }
         } else {
             println!(
                 "Inventory button texture not found: {}",
                 button_texture_path
             );
-        }
-
-        // Draw the inventory items if the inventory is open
-        if game.inventory.open {
-            let inventory_start_x = 20.0; // Left margin in game coordinates
-            let inventory_start_y = 1260.0; // Adjust this value as needed, in game coordinates
-            let item_spacing = 10.0;
-
-            for (index, &item_id) in game.inventory.items.iter().enumerate() {
-                if let Some(item) = game.items.iter().find(|i| i.id == item_id) {
-                    if let Some(texture) = asset_manager.get_texture(&item.textures.in_inventory) {
-                        let scale = self.get_scale();
-                        let item_width = texture.width();
-                        let item_height = texture.height();
-
-                        // Calculate x position in game coordinates, moving from left to right
-                        let game_x = inventory_start_x + (item_width + item_spacing) * index as f32;
-                        let (screen_x, screen_y) = self.get_scaled_pos(game_x, inventory_start_y);
-
-                        draw_texture_ex(
-                            &texture,
-                            screen_x,
-                            screen_y,
-                            WHITE,
-                            DrawTextureParams {
-                                dest_size: Some(Vec2::new(item_width * scale, item_height * scale)),
-                                ..Default::default()
-                            },
-                        );
-                    } else {
-                        println!("Inventory item texture not found for item ID: {}", item_id);
-                    }
-                }
-            }
         }
     }
 

@@ -525,7 +525,6 @@ impl Game {
             let path = format!("Huvudmeny/inventory/väska{}.png", i);
             if let Err(e) = self.asset_manager.load_texture(&path).await {
                 eprintln!("{}", e);
-            
             }
         }
     }
@@ -536,8 +535,25 @@ impl Game {
                 data: level.scenes.clone(),
                 count: level.scenes.len(),
             };
-            self.world_items = level.scenes.iter().map(|s| s.items.clone()).collect();
-            self.current_scene = 0; // Reset to the first scene of the new level
+            //self.world_items = level.scenes.iter().map(|s| s.items.clone()).collect();
+            self.world_items = level
+                .scenes
+                .iter()
+                .map(|s| {
+                    s.items
+                        .iter()
+                        .map(|item| {
+                            let mut new_item = item.clone();
+                            new_item.x *= 3.0;
+                            new_item.y *= 3.0;
+                            //new_item.width *= 3.0;
+                            //new_item.height *= 3.0;
+                            new_item
+                        })
+                        .collect::<Vec<ItemInstance>>()
+                })
+                .collect();
+            //self.current_scene = 0; // Reset to the first scene of the new level
 
             // Update blocked nodes in the grid
             if let Some(current_scene) = self.get_current_scene() {
@@ -717,7 +733,7 @@ impl Game {
     }
 
     fn update_inventory_animation(&mut self, delta_time: f32) {
-        const ANIMATION_SPEED: f32 = 0.1; // Adjust this value to change animation speed
+        const ANIMATION_SPEED: f32 = 0.03;
         const TOTAL_FRAMES: usize = 13;
 
         self.inventory.animation_timer += delta_time;
