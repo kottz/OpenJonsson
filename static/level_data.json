@@ -23,15 +23,49 @@
               "x": 132,
               "y": 0,
               "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/vind_förgrund-211.png",
+              "x": 0,
+              "y": 0,
+              "z_value": 3
             }
           ],
           "items": [
             {
+              "item_id": 0,
+              "x": 73,
+              "y": 217,
+              "width": 111,
+              "height": 99
+            },
+            {
               "item_id": 1,
-              "x": 100,
-              "y": 200,
-              "width": 50,
-              "height": 50
+              "x": 262,
+              "y": 137,
+              "width": 108,
+              "height": 87
+            },
+            {
+              "item_id": 2,
+              "x": 479,
+              "y": 183,
+              "width": 90,
+              "height": 90
+            },
+            {
+              "item_id": 3,
+              "x": 357,
+              "y": 412,
+              "width": 99,
+              "height": 84
+            },
+            {
+              "item_id": 4,
+              "x": 10,
+              "y": 204,
+              "width": 117,
+              "height": 81
             }
           ]
         },
@@ -55,7 +89,32 @@
               "targetScene": 2
             }
           ],
-          "overlay_assets": [],
+          "overlay_assets": [
+            {
+              "texture_path": "stockholm/Internal/Mattpisk-194.png",
+              "x": 164,
+              "y": 368,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/Parasoll-195.png",
+              "x": 0,
+              "y": 50,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/Träd-198.png",
+              "x": 451,
+              "y": 75,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/Förgrund-197.png",
+              "x": 0,
+              "y": 0,
+              "z_value": 3
+            }
+          ],
           "items": []
         },
         {
@@ -78,7 +137,20 @@
               "targetScene": 3
             }
           ],
-          "overlay_assets": [],
+          "overlay_assets": [
+            {
+              "texture_path": "stockholm/Internal/fg-232.png",
+              "x": 0,
+              "y": 0,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/huset-233.png",
+              "x": 199,
+              "y": 0,
+              "z_value": 0
+            }
+          ],
           "items": []
         },
         {
@@ -108,7 +180,20 @@
               "targetScene": 4
             }
           ],
-          "overlay_assets": [],
+          "overlay_assets": [
+            {
+              "texture_path": "stockholm/Internal/anusengträd-312.png",
+              "x": 266,
+              "y": 0,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/314.png",
+              "x": 334,
+              "y": 372,
+              "z_value": 3
+            }
+          ],
           "items": []
         },
         {
@@ -131,7 +216,44 @@
               "targetScene": 5
             }
           ],
-          "overlay_assets": [],
+          "overlay_assets": [
+            {
+              "texture_path": "stockholm/Internal/anusensbakgträd-313.png",
+              "x": 356,
+              "y": 0,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/310.png",
+              "x": 2,
+              "y": 418,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/AnusenBackDörr0-306.png",
+              "x": 249,
+              "y": 277,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/AnusenBackDörr1-307.png",
+              "x": 249,
+              "y": 277,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/AnusenBackDörr2-308.png",
+              "x": 248,
+              "y": 294,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/AnusenBackDörr3-309.png",
+              "x": 231,
+              "y": 292,
+              "z_value": 3
+            }
+          ],
           "items": []
         },
         {
@@ -154,7 +276,32 @@
               "targetScene": 6
             }
           ],
-          "overlay_assets": [],
+          "overlay_assets": [
+            {
+              "texture_path": "stockholm/Internal/336.png",
+              "x": 56,
+              "y": 117,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/trappan-326.png",
+              "x": 99,
+              "y": 98,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/327.png",
+              "x": 35,
+              "y": 67,
+              "z_value": 3
+            },
+            {
+              "texture_path": "stockholm/Internal/328.png",
+              "x": 173,
+              "y": 28,
+              "z_value": 3
+            }
+          ],
           "items": []
         },
         {
@@ -2000,50 +2147,50 @@
       "id": 0,
       "name": "Dynamit 1",
       "textures": {
-        "in_world": "Huvudmeny/inventory/Dynamit1Boxen-31.png",
-        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR-32.png",
-        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven-9.png",
-        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR-404.png"
+        "in_world": "Huvudmeny/inventory/Dynamit1Boxen.png",
+        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR.png",
+        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven.png",
+        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR.png"
       }
     },
     {
       "id": 1,
       "name": "Dynamit 2",
       "textures": {
-        "in_world": "Huvudmeny/inventory/Dynamit1Boxen-31.png",
-        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR-32.png",
-        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven-9.png",
-        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR-404.png"
+        "in_world": "Huvudmeny/inventory/Dynamit2Boxen.png",
+        "mouse_over": "Huvudmeny/inventory/Dynamit2BoxenR.png",
+        "in_inventory": "Huvudmeny/inventory/Dynamit2Inven.png",
+        "in_inventory_text": "Huvudmeny/inventory/Dynamit2InvenR.png"
       }
     },
     {
       "id": 2,
       "name": "Dynamit 3",
       "textures": {
-        "in_world": "Huvudmeny/inventory/Dynamit1Boxen-31.png",
-        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR-32.png",
-        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven-9.png",
-        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR-404.png"
+        "in_world": "Huvudmeny/inventory/Dynamit3Boxen.png",
+        "mouse_over": "Huvudmeny/inventory/Dynamit3BoxenR.png",
+        "in_inventory": "Huvudmeny/inventory/Dynamit3Inven.png",
+        "in_inventory_text": "Huvudmeny/inventory/Dynamit3InvenR.png"
       }
     },
     {
       "id": 3,
       "name": "Dynamit 4",
       "textures": {
-        "in_world": "Huvudmeny/inventory/Dynamit1Boxen-31.png",
-        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR-32.png",
-        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven-9.png",
-        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR-404.png"
+        "in_world": "Huvudmeny/inventory/Dynamit4Boxen.png",
+        "mouse_over": "Huvudmeny/inventory/Dynamit4BoxenR.png",
+        "in_inventory": "Huvudmeny/inventory/Dynamit4Inven.png",
+        "in_inventory_text": "Huvudmeny/inventory/Dynamit4InvenR.png"
       }
     },
     {
       "id": 4,
       "name": "Dynamit 5",
       "textures": {
-        "in_world": "Huvudmeny/inventory/Dynamit1Boxen-31.png",
-        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR-32.png",
-        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven-9.png",
-        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR-404.png"
+        "in_world": "Huvudmeny/inventory/Dynamit5Boxen.png",
+        "mouse_over": "Huvudmeny/inventory/Dynamit5BoxenR.png",
+        "in_inventory": "Huvudmeny/inventory/Dynamit5Inven.png",
+        "in_inventory_text": "Huvudmeny/inventory/Dynamit5InvenR.png"
       }
     }
   ]
