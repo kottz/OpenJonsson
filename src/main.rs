@@ -579,11 +579,7 @@ impl Game {
         // Check for items first
         let current_scene_items = &self.world_items[self.current_scene as usize];
         for item in current_scene_items {
-            if game_pos.x >= item.x
-                && game_pos.x <= item.x + item.width
-                && game_pos.y >= item.y
-                && game_pos.y <= item.y + item.height
-            {
+            if self.is_mouse_over_item(game_pos, item) {
                 return CursorType::Take;
             }
         }
