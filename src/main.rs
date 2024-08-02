@@ -3,6 +3,7 @@ mod config;
 mod renderer;
 
 use crate::config::character;
+use crate::config::inventory;
 use asset_manager::AssetManager;
 use macroquad::prelude::*;
 use renderer::Renderer;
@@ -135,6 +136,8 @@ pub struct InventoryData {
     pub animation_timer: f32,
     pub button_rect: Rect,
     pub items: Vec<u32>,
+    pub slots: [Option<u32>; inventory::SLOT_COUNT],
+    pub hovered_slot: Option<usize>,
 }
 
 impl InventoryData {
@@ -145,6 +148,8 @@ impl InventoryData {
             animation_timer: 0.0,
             button_rect: Rect::new(1800.0, 1340.0, 100.0, 100.0), // Adjust these values as needed
             items: Vec::new(),
+            slots: [None; inventory::SLOT_COUNT],
+            hovered_slot: None,
         }
     }
 }
@@ -720,7 +725,12 @@ impl Game {
                 && game_pos.y <= item.y + item.height
         }) {
             let item = current_scene_items.remove(index);
-            self.inventory.items.push(item.item_id);
+            if let Some(empty_slot) = self.inventory.slots.iter_mut().find(|slot| slot.is_none()) {
+                *empty_slot = Some(item.item_id);
+            } else {
+                // Inventory is full, handle this case (e.g., display a message)
+                println!("Inventory is full!");
+            }
         }
     }
 
@@ -748,6 +758,28 @@ impl Game {
             }
         }
     }
+
+    fn update_inventory(&mut self, mouse_pos: Vec2) {
+        if self.inventory.open {
+            self.inventory.hovered_slot = None;
+            for i in 0..inventory::SLOT_COUNT {
+                let slot_x = inventory::START_X
+                    + (inventory::SLOT_SIZE + inventory::SLOT_SPACING) * i as f32;
+                let slot_rect = Rect::new(
+                    slot_x,
+                    inventory::START_Y,
+                    inventory::SLOT_SIZE,
+                    inventory::SLOT_SIZE,
+                );
+
+                if slot_rect.contains(mouse_pos) {
+                    self.inventory.hovered_slot = Some(i);
+                    break;
+                }
+            }
+        }
+    }
+
     fn is_double_click(&mut self, character_index: usize) -> bool {
         let current_time = get_time();
         let last_click_time = &mut self.characters.last_click_times[character_index];
@@ -1120,6 +1152,7 @@ impl Game {
         let delta_time = get_frame_time();
         self.update_characters(delta_time);
         self.update_inventory_animation(delta_time);
+        self.update_inventory(game_pos);
     }
 
     async fn switch_to_level(&mut self, level_index: u32) {

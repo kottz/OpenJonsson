@@ -1,5 +1,5 @@
 use crate::asset_manager::AssetManager;
-use crate::config::character;
+use crate::config::{character, inventory};
 use crate::{ClickableArea, Game, OverlayAsset, Scene};
 use macroquad::prelude::*;
 
@@ -249,6 +249,9 @@ impl Renderer {
 
             let (screen_x, screen_y) = self.get_scaled_pos(game_x, game_y);
 
+            let animation_progress = game.inventory.animation_frame as f32 / 12.0;
+
+            // Draw the background texture
             draw_texture_ex(
                 &texture,
                 screen_x,
@@ -260,53 +263,85 @@ impl Renderer {
                 },
             );
 
-            if game.inventory.animation_frame > 0 {
-                let inventory_start_x = game_x + 60.0; // Left margin
-                let inventory_start_y = 1250.0; // top margin
-                let item_spacing = 13.0;
+            if game.inventory.animation_frame > 6 {
+                let visible_width = animation_progress * texture.width();
+                let slots_start_x = game_x + inventory::START_X;
 
-                // Calculate the width of the visible part of the inventory
-                let visible_width =
-                    (game.inventory.animation_frame as f32 / 12.0) * texture.width();
+                for (i, slot) in game.inventory.slots.iter().enumerate() {
+                    let slot_x =
+                        slots_start_x + (inventory::SLOT_SIZE + inventory::SLOT_SPACING) * i as f32;
+                    let slot_y = game_y + (texture.height() - inventory::SLOT_SIZE) / 2.0;
+                    let (screen_x, screen_y) = self.get_scaled_pos(slot_x, slot_y);
+                    let scaled_slot_size = inventory::SLOT_SIZE * scale;
 
-                for (index, &item_id) in game.inventory.items.iter().enumerate() {
-                    if let Some(item) = game.items.iter().find(|i| i.id == item_id) {
-                        if let Some(item_texture) =
-                            asset_manager.get_texture(&item.textures.in_inventory)
-                        {
-                            let item_width = item_texture.width();
-                            let item_height = item_texture.height();
+                    let slot_visible_width = (visible_width - (slot_x - game_x))
+                        .max(0.0)
+                        .min(inventory::SLOT_SIZE);
 
-                            let item_x =
-                                inventory_start_x + (item_width + item_spacing) * index as f32;
-
-                            let item_visible_width =
-                                (visible_width - (item_x - game_x)).max(0.0).min(item_width);
-
-                            if item_visible_width > 0.0 {
-                                let (screen_x, screen_y) =
-                                    self.get_scaled_pos(item_x, inventory_start_y);
-
-                                let source_rect =
-                                    Rect::new(0.0, 0.0, item_visible_width, item_height);
-
-                                draw_texture_ex(
-                                    &item_texture,
-                                    screen_x,
-                                    screen_y,
-                                    WHITE,
-                                    DrawTextureParams {
-                                        dest_size: Some(Vec2::new(
-                                            item_visible_width * scale,
-                                            item_height * scale,
-                                        )),
-                                        source: Some(source_rect),
-                                        ..Default::default()
-                                    },
-                                );
-                            }
+                    if slot_visible_width > 0.0 {
+                        let slot_color = if Some(i) == game.inventory.hovered_slot {
+                            BLUE
                         } else {
-                            println!("Inventory item texture not found for item ID: {}", item_id);
+                            GREEN
+                        };
+
+                        draw_rectangle_lines(
+                            screen_x,
+                            screen_y,
+                            scaled_slot_size * (slot_visible_width / inventory::SLOT_SIZE),
+                            scaled_slot_size,
+                            2.0,
+                            slot_color,
+                        );
+
+                        // Draw item in slot if it exists
+                        if let Some(item_id) = slot {
+                            if let Some(item) = game.items.iter().find(|i| i.id == *item_id) {
+                                if let Some(item_texture) =
+                                    asset_manager.get_texture(&item.textures.in_inventory)
+                                {
+                                    let item_width = item_texture.width().min(inventory::SLOT_SIZE);
+                                    let item_height =
+                                        item_texture.height().min(inventory::SLOT_SIZE);
+                                    let item_scale = (inventory::SLOT_SIZE / item_width)
+                                        .min(inventory::SLOT_SIZE / item_height);
+
+                                    let scaled_item_width = item_width * item_scale * scale;
+                                    let scaled_item_height = item_height * item_scale * scale;
+
+                                    let item_x =
+                                        screen_x + (scaled_slot_size - scaled_item_width) / 2.0;
+                                    let item_y =
+                                        screen_y + (scaled_slot_size - scaled_item_height) / 2.0;
+
+                                    let visible_item_width = (slot_visible_width
+                                        / inventory::SLOT_SIZE
+                                        * scaled_item_width)
+                                        .min(scaled_item_width);
+
+                                    let source_rect = Rect::new(
+                                        0.0,
+                                        0.0,
+                                        visible_item_width / (item_scale * scale),
+                                        item_height,
+                                    );
+
+                                    draw_texture_ex(
+                                        item_texture,
+                                        item_x,
+                                        item_y,
+                                        WHITE,
+                                        DrawTextureParams {
+                                            dest_size: Some(Vec2::new(
+                                                visible_item_width,
+                                                scaled_item_height,
+                                            )),
+                                            source: Some(source_rect),
+                                            ..Default::default()
+                                        },
+                                    );
+                                }
+                            }
                         }
                     }
                 }
