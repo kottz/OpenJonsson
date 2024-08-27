@@ -267,7 +267,14 @@ impl Renderer {
                 let visible_width = animation_progress * texture.width();
                 let slots_start_x = game_x + inventory::START_X;
 
-                for (i, slot) in game.inventory.slots.iter().enumerate() {
+                for i in 0..inventory::SLOT_COUNT {
+                    let item_index = i + game.inventory.scroll_offset;
+                    let slot = if item_index < inventory::INVENTORY_SIZE {
+                        game.inventory.items[item_index]
+                    } else {
+                        None
+                    };
+
                     let slot_x =
                         slots_start_x + (inventory::SLOT_SIZE + inventory::SLOT_SPACING) * i as f32;
                     let slot_y = game_y + (texture.height() - inventory::SLOT_SIZE) / 2.0;
@@ -296,7 +303,7 @@ impl Renderer {
 
                         // Draw item in slot if it exists
                         if let Some(item_id) = slot {
-                            if let Some(item) = game.items.iter().find(|i| i.id == *item_id) {
+                            if let Some(item) = game.items.iter().find(|i| i.id == item_id) {
                                 if let Some(item_texture) =
                                     asset_manager.get_texture(&item.textures.in_inventory)
                                 {

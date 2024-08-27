@@ -135,10 +135,9 @@ pub struct InventoryData {
     pub animation_frame: usize,
     pub animation_timer: f32,
     pub button_rect: Rect,
-    pub items: Vec<u32>,
-    pub slots: [Option<u32>; inventory::SLOT_COUNT],
-    pub hovered_slot: Option<usize>,
+    pub items: Vec<Option<u32>>,
     pub scroll_offset: usize,
+    pub hovered_slot: Option<usize>,
     pub left_arrow_rect: Rect,
     pub right_arrow_rect: Rect,
     pub hovered_left_arrow: bool,
@@ -158,10 +157,9 @@ impl InventoryData {
             animation_frame: 0,
             animation_timer: 0.0,
             button_rect: Rect::new(1800.0, 1340.0, 100.0, 100.0),
-            items: Vec::new(),
-            slots: [None; inventory::SLOT_COUNT],
-            hovered_slot: None,
+            items: vec![None; inventory::INVENTORY_SIZE],
             scroll_offset: 0,
+            hovered_slot: None,
             left_arrow_rect: Rect::new(
                 left_arrow_x,
                 inventory::START_Y + inventory::ARROW_OFFSET_Y,
@@ -754,25 +752,32 @@ impl Game {
     }
 
     fn handle_item_click(&mut self, game_pos: Vec2) {
-        let current_scene_items = &mut self.world_items[self.current_scene as usize];
-        if let Some(index) = current_scene_items.iter().position(|item| {
-            game_pos.x >= item.x
-                && game_pos.x <= item.x + item.width
-                && game_pos.y >= item.y
-                && game_pos.y <= item.y + item.height
-        }) {
-            let item = current_scene_items.remove(index);
-            if let Some(empty_slot) = self.inventory.slots.iter_mut().find(|slot| slot.is_none()) {
-                *empty_slot = Some(item.item_id);
+        let current_scene = self.current_scene as usize;
+        let item_to_add = self.world_items[current_scene]
+            .iter()
+            .position(|item| {
+                game_pos.x >= item.x
+                    && game_pos.x <= item.x + item.width
+                    && game_pos.y >= item.y
+                    && game_pos.y <= item.y + item.height
+            })
+            .map(|index| self.world_items[current_scene][index].item_id);
+
+        if let Some(item_id) = item_to_add {
+            if self.add_item_to_inventory(item_id) {
+                println!("Item added to inventory");
+                self.world_items[current_scene].retain(|item| item.item_id != item_id);
             } else {
-                // Inventory is full, handle this case (e.g., display a message)
                 println!("Inventory is full!");
             }
         }
     }
 
     fn is_item_in_inventory(&self, item_id: u32) -> bool {
-        self.inventory.items.contains(&item_id)
+        self.inventory
+            .items
+            .iter()
+            .any(|&item| item == Some(item_id))
     }
 
     fn update_inventory_animation(&mut self, delta_time: f32) {
@@ -836,14 +841,31 @@ impl Game {
     }
 
     fn scroll_inventory(&mut self, direction: i32) {
-        let max_scroll = self
+        let items_count = self
             .inventory
             .items
-            .len()
-            .saturating_sub(inventory::SLOT_COUNT);
-        self.inventory.scroll_offset = (self.inventory.scroll_offset as i32 + direction)
+            .iter()
+            .filter(|&item| item.is_some())
+            .count();
+        let max_scroll = items_count.saturating_sub(inventory::SLOT_COUNT);
+
+        let new_scroll_offset = (self.inventory.scroll_offset as i32 + direction)
             .max(0)
             .min(max_scroll as i32) as usize;
+
+        // Only update if the scroll actually changed
+        if new_scroll_offset != self.inventory.scroll_offset {
+            self.inventory.scroll_offset = new_scroll_offset;
+        }
+    }
+
+    fn add_item_to_inventory(&mut self, item_id: u32) -> bool {
+        if let Some(empty_slot) = self.inventory.items.iter_mut().find(|slot| slot.is_none()) {
+            *empty_slot = Some(item_id);
+            true
+        } else {
+            false // Inventory is full
+        }
     }
 
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
