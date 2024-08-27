@@ -138,18 +138,44 @@ pub struct InventoryData {
     pub items: Vec<u32>,
     pub slots: [Option<u32>; inventory::SLOT_COUNT],
     pub hovered_slot: Option<usize>,
+    pub scroll_offset: usize,
+    pub left_arrow_rect: Rect,
+    pub right_arrow_rect: Rect,
+    pub hovered_left_arrow: bool,
+    pub hovered_right_arrow: bool,
 }
 
 impl InventoryData {
     pub fn new() -> Self {
+        let inventory_width = inventory::SLOT_SIZE * inventory::SLOT_COUNT as f32
+            + inventory::SLOT_SPACING * (inventory::SLOT_COUNT - 1) as f32;
+
+        let left_arrow_x = inventory::START_X + inventory::LEFT_ARROW_OFFSET_X;
+        let right_arrow_x = inventory::START_X + inventory_width + inventory::RIGHT_ARROW_OFFSET_X;
+
         InventoryData {
             open: false,
             animation_frame: 0,
             animation_timer: 0.0,
-            button_rect: Rect::new(1800.0, 1340.0, 100.0, 100.0), // Adjust these values as needed
+            button_rect: Rect::new(1800.0, 1340.0, 100.0, 100.0),
             items: Vec::new(),
             slots: [None; inventory::SLOT_COUNT],
             hovered_slot: None,
+            scroll_offset: 0,
+            left_arrow_rect: Rect::new(
+                left_arrow_x,
+                inventory::START_Y + inventory::ARROW_OFFSET_Y,
+                inventory::ARROW_SIZE,
+                inventory::ARROW_SIZE,
+            ),
+            right_arrow_rect: Rect::new(
+                right_arrow_x,
+                inventory::START_Y + inventory::ARROW_OFFSET_Y,
+                inventory::ARROW_SIZE,
+                inventory::ARROW_SIZE,
+            ),
+            hovered_left_arrow: false,
+            hovered_right_arrow: false,
         }
     }
 }
@@ -532,6 +558,17 @@ impl Game {
                 eprintln!("{}", e);
             }
         }
+
+        // Load arrow textures
+        let arrow_paths = [
+            "Huvudmeny/inventory/pilv-271.png",
+            "Huvudmeny/inventory/pilh-272.png",
+        ];
+        for path in arrow_paths.iter() {
+            if let Err(e) = self.asset_manager.load_texture(path).await {
+                eprintln!("{}", e);
+            }
+        }
     }
 
     fn load_level_scenes(&mut self, level_id: u32) {
@@ -762,6 +799,9 @@ impl Game {
     fn update_inventory(&mut self, mouse_pos: Vec2) {
         if self.inventory.open {
             self.inventory.hovered_slot = None;
+            self.inventory.hovered_left_arrow = false;
+            self.inventory.hovered_right_arrow = false;
+
             for i in 0..inventory::SLOT_COUNT {
                 let slot_x = inventory::START_X
                     + (inventory::SLOT_SIZE + inventory::SLOT_SPACING) * i as f32;
@@ -777,6 +817,13 @@ impl Game {
                     break;
                 }
             }
+
+            // Check for arrow hovering
+            if self.inventory.left_arrow_rect.contains(mouse_pos) {
+                self.inventory.hovered_left_arrow = true;
+            } else if self.inventory.right_arrow_rect.contains(mouse_pos) {
+                self.inventory.hovered_right_arrow = true;
+            }
         }
     }
 
@@ -788,22 +835,55 @@ impl Game {
         is_double
     }
 
+    fn scroll_inventory(&mut self, direction: i32) {
+        let max_scroll = self
+            .inventory
+            .items
+            .len()
+            .saturating_sub(inventory::SLOT_COUNT);
+        self.inventory.scroll_offset = (self.inventory.scroll_offset as i32 + direction)
+            .max(0)
+            .min(max_scroll as i32) as usize;
+    }
+
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
         if !self.renderer.is_in_game_area(game_pos) {
             return;
         }
 
-        // Check if the inventory button was clicked
         if self.inventory.button_rect.contains(game_pos) {
             self.inventory.open = !self.inventory.open;
             return;
         }
 
-        // Close the inventory if clicked outside and it's open
-        if self.inventory.open && game_pos.y < 1340.0 {
-            // Adjust this value based on your inventory height
-            self.inventory.open = false;
-            return;
+        // Handle inventory interaction
+        if self.inventory.open {
+            let inventory_top = inventory::START_Y - 59.0;
+
+            // Check if click is inside or below the inventory area
+            if game_pos.y >= inventory_top {
+                // Handle left arrow click
+                if self.inventory.left_arrow_rect.contains(game_pos) {
+                    self.scroll_inventory(-1);
+                    return;
+                }
+
+                // Handle right arrow click
+                if self.inventory.right_arrow_rect.contains(game_pos) {
+                    self.scroll_inventory(1);
+                    return;
+                }
+
+                // If we've reached here, the click was inside or below the inventory area
+                // so we keep it open and do nothing
+                return;
+            }
+
+            // If the click is above the inventory, close it
+            if game_pos.y < inventory_top {
+                self.inventory.open = false;
+                return;
+            }
         }
 
         // Check if a character was clicked

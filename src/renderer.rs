@@ -345,11 +345,64 @@ impl Renderer {
                         }
                     }
                 }
+
+                // Draw arrow buttons
+                self.draw_inventory_arrow(game, asset_manager, true); // Left arrow
+                self.draw_inventory_arrow(game, asset_manager, false); // Right arrow
             }
         } else {
             println!(
                 "Inventory button texture not found: {}",
                 button_texture_path
+            );
+        }
+    }
+
+    fn draw_inventory_arrow(&self, game: &Game, asset_manager: &AssetManager, is_left: bool) {
+        let arrow_rect = if is_left {
+            game.inventory.left_arrow_rect
+        } else {
+            game.inventory.right_arrow_rect
+        };
+
+        let texture_path = if is_left {
+            "Huvudmeny/inventory/pilv-271.png"
+        } else {
+            "Huvudmeny/inventory/pilh-272.png"
+        };
+
+        if let Some(texture) = asset_manager.get_texture(texture_path) {
+            let (x, y) = self.get_scaled_pos(arrow_rect.x, arrow_rect.y);
+            let scale = self.get_scale();
+
+            // Draw the arrow texture
+            draw_texture_ex(
+                texture,
+                x,
+                y,
+                WHITE,
+                DrawTextureParams {
+                    dest_size: Some(Vec2::new(arrow_rect.w * scale, arrow_rect.h * scale)),
+                    ..Default::default()
+                },
+            );
+
+            // Draw the border
+            let border_color = if (is_left && game.inventory.hovered_left_arrow)
+                || (!is_left && game.inventory.hovered_right_arrow)
+            {
+                BLUE
+            } else {
+                GREEN
+            };
+
+            draw_rectangle_lines(
+                x,
+                y,
+                arrow_rect.w * scale,
+                arrow_rect.h * scale,
+                2.0,
+                border_color,
             );
         }
     }
