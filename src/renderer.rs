@@ -1,5 +1,5 @@
 use crate::asset_manager::AssetManager;
-use crate::config::{character, inventory};
+use crate::config::{character, dialog, inventory};
 use crate::{ClickableArea, Game, OverlayAsset, Scene};
 use macroquad::prelude::*;
 
@@ -71,6 +71,7 @@ impl Renderer {
         }
 
         self.draw_inventory(game, asset_manager);
+        self.draw_dialog_menu(game, asset_manager);
         self.draw_debug(game);
         self.draw_ui(game, asset_manager);
     }
@@ -661,6 +662,82 @@ impl Renderer {
             let width = rect.w * self.get_scale();
             let height = rect.h * self.get_scale();
             draw_rectangle_lines(x, y, width, height, 2.0, GREEN);
+        }
+    }
+
+    fn draw_dialog_menu(&self, game: &Game, asset_manager: &AssetManager) {
+        if game.dialog_menu.open {
+            if let Some(dialog_background) =
+                asset_manager.get_texture(&game.ui.general_textures.dialog_background)
+            {
+                let scale = self.get_scale();
+
+                // Draw dialog background
+                let (scaled_x, scaled_y) = self.get_scaled_pos(0.0, dialog::START_Y);
+                let scaled_width = dialog::WIDTH * scale;
+                let scaled_height = dialog::HEIGHT * scale;
+
+                draw_texture_ex(
+                    dialog_background,
+                    scaled_x,
+                    scaled_y,
+                    WHITE,
+                    DrawTextureParams {
+                        dest_size: Some(Vec2::new(scaled_width, scaled_height)),
+                        ..Default::default()
+                    },
+                );
+
+                if let Some(dialog_id) = game.dialog_menu.current_dialog_id {
+                    if let Some(current_scene) = game.get_current_scene() {
+                        if let Some(dialog) =
+                            current_scene.dialogs.iter().find(|d| d.id == dialog_id)
+                        {
+                            // Draw dialog options
+                            if let Some(level) = dialog.tree.first() {
+                                for (i, option) in level.options.iter().enumerate() {
+                                    let option_x = dialog::OPTION_START_X * scale + scaled_x;
+                                    let option_y = (dialog::OPTION_START_Y
+                                        + i as f32 * dialog::OPTION_SPACING)
+                                        * scale
+                                        + scaled_y;
+                                    let option_width = dialog::OPTION_BOX_WIDTH * scale;
+                                    let option_height = dialog::OPTION_BOX_HEIGHT * scale;
+
+                                    let is_hovered = game.dialog_menu.hovered_option == Some(i);
+                                    let (box_color, text_color) = if is_hovered {
+                                        (
+                                            dialog::OPTION_HOVER_BOX_COLOR,
+                                            dialog::OPTION_HOVER_TEXT_COLOR,
+                                        )
+                                    } else {
+                                        (dialog::OPTION_BOX_COLOR, dialog::OPTION_TEXT_COLOR)
+                                    };
+
+                                    // Draw option box
+                                    draw_rectangle(
+                                        option_x,
+                                        option_y,
+                                        option_width,
+                                        option_height,
+                                        box_color,
+                                    );
+
+                                    // Draw option text
+                                    let font_size = dialog::FONT_SIZE * scale;
+                                    draw_text(
+                                        &option.text,
+                                        option_x + dialog::TEXT_PADDING_X * scale,
+                                        option_y + option_height / 2.0 + font_size / 2.0,
+                                        font_size,
+                                        text_color,
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

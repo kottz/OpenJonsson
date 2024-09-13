@@ -70,7 +70,7 @@
           ],
           "dialogs":[
             {
-              "dialog_id":0,
+              "id":0,
               "description":"Doris",
               "x":1320,
               "y":1019,
@@ -2772,7 +2772,10 @@
     ],
     "menuItems":[
       
-    ]
+    ],
+    "generalTextures": {
+        "dialogBackground": "berlin/Dialog/dialogruta-2.png"
+    }
   },
   "items":[
     {

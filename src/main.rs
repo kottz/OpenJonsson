@@ -2,8 +2,7 @@ mod asset_manager;
 mod config;
 mod renderer;
 
-use crate::config::character;
-use crate::config::inventory;
+use crate::config::{character, dialog, inventory};
 use asset_manager::AssetManager;
 use macroquad::prelude::*;
 use renderer::Renderer;
@@ -61,6 +60,7 @@ pub struct SceneTransition {
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Dialog {
+    pub id: u32,
     pub x: f32,
     pub y: f32,
     pub width: f32,
@@ -82,6 +82,22 @@ pub struct DialogOption {
     pub text: String,
     pub response_audio: Vec<String>,
     pub target: u32,
+}
+
+pub struct DialogMenu {
+    pub open: bool,
+    pub current_dialog_id: Option<u32>,
+    pub hovered_option: Option<usize>,
+}
+
+impl DialogMenu {
+    pub fn new() -> Self {
+        DialogMenu {
+            open: false,
+            current_dialog_id: None,
+            hovered_option: None,
+        }
+    }
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -224,6 +240,14 @@ pub struct UI {
     pub cursors: Vec<Cursor>,
     #[serde(rename = "menuItems")]
     pub menu_items: Vec<MenuItem>,
+    #[serde(rename = "generalTextures")]
+    pub general_textures: GeneralTextures,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct GeneralTextures {
+    #[serde(rename = "dialogBackground")]
+    pub dialog_background: String,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -364,6 +388,7 @@ struct Game {
     renderer: Renderer,
     asset_manager: AssetManager,
     inventory: InventoryData,
+    dialog_menu: DialogMenu,
 }
 
 struct DebugTools {
@@ -492,6 +517,7 @@ impl Game {
             renderer,
             asset_manager,
             inventory: InventoryData::new(),
+            dialog_menu: DialogMenu::new(),
         };
 
         game.load_level_scenes(game.current_level);
@@ -560,6 +586,14 @@ impl Game {
             if let Err(e) = self.asset_manager.load_texture(&menu_item.texture).await {
                 eprintln!("{}", e);
             }
+        }
+
+        if let Err(e) = self
+            .asset_manager
+            .load_texture(&self.ui.general_textures.dialog_background)
+            .await
+        {
+            eprintln!("{}", e);
         }
     }
 
@@ -652,6 +686,18 @@ impl Game {
 
         // Then check for clickable areas
         if let Some(current_scene) = self.get_current_scene() {
+            // Check for dialog regions
+            for dialog in &current_scene.dialogs {
+                if game_pos.x >= dialog.x
+                    && game_pos.x <= dialog.x + dialog.width
+                    && game_pos.y >= dialog.y
+                    && game_pos.y <= dialog.y + dialog.height
+                {
+                    return CursorType::Talk;
+                }
+            }
+
+            // Check for scene transitions
             for st in &current_scene.scene_transitions {
                 if game_pos.x >= st.x
                     && game_pos.x <= st.x + st.width
@@ -907,7 +953,6 @@ impl Game {
         // Handle inventory interaction
         if self.inventory.open {
             let inventory_top = inventory::START_Y - 59.0;
-
             // Check if click is inside or below the inventory area
             if game_pos.y >= inventory_top {
                 // Handle left arrow click
@@ -915,21 +960,34 @@ impl Game {
                     self.scroll_inventory(-1);
                     return;
                 }
-
                 // Handle right arrow click
                 if self.inventory.right_arrow_rect.contains(game_pos) {
                     self.scroll_inventory(1);
                     return;
                 }
-
                 // If we've reached here, the click was inside or below the inventory area
                 // so we keep it open and do nothing
                 return;
             }
-
             // If the click is above the inventory, close it
             if game_pos.y < inventory_top {
                 self.inventory.open = false;
+                return;
+            }
+        }
+
+        // Check if the dialog is open and the click is within the dialog area
+        if self.dialog_menu.open {
+            let in_dialog_area = game_pos.y >= dialog::START_Y && game_pos.y <= 1440.0;
+            if in_dialog_area {
+                if let Some(selected_option) = self.get_clicked_dialog_option(game_pos) {
+                    self.handle_dialog_option_selection(selected_option);
+                }
+                return;
+            } else {
+                // Close the dialog if clicked outside
+                self.close_dialog_menu();
+                println!("Dialog clicked to close");
                 return;
             }
         }
@@ -942,6 +1000,24 @@ impl Game {
                 self.active_character = Some(index);
                 return;
             }
+        }
+
+        // Check for dialog interactions
+        let dialog_clicked = self
+            .get_current_scene()
+            .map(|current_scene| {
+                current_scene.dialogs.iter().any(|dialog| {
+                    game_pos.x >= dialog.x
+                        && game_pos.x <= dialog.x + dialog.width
+                        && game_pos.y >= dialog.y
+                        && game_pos.y <= dialog.y + dialog.height
+                })
+            })
+            .unwrap_or(false);
+
+        if dialog_clicked {
+            self.open_dialog_menu(game_pos);
+            return;
         }
 
         // Check for scene transitions and handle scene changes
@@ -969,6 +1045,73 @@ impl Game {
         if self.debug_tools.bounding_box_mode {
             self.debug_tools.handle_bounding_box_creation(game_pos);
         }
+    }
+
+    fn open_dialog_menu(&mut self, game_pos: Vec2) {
+        let dialog_id = self.get_current_scene().and_then(|current_scene| {
+            current_scene
+                .dialogs
+                .iter()
+                .find(|dialog| {
+                    game_pos.x >= dialog.x
+                        && game_pos.x <= dialog.x + dialog.width
+                        && game_pos.y >= dialog.y
+                        && game_pos.y <= dialog.y + dialog.height
+                })
+                .map(|dialog| dialog.id)
+        });
+
+        if let Some(id) = dialog_id {
+            self.dialog_menu.open = true;
+            self.dialog_menu.current_dialog_id = Some(id);
+        }
+    }
+
+    fn close_dialog_menu(&mut self) {
+        self.dialog_menu.open = false;
+        self.dialog_menu.current_dialog_id = None;
+    }
+
+    fn get_clicked_dialog_option(&self, game_pos: Vec2) -> Option<usize> {
+        if let Some(current_scene) = self.get_current_scene() {
+            if let Some(dialog_id) = self.dialog_menu.current_dialog_id {
+                if let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id) {
+                    if let Some(level) = dialog.tree.first() {
+                        // Calculate the relative mouse position within the dialog area
+                        let relative_pos = Vec2::new(
+                            game_pos.x - dialog::OPTION_START_X,
+                            game_pos.y - dialog::START_Y - dialog::OPTION_START_Y,
+                        );
+
+                        for (i, _) in level.options.iter().enumerate() {
+                            let option_y = i as f32 * dialog::OPTION_SPACING;
+                            let option_rect = Rect::new(
+                                0.0,
+                                option_y,
+                                dialog::OPTION_BOX_WIDTH,
+                                dialog::OPTION_BOX_HEIGHT,
+                            );
+
+                            if option_rect.contains(relative_pos) {
+                                return Some(i);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        None
+    }
+
+    fn update_dialog_hover(&mut self, mouse_pos: Vec2) {
+        if self.dialog_menu.open {
+            self.dialog_menu.hovered_option = self.get_clicked_dialog_option(mouse_pos);
+        }
+    }
+
+    fn handle_dialog_option_selection(&mut self, selected_option: usize) {
+        println!("Selected dialog option: {}", selected_option);
+        // TODO: Implement logic for handling the selected option
     }
 
     fn is_point_in_character(&self, point: Vec2, character_index: usize) -> bool {
@@ -1276,6 +1419,8 @@ impl Game {
         if new_cursor_type != self.current_cursor {
             self.current_cursor = new_cursor_type;
         }
+
+        self.update_dialog_hover(game_pos);
 
         let delta_time = get_frame_time();
         self.update_characters(delta_time);

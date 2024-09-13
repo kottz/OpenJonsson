@@ -20,3 +20,26 @@ pub mod inventory {
     pub const ARROW_OFFSET_Y: f32 = 20.0; // Vertical offset from the slots (0 means aligned with slots)
     pub const ARROW_SIZE: f32 = 50.0; // Size of the arrow buttons
 }
+
+pub mod dialog {
+    use macroquad::prelude::Color;
+    use macroquad::prelude::{DARKGRAY, GRAY, WHITE, YELLOW, RED};
+
+    pub const WIDTH: f32 = 1920.0;
+    pub const HEIGHT: f32 = 258.0;
+    pub const START_Y: f32 = 1440.0 - HEIGHT;
+    pub const TEXT_PADDING_X: f32 = 20.0;
+    pub const TEXT_PADDING_Y: f32 = 20.0;
+    pub const FONT_SIZE: f32 = 30.0;
+
+    // New configuration options
+    pub const OPTION_START_X: f32 = 50.0;
+    pub const OPTION_START_Y: f32 = 50.0;
+    pub const OPTION_SPACING: f32 = 40.0;
+    pub const OPTION_BOX_WIDTH: f32 = 800.0;
+    pub const OPTION_BOX_HEIGHT: f32 = 40.0;
+    pub const OPTION_TEXT_COLOR: Color = WHITE;
+    pub const OPTION_HOVER_TEXT_COLOR: Color = YELLOW;
+    pub const OPTION_BOX_COLOR: Color = DARKGRAY;
+    pub const OPTION_HOVER_BOX_COLOR: Color = RED;
+}
