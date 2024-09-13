@@ -6,6 +6,7 @@ pub struct AssetManager {
     textures: HashMap<String, Texture2D>,
     sounds: HashMap<String, Sound>,
     loading_textures: Vec<String>,
+    fonts: HashMap<String, Font>,
 }
 
 impl AssetManager {
@@ -14,6 +15,7 @@ impl AssetManager {
             textures: HashMap::new(),
             sounds: HashMap::new(),
             loading_textures: Vec::new(),
+            fonts: HashMap::new(),
         }
     }
 
@@ -65,5 +67,19 @@ impl AssetManager {
                 eprintln!("{}", e);
             }
         }
+    }
+
+    pub async fn load_font(&mut self, name: &str, path: &str) -> Result<(), String> {
+        match load_ttf_font(path).await {
+            Ok(font) => {
+                self.fonts.insert(name.to_string(), font);
+                Ok(())
+            }
+            Err(e) => Err(format!("Failed to load font {} from {}: {}", name, path, e)),
+        }
+    }
+
+    pub fn get_font(&self, name: &str) -> Option<&Font> {
+        self.fonts.get(name)
     }
 }

@@ -525,6 +525,7 @@ impl Game {
         game.load_characters().await;
         game.load_debug_textures().await;
         game.load_ui_textures().await;
+        game.load_fonts().await?;
         game.load_inventory_textures().await;
         game.load_item_textures().await;
 
@@ -545,6 +546,13 @@ impl Game {
             }
         }
         self.asset_manager.load_textures(&textures_to_load).await;
+    }
+
+    async fn load_fonts(&mut self) -> Result<(), String> {
+        self.asset_manager
+            .load_font("dialog", "static/fonts/LiberationSans-Regular.ttf")
+            .await?;
+        Ok(())
     }
 
     async fn load_characters(&mut self) {
@@ -987,7 +995,6 @@ impl Game {
             } else {
                 // Close the dialog if clicked outside
                 self.close_dialog_menu();
-                println!("Dialog clicked to close");
                 return;
             }
         }

@@ -693,8 +693,10 @@ impl Renderer {
                         if let Some(dialog) =
                             current_scene.dialogs.iter().find(|d| d.id == dialog_id)
                         {
-                            // Draw dialog options
                             if let Some(level) = dialog.tree.first() {
+                                // Get the font outside the loop
+                                let dialog_font = asset_manager.get_font("dialog");
+
                                 for (i, option) in level.options.iter().enumerate() {
                                     let option_x = dialog::OPTION_START_X * scale + scaled_x;
                                     let option_y = (dialog::OPTION_START_Y
@@ -714,23 +716,30 @@ impl Renderer {
                                         (dialog::OPTION_BOX_COLOR, dialog::OPTION_TEXT_COLOR)
                                     };
 
-                                    // Draw option box
-                                    draw_rectangle(
-                                        option_x,
-                                        option_y,
-                                        option_width,
-                                        option_height,
-                                        box_color,
-                                    );
-
-                                    // Draw option text
+                                    if game.debug_tools.active {
+                                        draw_rectangle_lines(
+                                            option_x,
+                                            option_y,
+                                            option_width,
+                                            option_height,
+                                            2.0,
+                                            box_color,
+                                        );
+                                    }
+                                    // Draw option text with custom font
                                     let font_size = dialog::FONT_SIZE * scale;
-                                    draw_text(
+                                    let text_params = TextParams {
+                                        font: dialog_font,
+                                        font_size: font_size as u16,
+                                        color: text_color,
+                                        ..Default::default()
+                                    };
+
+                                    draw_text_ex(
                                         &option.text,
                                         option_x + dialog::TEXT_PADDING_X * scale,
                                         option_y + option_height / 2.0 + font_size / 2.0,
-                                        font_size,
-                                        text_color,
+                                        text_params,
                                     );
                                 }
                             }
