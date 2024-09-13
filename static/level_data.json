@@ -1,2196 +1,2828 @@
 {
-  "levels": [
+  "levels":[
     {
-      "id": 0,
-      "name": "Stockholm",
-      "scenes": [
+      "id":0,
+      "name":"Stockholm",
+      "scenes":[
         {
-          "id": 0,
-          "description": "Attic",
-          "background": "stockholm/Internal/B GHV-210.png",
-          "sceneTransitions": [
+          "id":0,
+          "description":"Attic",
+          "background":"stockholm/Internal/B GHV-210.png",
+          "sceneTransitions":[
             {
-              "x": 295,
-              "y": 220,
-              "width": 131,
-              "height": 236,
-              "targetScene": 1
+              "x":295,
+              "y":220,
+              "width":131,
+              "height":236,
+              "targetScene":1
             }
           ],
-          "overlay_assets": [
+          "overlay_assets":[
             {
-              "texture_path": "stockholm/Internal/213.png",
-              "x": 132,
-              "y": 0,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/213.png",
+              "x":132,
+              "y":0,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/vind_förgrund-211.png",
-              "x": 0,
-              "y": 0,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/vind_förgrund-211.png",
+              "x":0,
+              "y":0,
+              "z_value":3
             }
           ],
-          "items": [
+          "items":[
             {
-              "item_id": 0,
-              "x": 73,
-              "y": 217,
-              "width": 111,
-              "height": 99
+              "item_id":0,
+              "x":73,
+              "y":217,
+              "width":111,
+              "height":99
             },
             {
-              "item_id": 1,
-              "x": 262,
-              "y": 137,
-              "width": 108,
-              "height": 87
+              "item_id":1,
+              "x":262,
+              "y":137,
+              "width":108,
+              "height":87
             },
             {
-              "item_id": 2,
-              "x": 479,
-              "y": 183,
-              "width": 90,
-              "height": 90
+              "item_id":2,
+              "x":479,
+              "y":183,
+              "width":90,
+              "height":90
             },
             {
-              "item_id": 3,
-              "x": 357,
-              "y": 412,
-              "width": 99,
-              "height": 84
+              "item_id":3,
+              "x":357,
+              "y":412,
+              "width":99,
+              "height":84
             },
             {
-              "item_id": 4,
-              "x": 10,
-              "y": 204,
-              "width": 117,
-              "height": 81
+              "item_id":4,
+              "x":10,
+              "y":204,
+              "width":117,
+              "height":81
+            }
+          ],
+          "dialogs":[
+            {
+              "dialog_id":0,
+              "description":"Doris",
+              "x":1320,
+              "y":1019,
+              "width":157,
+              "height":132,
+              "tree":[
+                {
+                  "level":0,
+                  "options":[
+                    {
+                      "option_id":0,
+                      "text":"Öh, Doris! Kan inte du ropa på Ingo?",
+                      "response_audio":[
+                        "voice/GHV/GHV_DG1_D_1_1"
+                      ],
+                      "target":1
+                    },
+                    {
+                      "option_id":1,
+                      "text":"Doris! Vi är törstiga, skicka upp lite dricka!",
+                      "response_audio":[
+                        "voice/GHV/GHV_DG1_D_1_2"
+                      ],
+                      "target":1
+                    }
+                  ]
+                },
+                {
+                  "level":1,
+                  "options":[
+                    {
+                      "option_id":0,
+                      "text":"Ingenting!",
+                      "response_audio":[
+                        
+                      ],
+                      "target":1
+                    },
+                    {
+                      "option_id":1,
+                      "text":"Vi håller på och löser korsord!",
+                      "response_audio":[
+                        "voice/GHV/GHV_DG1_D_1_2"
+                      ],
+                      "target":1
+                    }
+                  ]
+                },
+                {
+                  "level":2,
+                  "options":[
+                    {
+                      "option_id":0,
+                      "text":"Ja, vad heter Sveriges första och enda världsmästare i tungvikts boxning?",
+                      "response_audio":[
+                        "voice/GHV/GHV_DG1_D_3_1"
+                      ],
+                      "target":1
+                    },
+                    {
+                      "option_id":1,
+                      "text":"Bra! Vad hette Beatles trummis i förnamn?",
+                      "response_audio":[
+                        "voice/GHV/GHV_DG1_D_3_2",
+                        "voice/GHV/GHV_DG1_D_3_2_1",
+                        "voice/GHV/GHV_DG1_D_3_2_2"
+                      ],
+                      "target":1
+                    },
+                    {
+                      "option_id":2,
+                      "text":"Ja, vet du vad Norges kung heter?",
+                      "response_audio":[
+                        "voice/GHV/GHV_DG1_D_3_3"
+                      ],
+                      "target":1
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
         {
-          "id": 1,
-          "description": "Outside the house",
-          "background": "stockholm/Internal/B GHU-191.png",
-          "sceneTransitions": [
+          "id":1,
+          "description":"Outside the house",
+          "background":"stockholm/Internal/B GHU-191.png",
+          "sceneTransitions":[
             {
-              "x": 790,
-              "y": 204,
-              "width": 102,
-              "height": 149,
-              "targetScene": 0
+              "x":790,
+              "y":204,
+              "width":102,
+              "height":149,
+              "targetScene":0
             },
             {
-              "x": 1705,
-              "y": 1146,
-              "width": 214,
-              "height": 289,
-              "targetScene": 2
+              "x":1705,
+              "y":1146,
+              "width":214,
+              "height":289,
+              "targetScene":2
             }
           ],
-          "overlay_assets": [
+          "overlay_assets":[
             {
-              "texture_path": "stockholm/Internal/Mattpisk-194.png",
-              "x": 164,
-              "y": 368,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/Mattpisk-194.png",
+              "x":164,
+              "y":368,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/Parasoll-195.png",
-              "x": 0,
-              "y": 50,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/Parasoll-195.png",
+              "x":0,
+              "y":50,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/Träd-198.png",
-              "x": 451,
-              "y": 75,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/Träd-198.png",
+              "x":451,
+              "y":75,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/Förgrund-197.png",
-              "x": 0,
-              "y": 0,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/Förgrund-197.png",
+              "x":0,
+              "y":0,
+              "z_value":3
             }
           ],
-          "items": []
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 2,
-          "description": "At the car",
-          "background": "stockholm/Internal/B Bilscen-229.png",
-          "sceneTransitions": [
+          "id":2,
+          "description":"At the car",
+          "background":"stockholm/Internal/B Bilscen-229.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1185,
-              "width": 551,
-              "height": 253,
-              "targetScene": 1
+              "x":0,
+              "y":1185,
+              "width":551,
+              "height":253,
+              "targetScene":1
             },
             {
-              "x": 990,
-              "y": 649,
-              "width": 234,
-              "height": 190,
-              "targetScene": 3
+              "x":990,
+              "y":649,
+              "width":234,
+              "height":190,
+              "targetScene":3
             }
           ],
-          "overlay_assets": [
+          "overlay_assets":[
             {
-              "texture_path": "stockholm/Internal/fg-232.png",
-              "x": 0,
-              "y": 0,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/fg-232.png",
+              "x":0,
+              "y":0,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/huset-233.png",
-              "x": 199,
-              "y": 0,
-              "z_value": 0
+              "texture_path":"stockholm/Internal/huset-233.png",
+              "x":199,
+              "y":0,
+              "z_value":0
             }
           ],
-          "items": []
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 3,
-          "description": "Amundsen's house - Front",
-          "background": "stockholm/Internal/B AFF-286.png",
-          "sceneTransitions": [
+          "id":3,
+          "description":"Amundsen's house - Front",
+          "background":"stockholm/Internal/B AFF-286.png",
+          "sceneTransitions":[
             {
-              "x": 1582,
-              "y": 1009,
-              "width": 340,
-              "height": 256,
-              "targetScene": 2
+              "x":1582,
+              "y":1009,
+              "width":340,
+              "height":256,
+              "targetScene":2
             },
             {
-              "x": 1443,
-              "y": 768,
-              "width": 194,
-              "height": 197,
-              "targetScene": 10
+              "x":1443,
+              "y":768,
+              "width":194,
+              "height":197,
+              "targetScene":10
             },
             {
-              "x": 0,
-              "y": 956,
-              "width": 272,
-              "height": 352,
-              "targetScene": 4
+              "x":0,
+              "y":956,
+              "width":272,
+              "height":352,
+              "targetScene":4
             }
           ],
-          "overlay_assets": [
+          "overlay_assets":[
             {
-              "texture_path": "stockholm/Internal/anusengträd-312.png",
-              "x": 266,
-              "y": 0,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/anusengträd-312.png",
+              "x":266,
+              "y":0,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/314.png",
-              "x": 334,
-              "y": 372,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/314.png",
+              "x":334,
+              "y":372,
+              "z_value":3
             }
           ],
-          "items": []
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 4,
-          "description": "Amundsen's house - Back",
-          "background": "stockholm/Internal/B AFB-305.png",
-          "sceneTransitions": [
+          "id":4,
+          "description":"Amundsen's house - Back",
+          "background":"stockholm/Internal/B AFB-305.png",
+          "sceneTransitions":[
             {
-              "x": 1105,
-              "y": 730,
-              "width": 245,
-              "height": 256,
-              "targetScene": 3
+              "x":1105,
+              "y":730,
+              "width":245,
+              "height":256,
+              "targetScene":3
             },
             {
-              "x": 734,
-              "y": 882,
-              "width": 176,
-              "height": 239,
-              "targetScene": 5
+              "x":734,
+              "y":882,
+              "width":176,
+              "height":239,
+              "targetScene":5
             }
           ],
-          "overlay_assets": [
+          "overlay_assets":[
             {
-              "texture_path": "stockholm/Internal/anusensbakgträd-313.png",
-              "x": 356,
-              "y": 0,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/anusensbakgträd-313.png",
+              "x":356,
+              "y":0,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/310.png",
-              "x": 2,
-              "y": 418,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/310.png",
+              "x":2,
+              "y":418,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/AnusenBackDörr0-306.png",
-              "x": 249,
-              "y": 277,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/AnusenBackDörr0-306.png",
+              "x":249,
+              "y":277,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/AnusenBackDörr1-307.png",
-              "x": 249,
-              "y": 277,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/AnusenBackDörr1-307.png",
+              "x":249,
+              "y":277,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/AnusenBackDörr2-308.png",
-              "x": 248,
-              "y": 294,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/AnusenBackDörr2-308.png",
+              "x":248,
+              "y":294,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/AnusenBackDörr3-309.png",
-              "x": 231,
-              "y": 292,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/AnusenBackDörr3-309.png",
+              "x":231,
+              "y":292,
+              "z_value":3
             }
           ],
-          "items": []
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 5,
-          "description": "Amundsen's house - Downstairs",
-          "background": "stockholm/Internal/B AFN-324.png",
-          "sceneTransitions": [
+          "id":5,
+          "description":"Amundsen's house - Downstairs",
+          "background":"stockholm/Internal/B AFN-324.png",
+          "sceneTransitions":[
             {
-              "x": 287,
-              "y": 575,
-              "width": 275,
-              "height": 353,
-              "targetScene": 4
+              "x":287,
+              "y":575,
+              "width":275,
+              "height":353,
+              "targetScene":4
             },
             {
-              "x": 774,
-              "y": 121,
-              "width": 122,
-              "height": 259,
-              "targetScene": 6
+              "x":774,
+              "y":121,
+              "width":122,
+              "height":259,
+              "targetScene":6
             }
           ],
-          "overlay_assets": [
+          "overlay_assets":[
             {
-              "texture_path": "stockholm/Internal/336.png",
-              "x": 56,
-              "y": 117,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/336.png",
+              "x":56,
+              "y":117,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/trappan-326.png",
-              "x": 99,
-              "y": 98,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/trappan-326.png",
+              "x":99,
+              "y":98,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/327.png",
-              "x": 35,
-              "y": 67,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/327.png",
+              "x":35,
+              "y":67,
+              "z_value":3
             },
             {
-              "texture_path": "stockholm/Internal/328.png",
-              "x": 173,
-              "y": 28,
-              "z_value": 3
+              "texture_path":"stockholm/Internal/328.png",
+              "x":173,
+              "y":28,
+              "z_value":3
             }
           ],
-          "items": []
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 6,
-          "description": "Amundsen's house - Upstairs - First hallway",
-          "background": "stockholm/Internal/B AFUE-343.png",
-          "sceneTransitions": [
+          "id":6,
+          "description":"Amundsen's house - Upstairs - First hallway",
+          "background":"stockholm/Internal/B AFUE-343.png",
+          "sceneTransitions":[
             {
-              "x": 1016,
-              "y": 622,
-              "width": 224,
-              "height": 312,
-              "targetScene": 7
+              "x":1016,
+              "y":622,
+              "width":224,
+              "height":312,
+              "targetScene":7
             },
             {
-              "x": 286,
-              "y": 874,
-              "width": 133,
-              "height": 205,
-              "targetScene": 9
+              "x":286,
+              "y":874,
+              "width":133,
+              "height":205,
+              "targetScene":9
             },
             {
-              "x": 1270,
-              "y": 1174,
-              "width": 650,
-              "height": 262,
-              "targetScene": 5
+              "x":1270,
+              "y":1174,
+              "width":650,
+              "height":262,
+              "targetScene":5
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 7,
-          "description": "Amundsen's house - Upstairs - Second hallway",
-          "background": "stockholm/Internal/B AFU-382.png",
-          "sceneTransitions": [
+          "id":7,
+          "description":"Amundsen's house - Upstairs - Second hallway",
+          "background":"stockholm/Internal/B AFU-382.png",
+          "sceneTransitions":[
             {
-              "x": 672,
-              "y": 493,
-              "width": 174,
-              "height": 368,
-              "targetScene": 6
+              "x":672,
+              "y":493,
+              "width":174,
+              "height":368,
+              "targetScene":6
             },
             {
-              "x": 334,
-              "y": 764,
-              "width": 120,
-              "height": 239,
-              "targetScene": 8
+              "x":334,
+              "y":764,
+              "width":120,
+              "height":239,
+              "targetScene":8
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 8,
-          "description": "Amundsen's house - Upstairs -  Amundsen's office",
-          "background": "stockholm/Internal/B AFK-400.png",
-          "sceneTransitions": [
+          "id":8,
+          "description":"Amundsen's house - Upstairs -  Amundsen's office",
+          "background":"stockholm/Internal/B AFK-400.png",
+          "sceneTransitions":[
             {
-              "x": 1353,
-              "y": 391,
-              "width": 114,
-              "height": 281,
-              "targetScene": 7
+              "x":1353,
+              "y":391,
+              "width":114,
+              "height":281,
+              "targetScene":7
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 9,
-          "description": "Amundsen's house - Upstairs -  2nd office",
-          "background": "stockholm/Internal/B AFKE-362.png",
-          "sceneTransitions": [
+          "id":9,
+          "description":"Amundsen's house - Upstairs -  2nd office",
+          "background":"stockholm/Internal/B AFKE-362.png",
+          "sceneTransitions":[
             {
-              "x": 1338,
-              "y": 408,
-              "width": 133,
-              "height": 277,
-              "targetScene": 6
+              "x":1338,
+              "y":408,
+              "width":133,
+              "height":277,
+              "targetScene":6
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 10,
-          "description": "Wall-Enberg street outside office",
-          "background": "stockholm/Internal/B WEG-609.png",
-          "sceneTransitions": [
+          "id":10,
+          "description":"Wall-Enberg street outside office",
+          "background":"stockholm/Internal/B WEG-609.png",
+          "sceneTransitions":[
             {
-              "x": 1182,
-              "y": 334,
-              "width": 224,
-              "height": 432,
-              "targetScene": 11
+              "x":1182,
+              "y":334,
+              "width":224,
+              "height":432,
+              "targetScene":11
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 11,
-          "description": "Wall-Enberg office secretary",
-          "background": "stockholm/Internal/B Whall-438.png",
-          "sceneTransitions": [
+          "id":11,
+          "description":"Wall-Enberg office secretary",
+          "background":"stockholm/Internal/B Whall-438.png",
+          "sceneTransitions":[
             {
-              "x": 344,
-              "y": 571,
-              "width": 234,
-              "height": 242,
-              "targetScene": 10
+              "x":344,
+              "y":571,
+              "width":234,
+              "height":242,
+              "targetScene":10
             },
             {
-              "x": 1359,
-              "y": 543,
-              "width": 121,
-              "height": 287,
-              "targetScene": 12
+              "x":1359,
+              "y":543,
+              "width":121,
+              "height":287,
+              "targetScene":12
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 12,
-          "description": "Wall-Enberg office",
-          "background": "stockholm/Internal/B WEK-454.png",
-          "sceneTransitions": [
+          "id":12,
+          "description":"Wall-Enberg office",
+          "background":"stockholm/Internal/B WEK-454.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1233,
-              "width": 714,
-              "height": 203,
-              "targetScene": 11
+              "x":0,
+              "y":1233,
+              "width":714,
+              "height":203,
+              "targetScene":11
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         }
       ]
     },
     {
-      "id": 1,
-      "name": "Paris",
-      "scenes": [
+      "id":1,
+      "name":"Paris",
+      "scenes":[
         {
-          "id": 0,
-          "description": "Start - Painter's street",
-          "background": "paris/Internal/B PG2-217.png",
-          "sceneTransitions": [
+          "id":0,
+          "description":"Start - Painter's street",
+          "background":"paris/Internal/B PG2-217.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 698,
-              "width": 161,
-              "height": 629,
-              "targetScene": 1
+              "x":0,
+              "y":698,
+              "width":161,
+              "height":629,
+              "targetScene":1
             },
             {
-              "x": 1751,
-              "y": 78,
-              "width": 166,
-              "height": 756,
-              "targetScene": 4
+              "x":1751,
+              "y":78,
+              "width":166,
+              "height":756,
+              "targetScene":4
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 1,
-          "description": "Outside the Louvre",
-          "background": "paris/Internal/B PUL-235.png",
-          "sceneTransitions": [
+          "id":1,
+          "description":"Outside the Louvre",
+          "background":"paris/Internal/B PUL-235.png",
+          "sceneTransitions":[
             {
-              "x": 250,
-              "y": 270,
-              "width": 100,
-              "height": 216,
-              "targetScene": 2
+              "x":250,
+              "y":270,
+              "width":100,
+              "height":216,
+              "targetScene":2
             },
             {
-              "x": 1775,
-              "y": 90,
-              "width": 145,
-              "height": 612,
-              "targetScene": 0
+              "x":1775,
+              "y":90,
+              "width":145,
+              "height":612,
+              "targetScene":0
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 2,
-          "description": "Inside the Louvre - Outer Room",
-          "background": "paris/Internal/B PL-253.png",
-          "sceneTransitions": [
+          "id":2,
+          "description":"Inside the Louvre - Outer Room",
+          "background":"paris/Internal/B PL-253.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1285,
-              "width": 595,
-              "height": 152,
-              "targetScene": 1
+              "x":0,
+              "y":1285,
+              "width":595,
+              "height":152,
+              "targetScene":1
             },
             {
-              "x": 1818,
-              "y": 520,
-              "width": 105,
-              "height": 301,
-              "targetScene": 3
+              "x":1818,
+              "y":520,
+              "width":105,
+              "height":301,
+              "targetScene":3
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 3,
-          "description": "Inside the Louvre - Mona Lisa Room",
-          "background": "paris/Internal/B PLL-271.png",
-          "sceneTransitions": [
+          "id":3,
+          "description":"Inside the Louvre - Mona Lisa Room",
+          "background":"paris/Internal/B PLL-271.png",
+          "sceneTransitions":[
             {
-              "x": 1785,
-              "y": 1015,
-              "width": 138,
-              "height": 420,
-              "targetScene": 2
+              "x":1785,
+              "y":1015,
+              "width":138,
+              "height":420,
+              "targetScene":2
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 4,
-          "description": "Souvenir stand street",
-          "background": "paris/Internal/B PG1-181.png",
-          "sceneTransitions": [
+          "id":4,
+          "description":"Souvenir stand street",
+          "background":"paris/Internal/B PG1-181.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1160,
-              "width": 436,
-              "height": 280,
-              "targetScene": 0
+              "x":0,
+              "y":1160,
+              "width":436,
+              "height":280,
+              "targetScene":0
             },
             {
-              "x": 171,
-              "y": 473,
-              "width": 110,
-              "height": 220,
-              "targetScene": 5
+              "x":171,
+              "y":473,
+              "width":110,
+              "height":220,
+              "targetScene":5
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 5,
-          "description": "Butcher shop",
-          "background": "paris/Internal/B PGK-199.png",
-          "sceneTransitions": [
+          "id":5,
+          "description":"Butcher shop",
+          "background":"paris/Internal/B PGK-199.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1243,
-              "width": 571,
-              "height": 196,
-              "targetScene": 4
+              "x":0,
+              "y":1243,
+              "width":571,
+              "height":196,
+              "targetScene":4
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         }
       ]
     },
     {
-      "id": 2,
-      "name": "London",
-      "scenes": [
+      "id":2,
+      "name":"London",
+      "scenes":[
         {
-          "id": 0,
-          "description": "Start street corner",
-          "background": "london/Internal/B LHG-158.png",
-          "sceneTransitions": [
+          "id":0,
+          "description":"Start street corner",
+          "background":"london/Internal/B LHG-158.png",
+          "sceneTransitions":[
             {
-              "x": 445,
-              "y": 314,
-              "width": 132,
-              "height": 284,
-              "targetScene": 1
+              "x":445,
+              "y":314,
+              "width":132,
+              "height":284,
+              "targetScene":1
             },
             {
-              "x": 1807,
-              "y": 649,
-              "width": 113,
-              "height": 568,
-              "targetScene": 3
+              "x":1807,
+              "y":649,
+              "width":113,
+              "height":568,
+              "targetScene":3
             },
             {
-              "x": 0,
-              "y": 341,
-              "width": 139,
-              "height": 362,
-              "targetScene": 10
+              "x":0,
+              "y":341,
+              "width":139,
+              "height":362,
+              "targetScene":10
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 1,
-          "description": "Hotel Lobby",
-          "background": "london/Internal/B LHK-222.png",
-          "sceneTransitions": [
+          "id":1,
+          "description":"Hotel Lobby",
+          "background":"london/Internal/B LHK-222.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1311,
-              "width": 611,
-              "height": 126,
-              "targetScene": 0
+              "x":0,
+              "y":1311,
+              "width":611,
+              "height":126,
+              "targetScene":0
             },
             {
-              "x": 262,
-              "y": 260,
-              "width": 103,
-              "height": 194,
-              "targetScene": 2
+              "x":262,
+              "y":260,
+              "width":103,
+              "height":194,
+              "targetScene":2
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 2,
-          "description": "Hotel Room",
-          "background": "london/Internal/B LHR-205.png",
-          "sceneTransitions": [
+          "id":2,
+          "description":"Hotel Room",
+          "background":"london/Internal/B LHR-205.png",
+          "sceneTransitions":[
             {
-              "x": 224,
-              "y": 555,
-              "width": 125,
-              "height": 240,
-              "targetScene": 1
+              "x":224,
+              "y":555,
+              "width":125,
+              "height":240,
+              "targetScene":1
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 3,
-          "description": "Shop street - Royal beds",
-          "background": "london/Internal/B LHF-239.png",
-          "sceneTransitions": [
+          "id":3,
+          "description":"Shop street - Royal beds",
+          "background":"london/Internal/B LHF-239.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1277,
-              "width": 742,
-              "height": 161,
-              "targetScene": 0
+              "x":0,
+              "y":1277,
+              "width":742,
+              "height":161,
+              "targetScene":0
             },
             {
-              "x": 320,
-              "y": 781,
-              "width": 122,
-              "height": 240,
-              "targetScene": 4
+              "x":320,
+              "y":781,
+              "width":122,
+              "height":240,
+              "targetScene":4
             },
             {
-              "x": 1339,
-              "y": 296,
-              "width": 104,
-              "height": 267,
-              "targetScene": 5
+              "x":1339,
+              "y":296,
+              "width":104,
+              "height":267,
+              "targetScene":5
             },
             {
-              "x": 786,
-              "y": 0,
-              "width": 123,
-              "height": 737,
-              "targetScene": 6
+              "x":786,
+              "y":0,
+              "width":123,
+              "height":737,
+              "targetScene":6
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 4,
-          "description": "Royal Beds",
-          "background": "london/Internal/B LHM-256.png",
-          "sceneTransitions": [
+          "id":4,
+          "description":"Royal Beds",
+          "background":"london/Internal/B LHM-256.png",
+          "sceneTransitions":[
             {
-              "x": 390,
-              "y": 504,
-              "width": 115,
-              "height": 198,
-              "targetScene": 3
+              "x":390,
+              "y":504,
+              "width":115,
+              "height":198,
+              "targetScene":3
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 5,
-          "description": "Tailor",
-          "background": "london/Internal/B LHS-273.png",
-          "sceneTransitions": [
+          "id":5,
+          "description":"Tailor",
+          "background":"london/Internal/B LHS-273.png",
+          "sceneTransitions":[
             {
-              "x": 1732,
-              "y": 1084,
-              "width": 190,
-              "height": 355,
-              "targetScene": 3
+              "x":1732,
+              "y":1084,
+              "width":190,
+              "height":355,
+              "targetScene":3
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 6,
-          "description": "Second street",
-          "background": "london/Internal/B LMS-375.png",
-          "sceneTransitions": [
+          "id":6,
+          "description":"Second street",
+          "background":"london/Internal/B LMS-375.png",
+          "sceneTransitions":[
             {
-              "x": 1127,
-              "y": 1289,
-              "width": 796,
-              "height": 146,
-              "targetScene": 3
+              "x":1127,
+              "y":1289,
+              "width":796,
+              "height":146,
+              "targetScene":3
             },
             {
-              "x": 1091,
-              "y": 0,
-              "width": 281,
-              "height": 108,
-              "targetScene": 7
+              "x":1091,
+              "y":0,
+              "width":281,
+              "height":108,
+              "targetScene":7
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 7,
-          "description": "Outside Buckingham Palace",
-          "background": "london/Internal/B LUS-392.png",
-          "sceneTransitions": [
+          "id":7,
+          "description":"Outside Buckingham Palace",
+          "background":"london/Internal/B LUS-392.png",
+          "sceneTransitions":[
             {
-              "x": 1660,
-              "y": 1030,
-              "width": 262,
-              "height": 407,
-              "targetScene": 6 
+              "x":1660,
+              "y":1030,
+              "width":262,
+              "height":407,
+              "targetScene":6
             },
             {
-              "x": 40,
-              "y": 181,
-              "width": 159,
-              "height": 359,
-              "targetScene": 8
+              "x":40,
+              "y":181,
+              "width":159,
+              "height":359,
+              "targetScene":8
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 8,
-          "description": "Inside Buckingham Palace - Stairs",
-          "background": "london/Internal/B LUDR-426.png",
-          "sceneTransitions": [
+          "id":8,
+          "description":"Inside Buckingham Palace - Stairs",
+          "background":"london/Internal/B LUDR-426.png",
+          "sceneTransitions":[
             {
-              "x": 1548,
-              "y": 1304,
-              "width": 376,
-              "height": 130,
-              "targetScene": 7
+              "x":1548,
+              "y":1304,
+              "width":376,
+              "height":130,
+              "targetScene":7
             },
             {
-              "x": 23,
-              "y": 446,
-              "width": 109,
-              "height": 196,
-              "targetScene": 9
+              "x":23,
+              "y":446,
+              "width":109,
+              "height":196,
+              "targetScene":9
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 9,
-          "description": "Queen's Room",
-          "background": "london/Internal/B LTR-290.png",
-          "sceneTransitions": [
+          "id":9,
+          "description":"Queen's Room",
+          "background":"london/Internal/B LTR-290.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1246,
-              "width": 465,
-              "height": 193,
-              "targetScene": 8
+              "x":0,
+              "y":1246,
+              "width":465,
+              "height":193,
+              "targetScene":8
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 10,
-          "description": "Grass path to bar",
-          "background": "london/Internal/B LPH-307.png",
-          "sceneTransitions": [
+          "id":10,
+          "description":"Grass path to bar",
+          "background":"london/Internal/B LPH-307.png",
+          "sceneTransitions":[
             {
-              "x": 948,
-              "y": 1261,
-              "width": 332,
-              "height": 176,
-              "targetScene": 0
+              "x":948,
+              "y":1261,
+              "width":332,
+              "height":176,
+              "targetScene":0
             },
             {
-              "x": 682,
-              "y": 82,
-              "width": 382,
-              "height": 237,
-              "targetScene": 11
+              "x":682,
+              "y":82,
+              "width":382,
+              "height":237,
+              "targetScene":11
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 11,
-          "description": "Outside bar",
-          "background": "london/Internal/B LPU-324.png",
-          "sceneTransitions": [
+          "id":11,
+          "description":"Outside bar",
+          "background":"london/Internal/B LPU-324.png",
+          "sceneTransitions":[
             {
-              "x": 212,
-              "y": 1270,
-              "width": 608,
-              "height": 169,
-              "targetScene": 10
+              "x":212,
+              "y":1270,
+              "width":608,
+              "height":169,
+              "targetScene":10
             },
             {
-              "x": 1216,
-              "y": 486,
-              "width": 149,
-              "height": 257,
-              "targetScene": 12
+              "x":1216,
+              "y":486,
+              "width":149,
+              "height":257,
+              "targetScene":12
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 12,
-          "description": "Bar",
-          "background": "london/Internal/B LPP-341.png",
-          "sceneTransitions": [
+          "id":12,
+          "description":"Bar",
+          "background":"london/Internal/B LPP-341.png",
+          "sceneTransitions":[
             {
-              "x": 199,
-              "y": 512,
-              "width": 118,
-              "height": 204,
-              "targetScene": 11
+              "x":199,
+              "y":512,
+              "width":118,
+              "height":204,
+              "targetScene":11
             },
             {
-              "x": 806,
-              "y": 388,
-              "width": 124,
-              "height": 273,
-              "targetScene": 13
+              "x":806,
+              "y":388,
+              "width":124,
+              "height":273,
+              "targetScene":13
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 13,
-          "description": "Bar Office",
-          "background": "london/Internal/B LPR-358.png",
-          "sceneTransitions": [
+          "id":13,
+          "description":"Bar Office",
+          "background":"london/Internal/B LPR-358.png",
+          "sceneTransitions":[
             {
-              "x": 1060,
-              "y": 439,
-              "width": 103,
-              "height": 265,
-              "targetScene": 12
+              "x":1060,
+              "y":439,
+              "width":103,
+              "height":265,
+              "targetScene":12
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         }
       ]
     },
     {
-      "id": 3,
-      "name": "Berlin",
-      "scenes": [
+      "id":3,
+      "name":"Berlin",
+      "scenes":[
         {
-          "id": 0,
-          "description": "Start street - T-junction",
-          "background": "berlin/Internal/B BMB-217.png",
-          "sceneTransitions": [
+          "id":0,
+          "description":"Start street - T-junction",
+          "background":"berlin/Internal/B BMB-217.png",
+          "sceneTransitions":[
             {
-              "x": 578,
-              "y": 95,
-              "width": 167,
-              "height": 562,
-              "targetScene": 1
+              "x":578,
+              "y":95,
+              "width":167,
+              "height":562,
+              "targetScene":1
             },
             {
-              "x": 0,
-              "y": 1220,
-              "width": 470,
-              "height": 217,
-              "targetScene": 3
+              "x":0,
+              "y":1220,
+              "width":470,
+              "height":217,
+              "targetScene":3
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 1,
-          "description": "Street - Top Left",
-          "background": "berlin/Internal/B BMA-199.png",
-          "sceneTransitions": [
+          "id":1,
+          "description":"Street - Top Left",
+          "background":"berlin/Internal/B BMA-199.png",
+          "sceneTransitions":[
             {
-              "x": 1813,
-              "y": 785,
-              "width": 110,
-              "height": 374,
-              "targetScene": 0
+              "x":1813,
+              "y":785,
+              "width":110,
+              "height":374,
+              "targetScene":0
             },
             {
-              "x": 0,
-              "y": 796,
-              "width": 160,
-              "height": 404,
-              "targetScene": 2
+              "x":0,
+              "y":796,
+              "width":160,
+              "height":404,
+              "targetScene":2
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 2,
-          "description": "Souvenir Stand",
-          "background": "berlin/Internal/B BMG-181.png",
-          "sceneTransitions": [
+          "id":2,
+          "description":"Souvenir Stand",
+          "background":"berlin/Internal/B BMG-181.png",
+          "sceneTransitions":[
             {
-              "x": 756,
-              "y": 0,
-              "width": 469,
-              "height": 151,
-              "targetScene": 1
+              "x":756,
+              "y":0,
+              "width":469,
+              "height":151,
+              "targetScene":1
             },
             {
-              "x": 1772,
-              "y": 1019,
-              "width": 145,
-              "height": 419,
-              "targetScene": 3
+              "x":1772,
+              "y":1019,
+              "width":145,
+              "height":419,
+              "targetScene":3
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 3,
-          "description": "Bottom left junction",
-          "background": "berlin/Internal/B BMC-235.png",
-          "sceneTransitions": [
+          "id":3,
+          "description":"Bottom left junction",
+          "background":"berlin/Internal/B BMC-235.png",
+          "sceneTransitions":[
             {
-              "x": 1424,
-              "y": 65,
-              "width": 200,
-              "height": 535,
-              "targetScene": 0
+              "x":1424,
+              "y":65,
+              "width":200,
+              "height":535,
+              "targetScene":0
             },
             {
-              "x": 0,
-              "y": 509,
-              "width": 143,
-              "height": 666,
-              "targetScene": 2
+              "x":0,
+              "y":509,
+              "width":143,
+              "height":666,
+              "targetScene":2
             },
             {
-              "x": 1520,
-              "y": 1007,
-              "width": 400,
-              "height": 427,
-              "targetScene": 4
+              "x":1520,
+              "y":1007,
+              "width":400,
+              "height":427,
+              "targetScene":4
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 4,
-          "description": "Mountain Entrance",
-          "background": "berlin/Internal/B BJM-253.png",
-          "sceneTransitions": [
+          "id":4,
+          "description":"Mountain Entrance",
+          "background":"berlin/Internal/B BJM-253.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1179,
-              "width": 121,
-              "height": 258,
-              "targetScene": 3
+              "x":0,
+              "y":1179,
+              "width":121,
+              "height":258,
+              "targetScene":3
             },
             {
-              "x": 1411,
-              "y": 274,
-              "width": 166,
-              "height": 178,
-              "targetScene": 5
+              "x":1411,
+              "y":274,
+              "width":166,
+              "height":178,
+              "targetScene":5
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 5,
-          "description": "Mountain - First T-junction",
-          "background": "berlin/Internal/B BJM1-379.png",
-          "sceneTransitions": [
+          "id":5,
+          "description":"Mountain - First T-junction",
+          "background":"berlin/Internal/B BJM1-379.png",
+          "sceneTransitions":[
             {
-              "x": 1244,
-              "y": 1294,
-              "width": 676,
-              "height": 142,
-              "targetScene": 4
+              "x":1244,
+              "y":1294,
+              "width":676,
+              "height":142,
+              "targetScene":4
             },
             {
-              "x": 0,
-              "y": 320,
-              "width": 133,
-              "height": 464,
-              "targetScene": 6
+              "x":0,
+              "y":320,
+              "width":133,
+              "height":464,
+              "targetScene":6
             },
             {
-              "x": 798,
-              "y": 0,
-              "width": 392,
-              "height": 160,
-              "targetScene": 7
+              "x":798,
+              "y":0,
+              "width":392,
+              "height":160,
+              "targetScene":7
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 6,
-          "description": "Mountain - First Left pass",
-          "background": "berlin/Internal/B BJM15-631.png",
-          "sceneTransitions": [
+          "id":6,
+          "description":"Mountain - First Left pass",
+          "background":"berlin/Internal/B BJM15-631.png",
+          "sceneTransitions":[
             {
-              "x": 1244,
-              "y": 1294,
-              "width": 676,
-              "height": 142,
-              "targetScene": 5
+              "x":1244,
+              "y":1294,
+              "width":676,
+              "height":142,
+              "targetScene":5
             },
             {
-              "x": 798,
-              "y": 0,
-              "width": 392,
-              "height": 160,
-              "targetScene": 8
+              "x":798,
+              "y":0,
+              "width":392,
+              "height":160,
+              "targetScene":8
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 7,
-          "description": "Mountain - 5-way Junction",
-          "background": "berlin/Internal/B BJM14-613.png",
-          "sceneTransitions": [
+          "id":7,
+          "description":"Mountain - 5-way Junction",
+          "background":"berlin/Internal/B BJM14-613.png",
+          "sceneTransitions":[
             {
-              "x": 531,
-              "y": 1327,
-              "width": 600,
-              "height": 110,
-              "targetScene": 5
+              "x":531,
+              "y":1327,
+              "width":600,
+              "height":110,
+              "targetScene":5
             },
             {
-              "x": 0,
-              "y": 447,
-              "width": 103,
-              "height": 334,
-              "targetScene": 8
+              "x":0,
+              "y":447,
+              "width":103,
+              "height":334,
+              "targetScene":8
             },
             {
-              "x": 609,
-              "y": 0,
-              "width": 248,
-              "height": 102,
-              "targetScene": 9
+              "x":609,
+              "y":0,
+              "width":248,
+              "height":102,
+              "targetScene":9
             },
             {
-              "x": 1264,
-              "y": 0,
-              "width": 204,
-              "height": 107,
-              "targetScene": 10
+              "x":1264,
+              "y":0,
+              "width":204,
+              "height":107,
+              "targetScene":10
             },
             {
-              "x": 1816,
-              "y": 517,
-              "width": 102,
-              "height": 368,
-              "targetScene": 11
+              "x":1816,
+              "y":517,
+              "width":102,
+              "height":368,
+              "targetScene":11
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 8,
-          "description": "Mountain - Fat T-Junction - Left from 5-way",
-          "background": "berlin/Internal/B BJM4-433.png",
-          "sceneTransitions": [
+          "id":8,
+          "description":"Mountain - Fat T-Junction - Left from 5-way",
+          "background":"berlin/Internal/B BJM4-433.png",
+          "sceneTransitions":[
             {
-              "x": 1722,
-              "y": 114,
-              "width": 199,
-              "height": 367,
-              "targetScene": 7
+              "x":1722,
+              "y":114,
+              "width":199,
+              "height":367,
+              "targetScene":7
             },
             {
-              "x": 357,
-              "y": 1312,
-              "width": 972,
-              "height": 127,
-              "targetScene": 6
+              "x":357,
+              "y":1312,
+              "width":972,
+              "height":127,
+              "targetScene":6
             },
             {
-              "x": 701,
-              "y": 0,
-              "width": 422,
-              "height": 138,
-              "targetScene": 9
+              "x":701,
+              "y":0,
+              "width":422,
+              "height":138,
+              "targetScene":9
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 9,
-          "description": "Mountain - Top T-Junction - Top Left from 5-way",
-          "background": "berlin/Internal/B BJM12-577.png",
-          "sceneTransitions": [
+          "id":9,
+          "description":"Mountain - Top T-Junction - Top Left from 5-way",
+          "background":"berlin/Internal/B BJM12-577.png",
+          "sceneTransitions":[
             {
-              "x": 415,
-              "y": 1321,
-              "width": 538,
-              "height": 118,
-              "targetScene": 8
+              "x":415,
+              "y":1321,
+              "width":538,
+              "height":118,
+              "targetScene":8
             },
             {
-              "x": 0,
-              "y": 254,
-              "width": 127,
-              "height": 526,
-              "targetScene": 13
+              "x":0,
+              "y":254,
+              "width":127,
+              "height":526,
+              "targetScene":13
             },
             {
-              "x": 1755,
-              "y": 872,
-              "width": 164,
-              "height": 563,
-              "targetScene": 7
+              "x":1755,
+              "y":872,
+              "width":164,
+              "height":563,
+              "targetScene":7
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 10,
-          "description": "Mountain - Passage with traveller - Top Right from 5-way",
-          "background": "berlin/Internal/B BJM13-595.png",
-          "sceneTransitions": [
+          "id":10,
+          "description":"Mountain - Passage with traveller - Top Right from 5-way",
+          "background":"berlin/Internal/B BJM13-595.png",
+          "sceneTransitions":[
             {
-              "x": 295,
-              "y": 1319,
-              "width": 842,
-              "height": 120,
-              "targetScene": 7
+              "x":295,
+              "y":1319,
+              "width":842,
+              "height":120,
+              "targetScene":7
             },
             {
-              "x": 695,
-              "y": 0,
-              "width": 340,
-              "height": 126,
-              "targetScene": 14
+              "x":695,
+              "y":0,
+              "width":340,
+              "height":126,
+              "targetScene":14
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 11,
-          "description": "Mountain - Passage - Right from 5-way",
-          "background": "berlin/Internal/B BJM8-505.png",
-          "sceneTransitions": [
+          "id":11,
+          "description":"Mountain - Passage - Right from 5-way",
+          "background":"berlin/Internal/B BJM8-505.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1292,
-              "width": 868,
-              "height": 144,
-              "targetScene": 7
+              "x":0,
+              "y":1292,
+              "width":868,
+              "height":144,
+              "targetScene":7
             },
             {
-              "x": 703,
-              "y": 0,
-              "width": 454,
-              "height": 125,
-              "targetScene": 16
+              "x":703,
+              "y":0,
+              "width":454,
+              "height":125,
+              "targetScene":16
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 12,
-          "description": "Mountain - Passage - Right from 5-way",
-          "background": "berlin/Internal/B BJM8-505.png",
-          "sceneTransitions": [
+          "id":12,
+          "description":"Mountain - Passage - Right from 5-way",
+          "background":"berlin/Internal/B BJM8-505.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1292,
-              "width": 868,
-              "height": 144,
-              "targetScene": 7
+              "x":0,
+              "y":1292,
+              "width":868,
+              "height":144,
+              "targetScene":7
             },
             {
-              "x": 703,
-              "y": 0,
-              "width": 454,
-              "height": 125,
-              "targetScene": 5
+              "x":703,
+              "y":0,
+              "width":454,
+              "height":125,
+              "targetScene":5
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 13,
-          "description": "Mountain - Top Left Stop with Piece - Left->Up->Left from 5-way",
-          "background": "berlin/Internal/B BJM7-487.png",
-          "sceneTransitions": [
+          "id":13,
+          "description":"Mountain - Top Left Stop with Piece - Left->Up->Left from 5-way",
+          "background":"berlin/Internal/B BJM7-487.png",
+          "sceneTransitions":[
             {
-              "x": 1280,
-              "y": 1262,
-              "width": 641,
-              "height": 175,
-              "targetScene": 9
+              "x":1280,
+              "y":1262,
+              "width":641,
+              "height":175,
+              "targetScene":9
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 14,
-          "description": "Mountain - Top T-Junction ABOVE TRAVELLER - Top Right->Up from 5-way #1",
-          "background": "berlin/Internal/B BJM12-577.png",
-          "sceneTransitions": [
+          "id":14,
+          "description":"Mountain - Top T-Junction ABOVE TRAVELLER - Top Right->Up from 5-way #1",
+          "background":"berlin/Internal/B BJM12-577.png",
+          "sceneTransitions":[
             {
-              "x": 415,
-              "y": 1321,
-              "width": 538,
-              "height": 118,
-              "targetScene": 10
+              "x":415,
+              "y":1321,
+              "width":538,
+              "height":118,
+              "targetScene":10
             },
             {
-              "x": 0,
-              "y": 254,
-              "width": 127,
-              "height": 526,
-              "targetScene": 26
+              "x":0,
+              "y":254,
+              "width":127,
+              "height":526,
+              "targetScene":26
             },
             {
-              "x": 1755,
-              "y": 872,
-              "width": 164,
-              "height": 563,
-              "targetScene": 15
+              "x":1755,
+              "y":872,
+              "width":164,
+              "height":563,
+              "targetScene":15
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 15,
-          "description": "Mountain - T-junction with bottom right piece - Above traveller and then right",
-          "background": "berlin/Internal/B BJM1-379.png",
-          "sceneTransitions": [
+          "id":15,
+          "description":"Mountain - T-junction with bottom right piece - Above traveller and then right",
+          "background":"berlin/Internal/B BJM1-379.png",
+          "sceneTransitions":[
             {
-              "x": 1244,
-              "y": 1294,
-              "width": 676,
-              "height": 142,
-              "targetScene": 16
+              "x":1244,
+              "y":1294,
+              "width":676,
+              "height":142,
+              "targetScene":16
             },
             {
-              "x": 0,
-              "y": 320,
-              "width": 133,
-              "height": 464,
-              "targetScene": 14
+              "x":0,
+              "y":320,
+              "width":133,
+              "height":464,
+              "targetScene":14
             },
             {
-              "x": 798,
-              "y": 0,
-              "width": 392,
-              "height": 160,
-              "targetScene": 18
+              "x":798,
+              "y":0,
+              "width":392,
+              "height":160,
+              "targetScene":18
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 16,
-          "description": "Mountain - Fat T-Junction - Above Traveller->Right->Down",
-          "background": "berlin/Internal/B BJM4-433.png",
-          "sceneTransitions": [
+          "id":16,
+          "description":"Mountain - Fat T-Junction - Above Traveller->Right->Down",
+          "background":"berlin/Internal/B BJM4-433.png",
+          "sceneTransitions":[
             {
-              "x": 1722,
-              "y": 114,
-              "width": 199,
-              "height": 367,
-              "targetScene": 17
+              "x":1722,
+              "y":114,
+              "width":199,
+              "height":367,
+              "targetScene":17
             },
             {
-              "x": 357,
-              "y": 1312,
-              "width": 972,
-              "height": 127,
-              "targetScene": 11
+              "x":357,
+              "y":1312,
+              "width":972,
+              "height":127,
+              "targetScene":11
             },
             {
-              "x": 701,
-              "y": 0,
-              "width": 422,
-              "height": 138,
-              "targetScene": 15
+              "x":701,
+              "y":0,
+              "width":422,
+              "height":138,
+              "targetScene":15
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 17,
-          "description": "Mountain - Fat T-Junction - Above Traveller->Right->Down->Right OR First T-junction->Right->Up->Right",
-          "background": "berlin/Internal/B BJM10-541.png",
-          "sceneTransitions": [
+          "id":17,
+          "description":"Mountain - Fat T-Junction - Above Traveller->Right->Down->Right OR First T-junction->Right->Up->Right",
+          "background":"berlin/Internal/B BJM10-541.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1270,
-              "width": 662,
-              "height": 169,
-              "targetScene": 16
+              "x":0,
+              "y":1270,
+              "width":662,
+              "height":169,
+              "targetScene":16
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 18,
-          "description": "Mountain - above traveller->right->up",
-          "background": "berlin/Internal/B BJM13-595.png",
-          "sceneTransitions": [
+          "id":18,
+          "description":"Mountain - above traveller->right->up",
+          "background":"berlin/Internal/B BJM13-595.png",
+          "sceneTransitions":[
             {
-              "x": 295,
-              "y": 1319,
-              "width": 842,
-              "height": 120,
-              "targetScene": 15
+              "x":295,
+              "y":1319,
+              "width":842,
+              "height":120,
+              "targetScene":15
             },
             {
-              "x": 695,
-              "y": 0,
-              "width": 340,
-              "height": 126,
-              "targetScene": 19
+              "x":695,
+              "y":0,
+              "width":340,
+              "height":126,
+              "targetScene":19
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 19,
-          "description": "Mountain - Above Traveller->Right->Up->Up",
-          "background": "berlin/Internal/B BJM1-379.png",
-          "sceneTransitions": [
+          "id":19,
+          "description":"Mountain - Above Traveller->Right->Up->Up",
+          "background":"berlin/Internal/B BJM1-379.png",
+          "sceneTransitions":[
             {
-              "x": 1244,
-              "y": 1294,
-              "width": 676,
-              "height": 142,
-              "targetScene": 18
+              "x":1244,
+              "y":1294,
+              "width":676,
+              "height":142,
+              "targetScene":18
             },
             {
-              "x": 0,
-              "y": 320,
-              "width": 133,
-              "height": 464,
-              "targetScene": 21
+              "x":0,
+              "y":320,
+              "width":133,
+              "height":464,
+              "targetScene":21
             },
             {
-              "x": 798,
-              "y": 0,
-              "width": 392,
-              "height": 160,
-              "targetScene": 20
+              "x":798,
+              "y":0,
+              "width":392,
+              "height":160,
+              "targetScene":20
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 20,
-          "description": "Mountain - Exit to Castle - Above Traveller->Right->Up->Up->Up",
-          "background": "berlin/Internal/B BJM24-793.png",
-          "sceneTransitions": [
+          "id":20,
+          "description":"Mountain - Exit to Castle - Above Traveller->Right->Up->Up->Up",
+          "background":"berlin/Internal/B BJM24-793.png",
+          "sceneTransitions":[
             {
-              "x": 202,
-              "y": 1298,
-              "width": 944,
-              "height": 140,
-              "targetScene": 19
+              "x":202,
+              "y":1298,
+              "width":944,
+              "height":140,
+              "targetScene":19
             },
             {
-              "x": 1568,
-              "y": 0,
-              "width": 253,
-              "height": 179,
-              "targetScene": 31
+              "x":1568,
+              "y":0,
+              "width":253,
+              "height":179,
+              "targetScene":31
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 21,
-          "description": "Mountain - 3-way to ?? - Above Traveller->Right->Up->Up->Left",
-          "background": "berlin/Internal/B BJM20-721.png",
-          "sceneTransitions": [
+          "id":21,
+          "description":"Mountain - 3-way to ?? - Above Traveller->Right->Up->Up->Left",
+          "background":"berlin/Internal/B BJM20-721.png",
+          "sceneTransitions":[
             {
-              "x": 450,
-              "y": 0,
-              "width": 407,
-              "height": 122,
-              "targetScene": 22
+              "x":450,
+              "y":0,
+              "width":407,
+              "height":122,
+              "targetScene":22
             },
             {
-              "x": 410,
-              "y": 1300,
-              "width": 490,
-              "height": 139,
-              "targetScene": 25
+              "x":410,
+              "y":1300,
+              "width":490,
+              "height":139,
+              "targetScene":25
             },
             {
-              "x": 1730,
-              "y": 920,
-              "width": 190,
-              "height": 517,
-              "targetScene": 19
+              "x":1730,
+              "y":920,
+              "width":190,
+              "height":517,
+              "targetScene":19
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 22,
-          "description": "Mountain - Passage way - Above 3-way to ??",
-          "background": "berlin/Internal/B BJM13-595.png",
-          "sceneTransitions": [
+          "id":22,
+          "description":"Mountain - Passage way - Above 3-way to ??",
+          "background":"berlin/Internal/B BJM13-595.png",
+          "sceneTransitions":[
             {
-              "x": 295,
-              "y": 1319,
-              "width": 842,
-              "height": 120,
-              "targetScene": 21
+              "x":295,
+              "y":1319,
+              "width":842,
+              "height":120,
+              "targetScene":21
             },
             {
-              "x": 695,
-              "y": 0,
-              "width": 340,
-              "height": 126,
-              "targetScene": 23
+              "x":695,
+              "y":0,
+              "width":340,
+              "height":126,
+              "targetScene":23
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 23,
-          "description": "Mountain - Passage way - Above Above 3-way to ??",
-          "background": "berlin/Internal/B BJM17-667.png",
-          "sceneTransitions": [
+          "id":23,
+          "description":"Mountain - Passage way - Above Above 3-way to ??",
+          "background":"berlin/Internal/B BJM17-667.png",
+          "sceneTransitions":[
             {
-              "x": 738,
-              "y": 1322,
-              "width": 912,
-              "height": 115,
-              "targetScene": 22
+              "x":738,
+              "y":1322,
+              "width":912,
+              "height":115,
+              "targetScene":22
             },
             {
-              "x": 870,
-              "y": 0,
-              "width": 356,
-              "height": 124,
-              "targetScene": 24
+              "x":870,
+              "y":0,
+              "width":356,
+              "height":124,
+              "targetScene":24
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 24,
-          "description": "Mountain - Dead end with Top-Left piece -Above Above Above 3-way to ??",
-          "background": "berlin/Internal/B BJM23-775.png",
-          "sceneTransitions": [
+          "id":24,
+          "description":"Mountain - Dead end with Top-Left piece -Above Above Above 3-way to ??",
+          "background":"berlin/Internal/B BJM23-775.png",
+          "sceneTransitions":[
             {
-              "x": 249,
-              "y": 1296,
-              "width": 895,
-              "height": 142,
-              "targetScene": 23
+              "x":249,
+              "y":1296,
+              "width":895,
+              "height":142,
+              "targetScene":23
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 25,
-          "description": "Mountain - Passage way - Under 3-way to ??",
-          "background": "berlin/Internal/B BJM17-667.png",
-          "sceneTransitions": [
+          "id":25,
+          "description":"Mountain - Passage way - Under 3-way to ??",
+          "background":"berlin/Internal/B BJM17-667.png",
+          "sceneTransitions":[
             {
-              "x": 738,
-              "y": 1322,
-              "width": 912,
-              "height": 115,
-              "targetScene": 26
+              "x":738,
+              "y":1322,
+              "width":912,
+              "height":115,
+              "targetScene":26
             },
             {
-              "x": 870,
-              "y": 0,
-              "width": 356,
-              "height": 124,
-              "targetScene": 21
+              "x":870,
+              "y":0,
+              "width":356,
+              "height":124,
+              "targetScene":21
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 26,
-          "description": "Mountain - SECOND 5-way Junction",
-          "background": "berlin/Internal/B BJM14-613.png",
-          "sceneTransitions": [
+          "id":26,
+          "description":"Mountain - SECOND 5-way Junction",
+          "background":"berlin/Internal/B BJM14-613.png",
+          "sceneTransitions":[
             {
-              "x": 531,
-              "y": 1327,
-              "width": 600,
-              "height": 110,
-              "targetScene": 14
+              "x":531,
+              "y":1327,
+              "width":600,
+              "height":110,
+              "targetScene":14
             },
             {
-              "x": 0,
-              "y": 447,
-              "width": 103,
-              "height": 334,
-              "targetScene": 28
+              "x":0,
+              "y":447,
+              "width":103,
+              "height":334,
+              "targetScene":28
             },
             {
-              "x": 609,
-              "y": 0,
-              "width": 248,
-              "height": 102,
-              "targetScene": 30
+              "x":609,
+              "y":0,
+              "width":248,
+              "height":102,
+              "targetScene":30
             },
             {
-              "x": 1264,
-              "y": 0,
-              "width": 204,
-              "height": 107,
-              "targetScene": 25
+              "x":1264,
+              "y":0,
+              "width":204,
+              "height":107,
+              "targetScene":25
             },
             {
-              "x": 1816,
-              "y": 517,
-              "width": 102,
-              "height": 368,
-              "targetScene": 27
+              "x":1816,
+              "y":517,
+              "width":102,
+              "height":368,
+              "targetScene":27
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 27,
-          "description": "Mountain - Dead End to the right - Right of SECOND 5-way junction",
-          "background": "berlin/Internal/B BJM10-541.png",
-          "sceneTransitions": [
+          "id":27,
+          "description":"Mountain - Dead End to the right - Right of SECOND 5-way junction",
+          "background":"berlin/Internal/B BJM10-541.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1270,
-              "width": 662,
-              "height": 169,
-              "targetScene": 26
+              "x":0,
+              "y":1270,
+              "width":662,
+              "height":169,
+              "targetScene":26
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 28,
-          "description": "Mountain - Left pass with woman - Left of SECOND 5-way junction",
-          "background": "berlin/Internal/B BJM15-631.png",
-          "sceneTransitions": [
+          "id":28,
+          "description":"Mountain - Left pass with woman - Left of SECOND 5-way junction",
+          "background":"berlin/Internal/B BJM15-631.png",
+          "sceneTransitions":[
             {
-              "x": 1244,
-              "y": 1294,
-              "width": 676,
-              "height": 142,
-              "targetScene": 26
+              "x":1244,
+              "y":1294,
+              "width":676,
+              "height":142,
+              "targetScene":26
             },
             {
-              "x": 798,
-              "y": 0,
-              "width": 392,
-              "height": 160,
-              "targetScene": 29
+              "x":798,
+              "y":0,
+              "width":392,
+              "height":160,
+              "targetScene":29
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 29,
-          "description": "Mountain - Right bend with top-right piece - Above Woman - Left->up of SECOND 5-way junction",
-          "background": "berlin/Internal/B BJM19-703.png",
-          "sceneTransitions": [
+          "id":29,
+          "description":"Mountain - Right bend with top-right piece - Above Woman - Left->up of SECOND 5-way junction",
+          "background":"berlin/Internal/B BJM19-703.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1237,
-              "width": 576,
-              "height": 200,
-              "targetScene": 28
+              "x":0,
+              "y":1237,
+              "width":576,
+              "height":200,
+              "targetScene":28
             },
             {
-              "x": 1764,
-              "y": 661,
-              "width": 158,
-              "height": 398,
-              "targetScene": 30
+              "x":1764,
+              "y":661,
+              "width":158,
+              "height":398,
+              "targetScene":30
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 30,
-          "description": "Mountain - Horizontal Passage - Left->up->Right of SECOND 5-way junction",
-          "background": "berlin/Internal/B BJM18-685.png",
-          "sceneTransitions": [
+          "id":30,
+          "description":"Mountain - Horizontal Passage - Left->up->Right of SECOND 5-way junction",
+          "background":"berlin/Internal/B BJM18-685.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 491,
-              "width": 133,
-              "height": 476,
-              "targetScene": 29
+              "x":0,
+              "y":491,
+              "width":133,
+              "height":476,
+              "targetScene":29
             },
             {
-              "x": 1764,
-              "y": 904,
-              "width": 157,
-              "height": 534,
-              "targetScene": 26
+              "x":1764,
+              "y":904,
+              "width":157,
+              "height":534,
+              "targetScene":26
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 31,
-          "description": "Castle - Outside",
-          "background": "berlin/Internal/B BJS-271.png",
-          "sceneTransitions": [
+          "id":31,
+          "description":"Castle - Outside",
+          "background":"berlin/Internal/B BJS-271.png",
+          "sceneTransitions":[
             {
-              "x": 867,
-              "y": 1302,
-              "width": 196,
-              "height": 136,
-              "targetScene": 20
+              "x":867,
+              "y":1302,
+              "width":196,
+              "height":136,
+              "targetScene":20
             },
             {
-              "x": 272,
-              "y": 689,
-              "width": 158,
-              "height": 203,
-              "targetScene": 32
+              "x":272,
+              "y":689,
+              "width":158,
+              "height":203,
+              "targetScene":32
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 32,
-          "description": "Castle - Basement",
-          "background": "berlin/Internal/B BJB-289.png",
-          "sceneTransitions": [
+          "id":32,
+          "description":"Castle - Basement",
+          "background":"berlin/Internal/B BJB-289.png",
+          "sceneTransitions":[
             {
-              "x": 867,
-              "y": 1302,
-              "width": 196,
-              "height": 136,
-              "targetScene": 31
+              "x":867,
+              "y":1302,
+              "width":196,
+              "height":136,
+              "targetScene":31
             },
             {
-              "x": 362,
-              "y": 445,
-              "width": 134,
-              "height": 287,
-              "targetScene": 33
+              "x":362,
+              "y":445,
+              "width":134,
+              "height":287,
+              "targetScene":33
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 33,
-          "description": "Castle - Hallway",
-          "background": "berlin/Internal/B BJH-325.png",
-          "sceneTransitions": [
+          "id":33,
+          "description":"Castle - Hallway",
+          "background":"berlin/Internal/B BJH-325.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 673,
-              "width": 103,
-              "height": 450,
-              "targetScene": 34
+              "x":0,
+              "y":673,
+              "width":103,
+              "height":450,
+              "targetScene":34
             },
             {
-              "x": 426,
-              "y": 474,
-              "width": 138,
-              "height": 313,
-              "targetScene": 32
+              "x":426,
+              "y":474,
+              "width":138,
+              "height":313,
+              "targetScene":32
             },
             {
-              "x": 81,
-              "y": 311,
-              "width": 122,
-              "height": 289,
-              "targetScene": 35
+              "x":81,
+              "y":311,
+              "width":122,
+              "height":289,
+              "targetScene":35
             },
             {
-              "x": 793,
-              "y": 657,
-              "width": 144,
-              "height": 319,
-              "targetScene": 35
+              "x":793,
+              "y":657,
+              "width":144,
+              "height":319,
+              "targetScene":35
             },
             {
-              "x": 1147,
-              "y": 834,
-              "width": 134,
-              "height": 313,
-              "targetScene": 34
+              "x":1147,
+              "y":834,
+              "width":134,
+              "height":313,
+              "targetScene":34
             },
             {
-              "x": 1486,
-              "y": 1007,
-              "width": 136,
-              "height": 309,
-              "targetScene": 35
+              "x":1486,
+              "y":1007,
+              "width":136,
+              "height":309,
+              "targetScene":35
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 34,
-          "description": "Castle - Hallway 2 - At the shield on the wall",
-          "background": "berlin/Internal/B BJH2-343.png",
-          "sceneTransitions": [
+          "id":34,
+          "description":"Castle - Hallway 2 - At the shield on the wall",
+          "background":"berlin/Internal/B BJH2-343.png",
+          "sceneTransitions":[
             {
-              "x": 1131,
-              "y": 1319,
-              "width": 499,
-              "height": 120,
-              "targetScene": 33
+              "x":1131,
+              "y":1319,
+              "width":499,
+              "height":120,
+              "targetScene":33
             },
             {
-              "x": 919,
-              "y": 732,
-              "width": 136,
-              "height": 283,
-              "targetScene": 34
+              "x":919,
+              "y":732,
+              "width":136,
+              "height":283,
+              "targetScene":34
             },
             {
-              "x": 1279,
-              "y": 897,
-              "width": 142,
-              "height": 340,
-              "targetScene": 35
+              "x":1279,
+              "y":897,
+              "width":142,
+              "height":340,
+              "targetScene":35
             },
             {
-              "x": 1643,
-              "y": 1084,
-              "width": 124,
-              "height": 272,
-              "targetScene": 33
+              "x":1643,
+              "y":1084,
+              "width":124,
+              "height":272,
+              "targetScene":33
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 35,
-          "description": "Castle - Slip'n'Slide away",
-          "background": "berlin/Internal/B LAB-363.png",
-          "sceneTransitions": [
+          "id":35,
+          "description":"Castle - Slip'n'Slide away",
+          "background":"berlin/Internal/B LAB-363.png",
+          "sceneTransitions":[
             {
-              "x": 906,
-              "y": 1278,
-              "width": 434,
-              "height": 161,
-              "targetScene": 15
+              "x":906,
+              "y":1278,
+              "width":434,
+              "height":161,
+              "targetScene":15
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         }
       ]
     },
     {
-      "id": 4,
-      "name": "Rom",
-      "scenes": [
+      "id":4,
+      "name":"Rom",
+      "scenes":[
         {
-          "id": 0,
-          "description": "Start street - Dog and Shady guy",
-          "background": "rom/Internal/B RHG-191.png",
-          "sceneTransitions": [
+          "id":0,
+          "description":"Start street - Dog and Shady guy",
+          "background":"rom/Internal/B RHG-191.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1274,
-              "width": 434,
-              "height": 160,
-              "targetScene": 1
+              "x":0,
+              "y":1274,
+              "width":434,
+              "height":160,
+              "targetScene":1
             },
             {
-              "x": 0,
-              "y": 473,
-              "width": 151,
-              "height": 283,
-              "targetScene": 4
+              "x":0,
+              "y":473,
+              "width":151,
+              "height":283,
+              "targetScene":4
             },
             {
-              "x": 613,
-              "y": 331,
-              "width": 112,
-              "height": 296,
-              "targetScene": 7
+              "x":613,
+              "y":331,
+              "width":112,
+              "height":296,
+              "targetScene":7
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 1,
-          "description": "INTER INTER INTER",
-          "background": "rom/Internal/B RHC-267.png",
-          "sceneTransitions": [
+          "id":1,
+          "description":"INTER INTER INTER",
+          "background":"rom/Internal/B RHC-267.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1284,
-              "width": 808,
-              "height": 154,
-              "targetScene": 0
+              "x":0,
+              "y":1284,
+              "width":808,
+              "height":154,
+              "targetScene":0
             },
             {
-              "x": 230,
-              "y": 754,
-              "width": 116,
-              "height": 216,
-              "targetScene": 2
+              "x":230,
+              "y":754,
+              "width":116,
+              "height":216,
+              "targetScene":2
             },
             {
-              "x": 931,
-              "y": 0,
-              "width": 205,
-              "height": 239,
-              "targetScene": 3
+              "x":931,
+              "y":0,
+              "width":205,
+              "height":239,
+              "targetScene":3
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 2,
-          "description": "Pizzeria",
-          "background": "rom/Internal/B RHP-304.png",
-          "sceneTransitions": [
+          "id":2,
+          "description":"Pizzeria",
+          "background":"rom/Internal/B RHP-304.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1202,
-              "width": 558,
-              "height": 236,
-              "targetScene": 1
+              "x":0,
+              "y":1202,
+              "width":558,
+              "height":236,
+              "targetScene":1
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 3,
-          "description": "Alley with window",
-          "background": "rom/Internal/B RHA-362.png",
-          "sceneTransitions": [
+          "id":3,
+          "description":"Alley with window",
+          "background":"rom/Internal/B RHA-362.png",
+          "sceneTransitions":[
             {
-              "x": 578,
-              "y": 1274,
-              "width": 952,
-              "height": 164,
-              "targetScene": 1
+              "x":578,
+              "y":1274,
+              "width":952,
+              "height":164,
+              "targetScene":1
             },
             {
-              "x": 771,
-              "y": 395,
-              "width": 140,
-              "height": 335,
-              "targetScene": 4
+              "x":771,
+              "y":395,
+              "width":140,
+              "height":335,
+              "targetScene":4
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 4,
-          "description": "Open Square with fountain",
-          "background": "rom/Internal/B RHB-305.png",
-          "sceneTransitions": [
+          "id":4,
+          "description":"Open Square with fountain",
+          "background":"rom/Internal/B RHB-305.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 797,
-              "width": 82,
-              "height": 272,
-              "targetScene": 3
+              "x":0,
+              "y":797,
+              "width":82,
+              "height":272,
+              "targetScene":3
             },
             {
-              "x": 35,
-              "y": 431,
-              "width": 79,
-              "height": 221,
-              "targetScene": 5
+              "x":35,
+              "y":431,
+              "width":79,
+              "height":221,
+              "targetScene":5
             },
             {
-              "x": 467,
-              "y": 149,
-              "width": 116,
-              "height": 211,
-              "targetScene": 6
+              "x":467,
+              "y":149,
+              "width":116,
+              "height":211,
+              "targetScene":6
             },
             {
-              "x": 1002,
-              "y": 0,
-              "width": 191,
-              "height": 286,
-              "targetScene": 0
+              "x":1002,
+              "y":0,
+              "width":191,
+              "height":286,
+              "targetScene":0
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 5,
-          "description": "Piano shop",
-          "background": "rom/Internal/B RHI-324.png",
-          "sceneTransitions": [
+          "id":5,
+          "description":"Piano shop",
+          "background":"rom/Internal/B RHI-324.png",
+          "sceneTransitions":[
             {
-              "x": 1678,
-              "y": 1094,
-              "width": 242,
-              "height": 344,
-              "targetScene": 4
+              "x":1678,
+              "y":1094,
+              "width":242,
+              "height":344,
+              "targetScene":4
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 6,
-          "description": "Glass shop",
-          "background": "rom/Internal/B RHM-343.png",
-          "sceneTransitions": [
+          "id":6,
+          "description":"Glass shop",
+          "background":"rom/Internal/B RHM-343.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1285,
-              "width": 616,
-              "height": 150,
-              "targetScene": 4
+              "x":0,
+              "y":1285,
+              "width":616,
+              "height":150,
+              "targetScene":4
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 7,
-          "description": "Hotel Lobby",
-          "background": "rom/Internal/B RHK-210.png",
-          "sceneTransitions": [
+          "id":7,
+          "description":"Hotel Lobby",
+          "background":"rom/Internal/B RHK-210.png",
+          "sceneTransitions":[
             {
-              "x": 0,
-              "y": 1285,
-              "width": 616,
-              "height": 150,
-              "targetScene": 0
+              "x":0,
+              "y":1285,
+              "width":616,
+              "height":150,
+              "targetScene":0
             },
             {
-              "x": 250,
-              "y": 246,
-              "width": 122,
-              "height": 210,
-              "targetScene": 8
+              "x":250,
+              "y":246,
+              "width":122,
+              "height":210,
+              "targetScene":8
             },
             {
-              "x": 858,
-              "y": 0,
-              "width": 247,
-              "height": 137,
-              "targetScene": 9
+              "x":858,
+              "y":0,
+              "width":247,
+              "height":137,
+              "targetScene":9
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 8,
-          "description": "Hotel Room",
-          "background": "rom/Internal/B RHR-229.png",
-          "sceneTransitions": [
+          "id":8,
+          "description":"Hotel Room",
+          "background":"rom/Internal/B RHR-229.png",
+          "sceneTransitions":[
             {
-              "x": 216,
-              "y": 545,
-              "width": 139,
-              "height": 223,
-              "targetScene": 7
+              "x":216,
+              "y":545,
+              "width":139,
+              "height":223,
+              "targetScene":7
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 9,
-          "description": "Roof",
-          "background": "rom/Internal/B RHT-248.png",
-          "sceneTransitions": [
+          "id":9,
+          "description":"Roof",
+          "background":"rom/Internal/B RHT-248.png",
+          "sceneTransitions":[
             {
-              "x": 1240,
-              "y": 502,
-              "width": 222,
-              "height": 181,
-              "targetScene": 7
+              "x":1240,
+              "y":502,
+              "width":222,
+              "height":181,
+              "targetScene":7
             },
             {
-              "x": 388,
-              "y": 199,
-              "width": 390,
-              "height": 340,
-              "targetScene": 10
+              "x":388,
+              "y":199,
+              "width":390,
+              "height":340,
+              "targetScene":10
             }
           ],
-          "overlay_assets": [],
-          "items": []
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         },
         {
-          "id": 10,
-          "description": "Tower",
-          "background": "rom/Internal/B RPK-381.png",
-          "sceneTransitions": [],
-          "overlay_assets": [],
-          "items": []
+          "id":10,
+          "description":"Tower",
+          "background":"rom/Internal/B RPK-381.png",
+          "sceneTransitions":[
+            
+          ],
+          "overlay_assets":[
+            
+          ],
+          "items":[
+            
+          ],
+          "dialogs":[
+            
+          ]
         }
       ]
     }
   ],
-  "characters": [
+  "characters":[
     {
-      "name": "sickan",
-      "speed": 200.0,
-      "run_speed": 400.0
+      "name":"sickan",
+      "speed":200.0,
+      "run_speed":400.0
     },
     {
-      "name": "vanheden",
-      "speed": 200.0,
-      "run_speed": 400.0
+      "name":"vanheden",
+      "speed":200.0,
+      "run_speed":400.0
     },
     {
-      "name": "harry",
-      "speed": 200.0,
-      "run_speed": 400.0
+      "name":"harry",
+      "speed":200.0,
+      "run_speed":400.0
     }
   ],
-  "ui": {
-    "cursors": [
+  "ui":{
+    "cursors":[
       {
-        "cursor_type": "normal",
-        "texture": "Huvudmeny/inventory/norm-578_fix.png",
-        "hotspot": [
+        "cursor_type":"normal",
+        "texture":"Huvudmeny/inventory/norm-578_fix.png",
+        "hotspot":[
           10,
           10
         ]
       },
       {
-        "cursor_type": "move",
-        "texture": "Huvudmeny/inventory/out-588_fix.png",
-        "hotspot": [
+        "cursor_type":"move",
+        "texture":"Huvudmeny/inventory/out-588_fix.png",
+        "hotspot":[
           15,
           15
         ]
       },
       {
-        "cursor_type": "take",
-        "texture": "Huvudmeny/inventory/take-580_fix.png",
-        "hotspot": [
+        "cursor_type":"take",
+        "texture":"Huvudmeny/inventory/take-580_fix.png",
+        "hotspot":[
           5,
           5
         ]
       },
       {
-        "cursor_type": "talk",
-        "texture": "Huvudmeny/inventory/talk-584_fix.png",
-        "hotspot": [
+        "cursor_type":"talk",
+        "texture":"Huvudmeny/inventory/talk-584_fix.png",
+        "hotspot":[
           5,
           5
         ]
       }
     ],
-    "menuItems": []
+    "menuItems":[
+      
+    ]
   },
-  "items": [
+  "items":[
     {
-      "id": 0,
-      "name": "Dynamit 1",
-      "textures": {
-        "in_world": "Huvudmeny/inventory/Dynamit1Boxen.png",
-        "mouse_over": "Huvudmeny/inventory/Dynamit1BoxenR.png",
-        "in_inventory": "Huvudmeny/inventory/Dynamit1Inven.png",
-        "in_inventory_text": "Huvudmeny/inventory/Dynamit1InvenR.png"
+      "id":0,
+      "name":"Dynamit 1",
+      "textures":{
+        "in_world":"Huvudmeny/inventory/Dynamit1Boxen.png",
+        "mouse_over":"Huvudmeny/inventory/Dynamit1BoxenR.png",
+        "in_inventory":"Huvudmeny/inventory/Dynamit1Inven.png",
+        "in_inventory_text":"Huvudmeny/inventory/Dynamit1InvenR.png"
       }
     },
     {
-      "id": 1,
-      "name": "Dynamit 2",
-      "textures": {
-        "in_world": "Huvudmeny/inventory/Dynamit2Boxen.png",
-        "mouse_over": "Huvudmeny/inventory/Dynamit2BoxenR.png",
-        "in_inventory": "Huvudmeny/inventory/Dynamit2Inven.png",
-        "in_inventory_text": "Huvudmeny/inventory/Dynamit2InvenR.png"
+      "id":1,
+      "name":"Dynamit 2",
+      "textures":{
+        "in_world":"Huvudmeny/inventory/Dynamit2Boxen.png",
+        "mouse_over":"Huvudmeny/inventory/Dynamit2BoxenR.png",
+        "in_inventory":"Huvudmeny/inventory/Dynamit2Inven.png",
+        "in_inventory_text":"Huvudmeny/inventory/Dynamit2InvenR.png"
       }
     },
     {
-      "id": 2,
-      "name": "Dynamit 3",
-      "textures": {
-        "in_world": "Huvudmeny/inventory/Dynamit3Boxen.png",
-        "mouse_over": "Huvudmeny/inventory/Dynamit3BoxenR.png",
-        "in_inventory": "Huvudmeny/inventory/Dynamit3Inven.png",
-        "in_inventory_text": "Huvudmeny/inventory/Dynamit3InvenR.png"
+      "id":2,
+      "name":"Dynamit 3",
+      "textures":{
+        "in_world":"Huvudmeny/inventory/Dynamit3Boxen.png",
+        "mouse_over":"Huvudmeny/inventory/Dynamit3BoxenR.png",
+        "in_inventory":"Huvudmeny/inventory/Dynamit3Inven.png",
+        "in_inventory_text":"Huvudmeny/inventory/Dynamit3InvenR.png"
       }
     },
     {
-      "id": 3,
-      "name": "Dynamit 4",
-      "textures": {
-        "in_world": "Huvudmeny/inventory/Dynamit4Boxen.png",
-        "mouse_over": "Huvudmeny/inventory/Dynamit4BoxenR.png",
-        "in_inventory": "Huvudmeny/inventory/Dynamit4Inven.png",
-        "in_inventory_text": "Huvudmeny/inventory/Dynamit4InvenR.png"
+      "id":3,
+      "name":"Dynamit 4",
+      "textures":{
+        "in_world":"Huvudmeny/inventory/Dynamit4Boxen.png",
+        "mouse_over":"Huvudmeny/inventory/Dynamit4BoxenR.png",
+        "in_inventory":"Huvudmeny/inventory/Dynamit4Inven.png",
+        "in_inventory_text":"Huvudmeny/inventory/Dynamit4InvenR.png"
       }
     },
     {
-      "id": 4,
-      "name": "Dynamit 5",
-      "textures": {
-        "in_world": "Huvudmeny/inventory/Dynamit5Boxen.png",
-        "mouse_over": "Huvudmeny/inventory/Dynamit5BoxenR.png",
-        "in_inventory": "Huvudmeny/inventory/Dynamit5Inven.png",
-        "in_inventory_text": "Huvudmeny/inventory/Dynamit5InvenR.png"
+      "id":4,
+      "name":"Dynamit 5",
+      "textures":{
+        "in_world":"Huvudmeny/inventory/Dynamit5Boxen.png",
+        "mouse_over":"Huvudmeny/inventory/Dynamit5BoxenR.png",
+        "in_inventory":"Huvudmeny/inventory/Dynamit5Inven.png",
+        "in_inventory_text":"Huvudmeny/inventory/Dynamit5InvenR.png"
       }
     }
   ]

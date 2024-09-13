@@ -60,6 +60,31 @@ pub struct SceneTransition {
 }
 
 #[derive(Deserialize, Debug, Clone)]
+pub struct Dialog {
+    pub x: f32,
+    pub y: f32,
+    pub width: f32,
+    pub height: f32,
+    pub description: String,
+    pub tree: Vec<DialogNode>,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct DialogNode {
+    pub level: u32,
+    pub options: Vec<DialogOption>,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct DialogOption {
+    #[serde(rename = "option_id")]
+    pub id: u32,
+    pub text: String,
+    pub response_audio: Vec<String>,
+    pub target: u32,
+}
+
+#[derive(Deserialize, Debug, Clone)]
 pub struct BlockedNodeDataCollection {
     blocked_node_data: Vec<BlockedNodeData>,
 }
@@ -82,6 +107,7 @@ pub struct Scene {
     pub items: Vec<ItemInstance>,
     #[serde(skip)]
     pub blocked_nodes: Vec<(i32, i32)>,
+    pub dialogs: Vec<Dialog>,
 }
 
 #[derive(Debug, Clone, Deserialize)]

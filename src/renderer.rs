@@ -512,6 +512,7 @@ impl Renderer {
                 self.draw_level_list(game);
             }
             self.draw_debug_info(game);
+            self.draw_dialog_boxes(game);
         }
     }
 
@@ -570,6 +571,20 @@ impl Renderer {
 
                 draw_rectangle_lines(x, y, width, height, 2.0, BLUE);
                 let text = format!("#{}", transition.target_scene);
+                draw_text(&text, x, y, 40.0 * self.get_scale(), WHITE);
+            }
+        }
+    }
+
+    fn draw_dialog_boxes(&self, game: &Game) {
+        if let Some(current_scene) = game.get_current_scene() {
+            for dialog in &current_scene.dialogs {
+                let (x, y) = self.get_scaled_pos(dialog.x, dialog.y);
+                let width = dialog.width * self.get_scale();
+                let height = dialog.height * self.get_scale();
+
+                draw_rectangle_lines(x, y, width, height, 2.0, MAGENTA);
+                let text = format!("#{}", dialog.description);
                 draw_text(&text, x, y, 40.0 * self.get_scale(), WHITE);
             }
         }
