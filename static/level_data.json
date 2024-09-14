@@ -8,6 +8,7 @@
           "id":0,
           "description":"Attic",
           "background":"stockholm/Internal/B GHV-210.png",
+          "background_music":"Huvudmeny/ljudfx/radiomusik.wav",
           "sceneTransitions":[
             {
               "x":295,
@@ -158,6 +159,7 @@
           "id":1,
           "description":"Outside the house",
           "background":"stockholm/Internal/B GHU-191.png",
+          "background_music":"Huvudmeny/ljudfx/041.wav",
           "sceneTransitions":[
             {
               "x":790,
@@ -211,6 +213,7 @@
           "id":2,
           "description":"At the car",
           "background":"stockholm/Internal/B Bilscen-229.png",
+          "background_music":"Huvudmeny/ljudfx/040.wav",
           "sceneTransitions":[
             {
               "x":0,

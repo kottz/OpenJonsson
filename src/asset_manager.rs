@@ -4,7 +4,7 @@ use std::collections::HashMap;
 
 pub struct AssetManager {
     textures: HashMap<String, Texture2D>,
-    sounds: HashMap<String, Sound>,
+    pub sounds: HashMap<String, Sound>,
     loading_textures: Vec<String>,
     fonts: HashMap<String, Font>,
 }

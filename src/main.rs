@@ -1,9 +1,11 @@
 mod asset_manager;
+mod audio;
 mod config;
 mod renderer;
 
 use crate::config::{character, dialog, inventory};
 use asset_manager::AssetManager;
+use audio::AudioSystem;
 use macroquad::prelude::*;
 use renderer::Renderer;
 use serde::Deserialize;
@@ -124,6 +126,7 @@ pub struct Scene {
     #[serde(skip)]
     pub blocked_nodes: Vec<(i32, i32)>,
     pub dialogs: Vec<Dialog>,
+    pub background_music: Option<String>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -389,6 +392,7 @@ struct Game {
     asset_manager: AssetManager,
     inventory: InventoryData,
     dialog_menu: DialogMenu,
+    audio_system: AudioSystem,
 }
 
 struct DebugTools {
@@ -518,9 +522,11 @@ impl Game {
             asset_manager,
             inventory: InventoryData::new(),
             dialog_menu: DialogMenu::new(),
+            audio_system: AudioSystem::new(),
         };
 
         game.load_level_scenes(game.current_level);
+        game.load_audio_assets().await?;
         game.load_current_and_adjacent_scenes().await;
         game.load_characters().await;
         game.load_debug_textures().await;
@@ -546,6 +552,24 @@ impl Game {
             }
         }
         self.asset_manager.load_textures(&textures_to_load).await;
+    }
+
+    async fn load_audio_assets(&mut self) -> Result<(), String> {
+        let mut audio_files = std::collections::HashSet::new();
+
+        for level in &self.levels {
+            for scene in &level.scenes {
+                if let Some(music) = &scene.background_music {
+                    audio_files.insert(music.clone());
+                }
+            }
+        }
+
+        for audio_file in audio_files {
+            self.asset_manager.load_sound(&audio_file).await?;
+        }
+
+        Ok(())
     }
 
     async fn load_fonts(&mut self) -> Result<(), String> {
@@ -948,6 +972,17 @@ impl Game {
         }
     }
 
+    fn update_scene_audio(&mut self) {
+        let current_music = self
+            .get_current_scene()
+            .and_then(|scene| scene.background_music.clone());
+
+        match current_music {
+            Some(music) => self.audio_system.play_music(&self.asset_manager, &music),
+            None => self.audio_system.stop_music(&self.asset_manager),
+        }
+    }
+
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
         if !self.renderer.is_in_game_area(game_pos) {
             return;
@@ -1203,6 +1238,7 @@ impl Game {
         }
 
         self.load_current_and_adjacent_scenes().await;
+        self.update_scene_audio();
     }
 
     fn get_transition_data(
