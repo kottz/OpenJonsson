@@ -425,7 +425,7 @@ impl Renderer {
     fn draw_scene_description(&self, scene: &Scene) {
         let (desc_x, desc_y) = self.get_scaled_pos(20.0, 20.0);
         draw_text(
-            format!("#{} - {}", scene.id, scene.description).as_str(),
+            format!("#{} - {} - {}", scene.id, scene.name, scene.description).as_str(),
             desc_x,
             desc_y,
             30.0 * self.get_scale(),

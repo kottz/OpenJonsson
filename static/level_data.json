@@ -6,6 +6,7 @@
       "scenes":[
         {
           "id":0,
+          "name":"GHV",
           "description":"Attic",
           "background":"stockholm/Internal/B GHV-210.png",
           "background_music":"Huvudmeny/ljudfx/radiomusik.wav",
@@ -85,7 +86,7 @@
                       "option_id":0,
                       "text":"Öh, Doris! Kan inte du ropa på Ingo?",
                       "response_audio":[
-                        "voice/GHV/GHV_DG1_D_1_1"
+                        "DG1_D_1_1"
                       ],
                       "target":1
                     },
@@ -93,7 +94,7 @@
                       "option_id":1,
                       "text":"Doris! Vi är törstiga, skicka upp lite dricka!",
                       "response_audio":[
-                        "voice/GHV/GHV_DG1_D_1_2"
+                        "DG1_D_1_2"
                       ],
                       "target":1
                     }
@@ -114,7 +115,7 @@
                       "option_id":1,
                       "text":"Vi håller på och löser korsord!",
                       "response_audio":[
-                        "voice/GHV/GHV_DG1_D_1_2"
+                        "DG1_D_1_2"
                       ],
                       "target":1
                     }
@@ -127,7 +128,7 @@
                       "option_id":0,
                       "text":"Ja, vad heter Sveriges första och enda världsmästare i tungvikts boxning?",
                       "response_audio":[
-                        "voice/GHV/GHV_DG1_D_3_1"
+                        "DG1_D_3_1"
                       ],
                       "target":1
                     },
@@ -135,9 +136,9 @@
                       "option_id":1,
                       "text":"Bra! Vad hette Beatles trummis i förnamn?",
                       "response_audio":[
-                        "voice/GHV/GHV_DG1_D_3_2",
-                        "voice/GHV/GHV_DG1_D_3_2_1",
-                        "voice/GHV/GHV_DG1_D_3_2_2"
+                        "DG1_D_3_2",
+                        "DG1_D_3_2_1",
+                        "DG1_D_3_2_2"
                       ],
                       "target":1
                     },
@@ -145,7 +146,7 @@
                       "option_id":2,
                       "text":"Ja, vet du vad Norges kung heter?",
                       "response_audio":[
-                        "voice/GHV/GHV_DG1_D_3_3"
+                        "DG1_D_3_3"
                       ],
                       "target":1
                     }
@@ -157,6 +158,7 @@
         },
         {
           "id":1,
+          "name":"GHU",
           "description":"Outside the house",
           "background":"stockholm/Internal/B GHU-191.png",
           "background_music":"Huvudmeny/ljudfx/041.wav",
@@ -211,6 +213,7 @@
         },
         {
           "id":2,
+          "name":"Bilscen",
           "description":"At the car",
           "background":"stockholm/Internal/B Bilscen-229.png",
           "background_music":"Huvudmeny/ljudfx/040.wav",
@@ -253,6 +256,7 @@
         },
         {
           "id":3,
+          "name":"AFF",
           "description":"Amundsen's house - Front",
           "background":"stockholm/Internal/B AFF-286.png",
           "sceneTransitions":[
@@ -301,6 +305,7 @@
         },
         {
           "id":4,
+          "name":"AFB",
           "description":"Amundsen's house - Back",
           "background":"stockholm/Internal/B AFB-305.png",
           "sceneTransitions":[
@@ -366,6 +371,7 @@
         },
         {
           "id":5,
+          "name":"AFN",
           "description":"Amundsen's house - Downstairs",
           "background":"stockholm/Internal/B AFN-324.png",
           "sceneTransitions":[
@@ -419,6 +425,7 @@
         },
         {
           "id":6,
+          "name":"AFUE",
           "description":"Amundsen's house - Upstairs - First hallway",
           "background":"stockholm/Internal/B AFUE-343.png",
           "sceneTransitions":[
@@ -456,6 +463,7 @@
         },
         {
           "id":7,
+          "name":"AFU",
           "description":"Amundsen's house - Upstairs - Second hallway",
           "background":"stockholm/Internal/B AFU-382.png",
           "sceneTransitions":[
@@ -486,6 +494,7 @@
         },
         {
           "id":8,
+          "name":"AFK",
           "description":"Amundsen's house - Upstairs -  Amundsen's office",
           "background":"stockholm/Internal/B AFK-400.png",
           "sceneTransitions":[
@@ -509,6 +518,7 @@
         },
         {
           "id":9,
+          "name":"AFKE",
           "description":"Amundsen's house - Upstairs -  2nd office",
           "background":"stockholm/Internal/B AFKE-362.png",
           "sceneTransitions":[
@@ -532,6 +542,7 @@
         },
         {
           "id":10,
+          "name":"WEG",
           "description":"Wall-Enberg street outside office",
           "background":"stockholm/Internal/B WEG-609.png",
           "sceneTransitions":[
@@ -555,6 +566,7 @@
         },
         {
           "id":11,
+          "name":"Whall",
           "description":"Wall-Enberg office secretary",
           "background":"stockholm/Internal/B Whall-438.png",
           "sceneTransitions":[
@@ -585,6 +597,7 @@
         },
         {
           "id":12,
+          "name":"WEK",
           "description":"Wall-Enberg office",
           "background":"stockholm/Internal/B WEK-454.png",
           "sceneTransitions":[
@@ -614,6 +627,7 @@
       "scenes":[
         {
           "id":0,
+          "name":"PG2",
           "description":"Start - Painter's street",
           "background":"paris/Internal/B PG2-217.png",
           "sceneTransitions":[
@@ -644,6 +658,7 @@
         },
         {
           "id":1,
+          "name":"PUL",
           "description":"Outside the Louvre",
           "background":"paris/Internal/B PUL-235.png",
           "sceneTransitions":[
@@ -674,6 +689,7 @@
         },
         {
           "id":2,
+          "name":"PL",
           "description":"Inside the Louvre - Outer Room",
           "background":"paris/Internal/B PL-253.png",
           "sceneTransitions":[
@@ -704,6 +720,7 @@
         },
         {
           "id":3,
+          "name":"PLL",
           "description":"Inside the Louvre - Mona Lisa Room",
           "background":"paris/Internal/B PLL-271.png",
           "sceneTransitions":[
@@ -727,6 +744,7 @@
         },
         {
           "id":4,
+          "name":"PG1",
           "description":"Souvenir stand street",
           "background":"paris/Internal/B PG1-181.png",
           "sceneTransitions":[
@@ -757,6 +775,7 @@
         },
         {
           "id":5,
+          "name":"PGK",
           "description":"Butcher shop",
           "background":"paris/Internal/B PGK-199.png",
           "sceneTransitions":[
@@ -786,6 +805,7 @@
       "scenes":[
         {
           "id":0,
+          "name":"LHG",
           "description":"Start street corner",
           "background":"london/Internal/B LHG-158.png",
           "sceneTransitions":[
@@ -823,6 +843,7 @@
         },
         {
           "id":1,
+          "name":"LHK",
           "description":"Hotel Lobby",
           "background":"london/Internal/B LHK-222.png",
           "sceneTransitions":[
@@ -853,6 +874,7 @@
         },
         {
           "id":2,
+          "name":"LHR",
           "description":"Hotel Room",
           "background":"london/Internal/B LHR-205.png",
           "sceneTransitions":[
@@ -876,6 +898,7 @@
         },
         {
           "id":3,
+          "name":"LHF",
           "description":"Shop street - Royal beds",
           "background":"london/Internal/B LHF-239.png",
           "sceneTransitions":[
@@ -920,6 +943,7 @@
         },
         {
           "id":4,
+          "name":"LHM",
           "description":"Royal Beds",
           "background":"london/Internal/B LHM-256.png",
           "sceneTransitions":[
@@ -943,6 +967,7 @@
         },
         {
           "id":5,
+          "name":"LHS",
           "description":"Tailor",
           "background":"london/Internal/B LHS-273.png",
           "sceneTransitions":[
@@ -966,6 +991,7 @@
         },
         {
           "id":6,
+          "name":"LMS",
           "description":"Second street",
           "background":"london/Internal/B LMS-375.png",
           "sceneTransitions":[
@@ -996,6 +1022,7 @@
         },
         {
           "id":7,
+          "name":"LUS",
           "description":"Outside Buckingham Palace",
           "background":"london/Internal/B LUS-392.png",
           "sceneTransitions":[
@@ -1026,6 +1053,7 @@
         },
         {
           "id":8,
+          "name":"LUDR",
           "description":"Inside Buckingham Palace - Stairs",
           "background":"london/Internal/B LUDR-426.png",
           "sceneTransitions":[
@@ -1056,6 +1084,7 @@
         },
         {
           "id":9,
+          "name":"LTR",
           "description":"Queen's Room",
           "background":"london/Internal/B LTR-290.png",
           "sceneTransitions":[
@@ -1079,6 +1108,7 @@
         },
         {
           "id":10,
+          "name":"LPH",
           "description":"Grass path to bar",
           "background":"london/Internal/B LPH-307.png",
           "sceneTransitions":[
@@ -1109,6 +1139,7 @@
         },
         {
           "id":11,
+          "name":"LPU",
           "description":"Outside bar",
           "background":"london/Internal/B LPU-324.png",
           "sceneTransitions":[
@@ -1139,6 +1170,7 @@
         },
         {
           "id":12,
+          "name":"LPP",
           "description":"Bar",
           "background":"london/Internal/B LPP-341.png",
           "sceneTransitions":[
@@ -1169,6 +1201,7 @@
         },
         {
           "id":13,
+          "name":"LPR",
           "description":"Bar Office",
           "background":"london/Internal/B LPR-358.png",
           "sceneTransitions":[
@@ -1198,6 +1231,7 @@
       "scenes":[
         {
           "id":0,
+          "name":"BMB",
           "description":"Start street - T-junction",
           "background":"berlin/Internal/B BMB-217.png",
           "sceneTransitions":[
@@ -1228,6 +1262,7 @@
         },
         {
           "id":1,
+          "name":"BMA",
           "description":"Street - Top Left",
           "background":"berlin/Internal/B BMA-199.png",
           "sceneTransitions":[
@@ -1258,6 +1293,7 @@
         },
         {
           "id":2,
+          "name":"BMG",
           "description":"Souvenir Stand",
           "background":"berlin/Internal/B BMG-181.png",
           "sceneTransitions":[
@@ -1288,6 +1324,7 @@
         },
         {
           "id":3,
+          "name":"BMC",
           "description":"Bottom left junction",
           "background":"berlin/Internal/B BMC-235.png",
           "sceneTransitions":[
@@ -1325,6 +1362,7 @@
         },
         {
           "id":4,
+          "name":"BJM",
           "description":"Mountain Entrance",
           "background":"berlin/Internal/B BJM-253.png",
           "sceneTransitions":[
@@ -1355,6 +1393,7 @@
         },
         {
           "id":5,
+          "name":"BJM1",
           "description":"Mountain - First T-junction",
           "background":"berlin/Internal/B BJM1-379.png",
           "sceneTransitions":[
@@ -1392,6 +1431,7 @@
         },
         {
           "id":6,
+          "name":"BJM15",
           "description":"Mountain - First Left pass",
           "background":"berlin/Internal/B BJM15-631.png",
           "sceneTransitions":[
@@ -1422,6 +1462,7 @@
         },
         {
           "id":7,
+          "name":"BJM14",
           "description":"Mountain - 5-way Junction",
           "background":"berlin/Internal/B BJM14-613.png",
           "sceneTransitions":[
@@ -1473,6 +1514,7 @@
         },
         {
           "id":8,
+          "name":"BJM4",
           "description":"Mountain - Fat T-Junction - Left from 5-way",
           "background":"berlin/Internal/B BJM4-433.png",
           "sceneTransitions":[
@@ -1510,6 +1552,7 @@
         },
         {
           "id":9,
+          "name":"BJM12",
           "description":"Mountain - Top T-Junction - Top Left from 5-way",
           "background":"berlin/Internal/B BJM12-577.png",
           "sceneTransitions":[
@@ -1547,6 +1590,7 @@
         },
         {
           "id":10,
+          "name":"BJM13",
           "description":"Mountain - Passage with traveller - Top Right from 5-way",
           "background":"berlin/Internal/B BJM13-595.png",
           "sceneTransitions":[
@@ -1577,6 +1621,7 @@
         },
         {
           "id":11,
+          "name":"BJM8",
           "description":"Mountain - Passage - Right from 5-way",
           "background":"berlin/Internal/B BJM8-505.png",
           "sceneTransitions":[
@@ -1607,6 +1652,7 @@
         },
         {
           "id":12,
+          "name":"BJM8_12",
           "description":"Mountain - Passage - Right from 5-way",
           "background":"berlin/Internal/B BJM8-505.png",
           "sceneTransitions":[
@@ -1637,6 +1683,7 @@
         },
         {
           "id":13,
+          "name":"BJM7_13",
           "description":"Mountain - Top Left Stop with Piece - Left->Up->Left from 5-way",
           "background":"berlin/Internal/B BJM7-487.png",
           "sceneTransitions":[
@@ -1660,6 +1707,7 @@
         },
         {
           "id":14,
+          "name":"BJM12_14",
           "description":"Mountain - Top T-Junction ABOVE TRAVELLER - Top Right->Up from 5-way #1",
           "background":"berlin/Internal/B BJM12-577.png",
           "sceneTransitions":[
@@ -1697,6 +1745,7 @@
         },
         {
           "id":15,
+          "name":"BJM1_15",
           "description":"Mountain - T-junction with bottom right piece - Above traveller and then right",
           "background":"berlin/Internal/B BJM1-379.png",
           "sceneTransitions":[
@@ -1734,6 +1783,7 @@
         },
         {
           "id":16,
+          "name":"BJM4_16",
           "description":"Mountain - Fat T-Junction - Above Traveller->Right->Down",
           "background":"berlin/Internal/B BJM4-433.png",
           "sceneTransitions":[
@@ -1771,6 +1821,7 @@
         },
         {
           "id":17,
+          "name":"BJM10_17",
           "description":"Mountain - Fat T-Junction - Above Traveller->Right->Down->Right OR First T-junction->Right->Up->Right",
           "background":"berlin/Internal/B BJM10-541.png",
           "sceneTransitions":[
@@ -1794,6 +1845,7 @@
         },
         {
           "id":18,
+          "name":"BJM13_18",
           "description":"Mountain - above traveller->right->up",
           "background":"berlin/Internal/B BJM13-595.png",
           "sceneTransitions":[
@@ -1824,6 +1876,7 @@
         },
         {
           "id":19,
+          "name":"BJM1_19",
           "description":"Mountain - Above Traveller->Right->Up->Up",
           "background":"berlin/Internal/B BJM1-379.png",
           "sceneTransitions":[
@@ -1861,6 +1914,7 @@
         },
         {
           "id":20,
+          "name":"BJM24_20",
           "description":"Mountain - Exit to Castle - Above Traveller->Right->Up->Up->Up",
           "background":"berlin/Internal/B BJM24-793.png",
           "sceneTransitions":[
@@ -1891,6 +1945,7 @@
         },
         {
           "id":21,
+          "name":"BJM20_21",
           "description":"Mountain - 3-way to ?? - Above Traveller->Right->Up->Up->Left",
           "background":"berlin/Internal/B BJM20-721.png",
           "sceneTransitions":[
@@ -1928,6 +1983,7 @@
         },
         {
           "id":22,
+          "name":"BJM13_22",
           "description":"Mountain - Passage way - Above 3-way to ??",
           "background":"berlin/Internal/B BJM13-595.png",
           "sceneTransitions":[
@@ -1958,6 +2014,7 @@
         },
         {
           "id":23,
+          "name":"BJM17_23",
           "description":"Mountain - Passage way - Above Above 3-way to ??",
           "background":"berlin/Internal/B BJM17-667.png",
           "sceneTransitions":[
@@ -1988,6 +2045,7 @@
         },
         {
           "id":24,
+          "name":"BJM23_24",
           "description":"Mountain - Dead end with Top-Left piece -Above Above Above 3-way to ??",
           "background":"berlin/Internal/B BJM23-775.png",
           "sceneTransitions":[
@@ -2011,6 +2069,7 @@
         },
         {
           "id":25,
+          "name":"BJM17_25",
           "description":"Mountain - Passage way - Under 3-way to ??",
           "background":"berlin/Internal/B BJM17-667.png",
           "sceneTransitions":[
@@ -2041,6 +2100,7 @@
         },
         {
           "id":26,
+          "name":"BJM14_26",
           "description":"Mountain - SECOND 5-way Junction",
           "background":"berlin/Internal/B BJM14-613.png",
           "sceneTransitions":[
@@ -2092,6 +2152,7 @@
         },
         {
           "id":27,
+          "name":"BJM10_27",
           "description":"Mountain - Dead End to the right - Right of SECOND 5-way junction",
           "background":"berlin/Internal/B BJM10-541.png",
           "sceneTransitions":[
@@ -2115,6 +2176,7 @@
         },
         {
           "id":28,
+          "name":"BJM15_28",
           "description":"Mountain - Left pass with woman - Left of SECOND 5-way junction",
           "background":"berlin/Internal/B BJM15-631.png",
           "sceneTransitions":[
@@ -2145,6 +2207,7 @@
         },
         {
           "id":29,
+          "name":"BJM19_29",
           "description":"Mountain - Right bend with top-right piece - Above Woman - Left->up of SECOND 5-way junction",
           "background":"berlin/Internal/B BJM19-703.png",
           "sceneTransitions":[
@@ -2175,6 +2238,7 @@
         },
         {
           "id":30,
+          "name":"BJM18_30",
           "description":"Mountain - Horizontal Passage - Left->up->Right of SECOND 5-way junction",
           "background":"berlin/Internal/B BJM18-685.png",
           "sceneTransitions":[
@@ -2205,6 +2269,7 @@
         },
         {
           "id":31,
+          "name":"BJS",
           "description":"Castle - Outside",
           "background":"berlin/Internal/B BJS-271.png",
           "sceneTransitions":[
@@ -2235,6 +2300,7 @@
         },
         {
           "id":32,
+          "name":"BJB",
           "description":"Castle - Basement",
           "background":"berlin/Internal/B BJB-289.png",
           "sceneTransitions":[
@@ -2265,6 +2331,7 @@
         },
         {
           "id":33,
+          "name":"BJH",
           "description":"Castle - Hallway",
           "background":"berlin/Internal/B BJH-325.png",
           "sceneTransitions":[
@@ -2323,6 +2390,7 @@
         },
         {
           "id":34,
+          "name":"BJH2",
           "description":"Castle - Hallway 2 - At the shield on the wall",
           "background":"berlin/Internal/B BJH2-343.png",
           "sceneTransitions":[
@@ -2367,6 +2435,7 @@
         },
         {
           "id":35,
+          "name":"LAB",
           "description":"Castle - Slip'n'Slide away",
           "background":"berlin/Internal/B LAB-363.png",
           "sceneTransitions":[
@@ -2396,6 +2465,7 @@
       "scenes":[
         {
           "id":0,
+          "name":"RHG",
           "description":"Start street - Dog and Shady guy",
           "background":"rom/Internal/B RHG-191.png",
           "sceneTransitions":[
@@ -2433,6 +2503,7 @@
         },
         {
           "id":1,
+          "name":"RHC",
           "description":"INTER INTER INTER",
           "background":"rom/Internal/B RHC-267.png",
           "sceneTransitions":[
@@ -2470,6 +2541,7 @@
         },
         {
           "id":2,
+          "name":"RHP",
           "description":"Pizzeria",
           "background":"rom/Internal/B RHP-304.png",
           "sceneTransitions":[
@@ -2493,6 +2565,7 @@
         },
         {
           "id":3,
+          "name":"RHA",
           "description":"Alley with window",
           "background":"rom/Internal/B RHA-362.png",
           "sceneTransitions":[
@@ -2523,6 +2596,7 @@
         },
         {
           "id":4,
+          "name":"RHB",
           "description":"Open Square with fountain",
           "background":"rom/Internal/B RHB-305.png",
           "sceneTransitions":[
@@ -2567,6 +2641,7 @@
         },
         {
           "id":5,
+          "name":"RHI",
           "description":"Piano shop",
           "background":"rom/Internal/B RHI-324.png",
           "sceneTransitions":[
@@ -2590,6 +2665,7 @@
         },
         {
           "id":6,
+          "name":"RHM",
           "description":"Glass shop",
           "background":"rom/Internal/B RHM-343.png",
           "sceneTransitions":[
@@ -2613,6 +2689,7 @@
         },
         {
           "id":7,
+          "name":"RHK",
           "description":"Hotel Lobby",
           "background":"rom/Internal/B RHK-210.png",
           "sceneTransitions":[
@@ -2650,6 +2727,7 @@
         },
         {
           "id":8,
+          "name":"RHR",
           "description":"Hotel Room",
           "background":"rom/Internal/B RHR-229.png",
           "sceneTransitions":[
@@ -2673,6 +2751,7 @@
         },
         {
           "id":9,
+          "name":"RHT",
           "description":"Roof",
           "background":"rom/Internal/B RHT-248.png",
           "sceneTransitions":[
@@ -2703,6 +2782,7 @@
         },
         {
           "id":10,
+          "name":"RPK",
           "description":"Tower",
           "background":"rom/Internal/B RPK-381.png",
           "sceneTransitions":[

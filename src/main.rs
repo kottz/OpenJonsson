@@ -117,6 +117,7 @@ pub struct BlockedNodeData {
 #[derive(Deserialize, Debug, Clone)]
 pub struct Scene {
     pub id: u32,
+    pub name: String,
     pub description: String,
     pub background: String,
     #[serde(rename = "sceneTransitions")]
