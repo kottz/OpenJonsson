@@ -1,52 +1,90 @@
 use crate::asset_manager::AssetManager;
-use macroquad::audio::{play_sound, set_sound_volume, stop_sound};
+use macroquad::audio::{play_sound, stop_sound, Sound};
+use std::collections::HashMap;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub enum AudioCategory {
+    Music,
+    Dialog,
+    SoundEffect,
+}
 
 pub struct AudioSystem {
-    current_music: Option<String>,
-    master_volume: f32,
+    volume_levels: HashMap<AudioCategory, f32>,
+    pub currently_playing: HashMap<AudioCategory, Option<String>>,
 }
 
 impl AudioSystem {
     pub fn new() -> Self {
+        let mut volume_levels = HashMap::new();
+        volume_levels.insert(AudioCategory::Music, 1.0);
+        volume_levels.insert(AudioCategory::Dialog, 1.0);
+        volume_levels.insert(AudioCategory::SoundEffect, 1.0);
+
         AudioSystem {
-            current_music: None,
-            master_volume: 1.0,
+            volume_levels,
+            currently_playing: HashMap::new(),
         }
     }
 
-    pub fn play_music(&mut self, asset_manager: &AssetManager, name: &str) {
-        if let Some(current_music) = &self.current_music {
-            if current_music == name {
-                return; // The requested music is already playing
-            }
-            self.stop_music(asset_manager);
-        }
-
+    pub fn play_audio(
+        &mut self,
+        asset_manager: &AssetManager,
+        name: &str,
+        category: AudioCategory,
+    ) {
         if let Some(sound) = asset_manager.get_sound(name) {
+            let volume = self.volume_levels.get(&category).cloned().unwrap_or(1.0);
+
+            // Stop any currently playing audio in the same category
+            if let Some(current_name) = self.currently_playing.get(&category).cloned().flatten() {
+                if current_name != name {
+                    if let Some(current_sound) = asset_manager.get_sound(&current_name) {
+                        stop_sound(current_sound);
+                    }
+                }
+            }
+
             play_sound(
                 sound,
                 macroquad::audio::PlaySoundParams {
-                    looped: true,
-                    volume: self.master_volume,
+                    looped: category == AudioCategory::Music,
+                    volume,
                 },
             );
-            self.current_music = Some(name.to_string());
+            self.currently_playing
+                .insert(category, Some(name.to_string()));
+            println!("Playing audio: {}", name); // Debug print
+        } else {
+            println!("Audio not found: {}", name); // Debug print
         }
+    }
+
+    pub fn stop_audio(&mut self, asset_manager: &AssetManager, category: &AudioCategory) {
+        if let Some(Some(current_name)) = self.currently_playing.get(category) {
+            if let Some(sound) = asset_manager.get_sound(current_name) {
+                stop_sound(sound);
+                self.currently_playing.insert(category.clone(), None);
+            }
+        }
+    }
+
+    pub fn set_volume(&mut self, category: AudioCategory, volume: f32) {
+        let clamped_volume = volume.clamp(0.0, 1.0);
+        self.volume_levels.insert(category, clamped_volume);
+        // Note: We can't update the volume of currently playing sounds here
+        // because we don't have access to the AssetManager
+    }
+
+    pub fn get_volume(&self, category: &AudioCategory) -> f32 {
+        *self.volume_levels.get(category).unwrap_or(&1.0)
+    }
+
+    pub fn play_music(&mut self, asset_manager: &AssetManager, name: &str) {
+        self.play_audio(asset_manager, name, AudioCategory::Music);
     }
 
     pub fn stop_music(&mut self, asset_manager: &AssetManager) {
-        if let Some(current_music) = &self.current_music {
-            if let Some(sound) = asset_manager.get_sound(current_music) {
-                stop_sound(sound);
-            }
-            self.current_music = None;
-        }
-    }
-
-    pub fn set_master_volume(&mut self, asset_manager: &AssetManager, volume: f32) {
-        self.master_volume = volume.clamp(0.0, 1.0);
-        for sound in asset_manager.sounds.values() {
-            set_sound_volume(sound, self.master_volume);
-        }
+        self.stop_audio(asset_manager, &AudioCategory::Music);
     }
 }

@@ -693,7 +693,7 @@ impl Renderer {
                         if let Some(dialog) =
                             current_scene.dialogs.iter().find(|d| d.id == dialog_id)
                         {
-                            if let Some(level) = dialog.tree.first() {
+                            if let Some(level) = dialog.tree.get(game.dialog_menu.current_level) {
                                 // Get the font outside the loop
                                 let dialog_font = asset_manager.get_font("dialog");
 

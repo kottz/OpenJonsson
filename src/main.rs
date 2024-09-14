@@ -5,12 +5,13 @@ mod renderer;
 
 use crate::config::{character, dialog, inventory};
 use asset_manager::AssetManager;
-use audio::AudioSystem;
+use audio::{AudioCategory, AudioSystem};
 use macroquad::prelude::*;
 use renderer::Renderer;
 use serde::Deserialize;
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap, HashSet};
+use macroquad::rand::ChooseRandom;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Direction {
@@ -89,6 +90,7 @@ pub struct DialogOption {
 pub struct DialogMenu {
     pub open: bool,
     pub current_dialog_id: Option<u32>,
+    pub current_level: usize,
     pub hovered_option: Option<usize>,
 }
 
@@ -97,6 +99,7 @@ impl DialogMenu {
         DialogMenu {
             open: false,
             current_dialog_id: None,
+            current_level: 0,
             hovered_option: None,
         }
     }
@@ -557,20 +560,54 @@ impl Game {
 
     async fn load_audio_assets(&mut self) -> Result<(), String> {
         let mut audio_files = std::collections::HashSet::new();
-
         for level in &self.levels {
             for scene in &level.scenes {
                 if let Some(music) = &scene.background_music {
                     audio_files.insert(music.clone());
                 }
+                // Add dialog audio files if needed
+                for dialog in &scene.dialogs {
+                    for level in &dialog.tree {
+                        for option in &level.options {
+                            for audio in &option.response_audio {
+                                let audio_path =
+                                    format!("voice/{}/{}_{}.wav", scene.name, scene.name, audio);
+                                audio_files.insert(audio_path);
+                            }
+                        }
+                    }
+                }
             }
         }
-
         for audio_file in audio_files {
             self.asset_manager.load_sound(&audio_file).await?;
         }
-
         Ok(())
+    }
+
+    // Update this method to work with the new AudioSystem
+    fn update_scene_audio(&mut self) {
+        let music_to_play = self
+            .get_current_scene()
+            .and_then(|scene| scene.background_music.clone());
+
+        match music_to_play {
+            Some(music) => {
+                // Check if the music is already playing
+                if self
+                    .audio_system
+                    .currently_playing
+                    .get(&AudioCategory::Music)
+                    != Some(&Some(music.clone()))
+                {
+                    self.audio_system.play_music(&self.asset_manager, &music);
+                }
+            }
+            None => {
+                // Stop the music if there's no background music for this scene
+                self.audio_system.stop_music(&self.asset_manager);
+            }
+        }
     }
 
     async fn load_fonts(&mut self) -> Result<(), String> {
@@ -973,17 +1010,6 @@ impl Game {
         }
     }
 
-    fn update_scene_audio(&mut self) {
-        let current_music = self
-            .get_current_scene()
-            .and_then(|scene| scene.background_music.clone());
-
-        match current_music {
-            Some(music) => self.audio_system.play_music(&self.asset_manager, &music),
-            None => self.audio_system.stop_music(&self.asset_manager),
-        }
-    }
-
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
         if !self.renderer.is_in_game_area(game_pos) {
             return;
@@ -1113,13 +1139,14 @@ impl Game {
     fn close_dialog_menu(&mut self) {
         self.dialog_menu.open = false;
         self.dialog_menu.current_dialog_id = None;
+        self.dialog_menu.current_level = 0;
     }
 
     fn get_clicked_dialog_option(&self, game_pos: Vec2) -> Option<usize> {
         if let Some(current_scene) = self.get_current_scene() {
             if let Some(dialog_id) = self.dialog_menu.current_dialog_id {
                 if let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id) {
-                    if let Some(level) = dialog.tree.first() {
+                    if let Some(level) = dialog.tree.get(self.dialog_menu.current_level) {
                         // Calculate the relative mouse position within the dialog area
                         let relative_pos = Vec2::new(
                             game_pos.x - dialog::OPTION_START_X,
@@ -1153,8 +1180,49 @@ impl Game {
     }
 
     fn handle_dialog_option_selection(&mut self, selected_option: usize) {
-        println!("Selected dialog option: {}", selected_option);
-        // TODO: Implement logic for handling the selected option
+        let mut audio_to_play = None;
+        let mut next_level = None;
+
+        if let Some(current_scene) = self.get_current_scene() {
+            if let Some(dialog_id) = self.dialog_menu.current_dialog_id {
+                if let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id) {
+                    if let Some(level) = dialog.tree.get(self.dialog_menu.current_level) {
+                        if let Some(option) = level.options.get(selected_option) {
+                            println!("Selected option: {}", option.text);
+                            if let Some(audio) = option.response_audio.choose() {
+                                audio_to_play = Some(format!(
+                                    "voice/{}/{}_{}.wav",
+                                    current_scene.name, current_scene.name, audio
+                                ));
+                            }
+                            next_level = Some(option.target as usize);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Now that we've gathered all the information, we can modify the state
+        if let Some(audio_path) = audio_to_play {
+            self.audio_system
+                .play_audio(&self.asset_manager, &audio_path, AudioCategory::Dialog);
+        }
+
+        if let Some(level) = next_level {
+            self.dialog_menu.current_level = level;
+            self.refresh_dialog_options();
+        }
+
+        // Use 100 as indication that the dialog should be closed
+        if next_level == Some(100) {
+            self.close_dialog_menu();
+        }
+    }
+
+    fn refresh_dialog_options(&mut self) {
+        println!("Refreshing dialog options");
+        // Implement this method to update the displayed dialog options
+        // based on the current level in the dialog tree
     }
 
     fn is_point_in_character(&self, point: Vec2, character_index: usize) -> bool {

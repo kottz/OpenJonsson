@@ -88,7 +88,7 @@
                       "response_audio":[
                         "DG1_D_1_1"
                       ],
-                      "target":1
+                      "target":100
                     },
                     {
                       "option_id":1,
@@ -109,15 +109,15 @@
                       "response_audio":[
                         
                       ],
-                      "target":1
+                      "target":100
                     },
                     {
                       "option_id":1,
                       "text":"Vi håller på och löser korsord!",
                       "response_audio":[
-                        "DG1_D_1_2"
+                        "DG1_D_2_1"
                       ],
-                      "target":1
+                      "target":2
                     }
                   ]
                 },
@@ -130,7 +130,7 @@
                       "response_audio":[
                         "DG1_D_3_1"
                       ],
-                      "target":1
+                      "target":100
                     },
                     {
                       "option_id":1,
@@ -140,7 +140,7 @@
                         "DG1_D_3_2_1",
                         "DG1_D_3_2_2"
                       ],
-                      "target":1
+                      "target":100
                     },
                     {
                       "option_id":2,
@@ -148,7 +148,7 @@
                       "response_audio":[
                         "DG1_D_3_3"
                       ],
-                      "target":1
+                      "target":100
                     }
                   ]
                 }

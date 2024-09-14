@@ -36,7 +36,7 @@ pub mod dialog {
     pub const OPTION_START_X: f32 = 45.0;
     pub const OPTION_START_Y: f32 = 30.0;
     pub const OPTION_SPACING: f32 = 55.0;
-    pub const OPTION_BOX_WIDTH: f32 = 1200.0;
+    pub const OPTION_BOX_WIDTH: f32 = 1280.0;
     pub const OPTION_BOX_HEIGHT: f32 = 50.0;
     pub const OPTION_TEXT_COLOR: Color = WHITE;
     pub const OPTION_HOVER_TEXT_COLOR: Color = YELLOW;
