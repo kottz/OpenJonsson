@@ -1478,6 +1478,14 @@ impl Game {
             }
         }
 
+        if is_key_pressed(KeyCode::M) && self.debug_tools.active {
+            if self.audio_system.is_muted() {
+                println!("Unmuting audio");
+            } else {
+                println!("Muting audio");
+            }
+            self.audio_system.toggle_mute(&self.asset_manager);
+        }
         if is_key_pressed(KeyCode::F3) {
             self.debug_instant_move = !self.debug_instant_move;
             println!("Debug instant move: {}", self.debug_instant_move);

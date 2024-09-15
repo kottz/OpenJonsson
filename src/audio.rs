@@ -1,5 +1,5 @@
 use crate::asset_manager::AssetManager;
-use macroquad::audio::{play_sound, stop_sound, Sound};
+use macroquad::audio::{play_sound, set_sound_volume, stop_sound, Sound};
 use std::collections::HashMap;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
@@ -86,5 +86,32 @@ impl AudioSystem {
 
     pub fn stop_music(&mut self, asset_manager: &AssetManager) {
         self.stop_audio(asset_manager, &AudioCategory::Music);
+    }
+
+    pub fn toggle_mute(&mut self, asset_manager: &AssetManager) {
+        // Calculate new volume (toggle between 0.0 and 1.0)
+        let new_volume = if self.volume_levels.values().any(|&v| v > 0.0) {
+            0.0
+        } else {
+            1.0
+        };
+
+        // Set new volume for all categories
+        for volume in self.volume_levels.values_mut() {
+            *volume = new_volume;
+        }
+
+        // Apply new volume to all playing sounds
+        for (_, name) in self.currently_playing.iter() {
+            if let Some(name) = name {
+                if let Some(sound) = asset_manager.get_sound(name) {
+                    set_sound_volume(sound, new_volume);
+                }
+            }
+        }
+    }
+
+    pub fn is_muted(&self) -> bool {
+        self.volume_levels.values().all(|&v| v == 0.0)
     }
 }
