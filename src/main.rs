@@ -1,9 +1,11 @@
 mod asset_manager;
 mod audio;
 mod config;
+mod dialog;
 mod renderer;
 
-use crate::config::{character, dialog, inventory};
+use crate::config::{character, inventory};
+use crate::dialog::{Dialog, DialogMenu};
 use asset_manager::AssetManager;
 use audio::{AudioCategory, AudioSystem};
 use macroquad::prelude::*;
@@ -59,50 +61,6 @@ pub struct SceneTransition {
     pub height: f32,
     #[serde(rename = "targetScene")]
     pub target_scene: u32,
-}
-
-#[derive(Deserialize, Debug, Clone)]
-pub struct Dialog {
-    pub id: u32,
-    pub x: f32,
-    pub y: f32,
-    pub width: f32,
-    pub height: f32,
-    pub description: String,
-    pub tree: Vec<DialogNode>,
-}
-
-#[derive(Deserialize, Debug, Clone)]
-pub struct DialogNode {
-    pub level: u32,
-    pub options: Vec<DialogOption>,
-}
-
-#[derive(Deserialize, Debug, Clone)]
-pub struct DialogOption {
-    #[serde(rename = "option_id")]
-    pub id: u32,
-    pub text: String,
-    pub response_audio: Vec<String>,
-    pub target: u32,
-}
-
-pub struct DialogMenu {
-    pub open: bool,
-    pub current_dialog_id: Option<u32>,
-    pub current_level: usize,
-    pub hovered_option: Option<usize>,
-}
-
-impl DialogMenu {
-    pub fn new() -> Self {
-        DialogMenu {
-            open: false,
-            current_dialog_id: None,
-            current_level: 0,
-            hovered_option: None,
-        }
-    }
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -1048,7 +1006,7 @@ impl Game {
 
         // Check if the dialog is open and the click is within the dialog area
         if self.dialog_menu.open {
-            let in_dialog_area = game_pos.y >= dialog::START_Y && game_pos.y <= 1440.0;
+            let in_dialog_area = game_pos.y >= config::dialog::START_Y && game_pos.y <= 1440.0;
             if in_dialog_area {
                 if let Some(selected_option) = self.get_clicked_dialog_option(game_pos) {
                     self.handle_dialog_option_selection(selected_option);
@@ -1149,17 +1107,17 @@ impl Game {
                     if let Some(level) = dialog.tree.get(self.dialog_menu.current_level) {
                         // Calculate the relative mouse position within the dialog area
                         let relative_pos = Vec2::new(
-                            game_pos.x - dialog::OPTION_START_X,
-                            game_pos.y - dialog::START_Y - dialog::OPTION_START_Y,
+                            game_pos.x - config::dialog::OPTION_START_X,
+                            game_pos.y - config::dialog::START_Y - config::dialog::OPTION_START_Y,
                         );
 
                         for (i, _) in level.options.iter().enumerate() {
-                            let option_y = i as f32 * dialog::OPTION_SPACING;
+                            let option_y = i as f32 * config::dialog::OPTION_SPACING;
                             let option_rect = Rect::new(
                                 0.0,
                                 option_y,
-                                dialog::OPTION_BOX_WIDTH,
-                                dialog::OPTION_BOX_HEIGHT,
+                                config::dialog::OPTION_BOX_WIDTH,
+                                config::dialog::OPTION_BOX_HEIGHT,
                             );
 
                             if option_rect.contains(relative_pos) {
