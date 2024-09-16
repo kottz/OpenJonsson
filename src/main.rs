@@ -1168,19 +1168,12 @@ impl Game {
 
         if let Some(level) = next_level {
             self.dialog_menu.current_level = level;
-            self.refresh_dialog_options();
         }
 
         // Use 100 as indication that the dialog should be closed
         if next_level == Some(100) {
             self.close_dialog_menu();
         }
-    }
-
-    fn refresh_dialog_options(&mut self) {
-        println!("Refreshing dialog options");
-        // Implement this method to update the displayed dialog options
-        // based on the current level in the dialog tree
     }
 
     fn is_point_in_character(&self, point: Vec2, character_index: usize) -> bool {
@@ -1534,6 +1527,7 @@ impl Game {
             println!("Invalid level index: {}", level_index);
         }
     }
+
     fn update_characters(&mut self, delta_time: f32) {
         for i in 0..self.characters.count {
             if let Some(path) = &mut self.characters.paths[i] {
