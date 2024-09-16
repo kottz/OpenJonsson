@@ -354,9 +354,11 @@ impl Renderer {
                     }
                 }
 
-                // Draw arrow buttons
-                self.draw_inventory_arrow(game, asset_manager, true); // Left arrow
-                self.draw_inventory_arrow(game, asset_manager, false); // Right arrow
+                if game.inventory.animation_frame > 11 {
+                    // Draw arrow buttons
+                    self.draw_inventory_arrow(game, asset_manager, true); // Left arrow
+                    self.draw_inventory_arrow(game, asset_manager, false); // Right arrow
+                }
             }
         } else {
             println!(
