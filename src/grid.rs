@@ -29,6 +29,10 @@ pub struct Grid {
     pub blocked_nodes: HashSet<(i32, i32)>,
 }
 
+// The original game uses a grid system to determine the position of the characters and
+// blocked areas of the map.
+// The grid is sheared and rotated to fit the isometric perspective of the game.
+// The a, m and stretch values have been experimentally determined to match the grid of the original game.
 impl Grid {
     pub fn new() -> Self {
         Self {
@@ -69,14 +73,13 @@ impl Grid {
     pub fn is_node_walkable(&self, node: (i32, i32)) -> bool {
         let (x, y) = node;
 
-        // Check if the node is not blocked
         if self.blocked_nodes.contains(&node) {
             return false;
         }
 
         // Check boundary conditions
         if x - y >= 16 {
-            return false;
+            return false; // Off the screen to the right
         }
         if y - x >= 16 {
             return false; // Off the screen on the left
