@@ -23,7 +23,7 @@ pub mod inventory {
 
 pub mod dialog {
     use macroquad::prelude::Color;
-    use macroquad::prelude::{GREEN, DARKGRAY, GRAY, WHITE, YELLOW, RED};
+    use macroquad::prelude::{DARKGRAY, GRAY, GREEN, RED, WHITE, YELLOW};
 
     pub const WIDTH: f32 = 1920.0;
     pub const HEIGHT: f32 = 258.0;
