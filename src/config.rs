@@ -29,7 +29,6 @@ pub mod dialog {
     pub const HEIGHT: f32 = 258.0;
     pub const START_Y: f32 = 1440.0 - HEIGHT;
     pub const TEXT_PADDING_X: f32 = 20.0;
-    pub const TEXT_PADDING_Y: f32 = 20.0;
     pub const FONT_SIZE: f32 = 40.0;
 
     // New configuration options
