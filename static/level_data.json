@@ -259,6 +259,7 @@
           "name":"AFF",
           "description":"Amundsen's house - Front",
           "background":"stockholm/Internal/B AFF-286.png",
+          "background_music":"Huvudmeny/ljudfx/smyg1.wav",
           "sceneTransitions":[
             {
               "x":1582,
@@ -308,6 +309,7 @@
           "name":"AFB",
           "description":"Amundsen's house - Back",
           "background":"stockholm/Internal/B AFB-305.png",
+          "background_music":"Huvudmeny/ljudfx/smyg1.wav",
           "sceneTransitions":[
             {
               "x":1105,
@@ -374,6 +376,7 @@
           "name":"AFN",
           "description":"Amundsen's house - Downstairs",
           "background":"stockholm/Internal/B AFN-324.png",
+          "background_music":"Huvudmeny/ljudfx/smyg1.wav",
           "sceneTransitions":[
             {
               "x":287,
