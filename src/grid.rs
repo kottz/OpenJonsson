@@ -94,6 +94,19 @@ impl Grid {
         true
     }
 
+    fn blocked_diagonals(&self, node: (i32, i32)) -> Vec<(i32, i32)> {
+        let mut blocked_diagonals = vec![];
+        for x in [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 0)].windows(2) {
+            let u = (node.0 + x[0].0, node.1 + x[0].1);
+            let v = (node.0 + x[1].0, node.1 + x[1].1);
+            let diagonal = (node.0 + x[0].0 + x[1].0, node.1 + x[0].1 + x[1].1);
+            if self.blocked_nodes.contains(&u) && self.blocked_nodes.contains(&v) {
+                blocked_diagonals.push(diagonal);
+            }
+        }
+        blocked_diagonals
+    }
+
     pub fn pathfind(&self, start: (i32, i32), goal: (i32, i32)) -> Option<Vec<(i32, i32)>> {
         let mut open_set = BinaryHeap::new();
         let mut came_from = HashMap::new();
@@ -114,10 +127,6 @@ impl Grid {
             }
 
             for neighbor in self.get_neighbors(current.position) {
-                if !self.is_node_walkable(neighbor) {
-                    continue; // Skip non-walkable nodes
-                }
-
                 let tentative_g_score = g_score[&current.position] + 1;
 
                 if tentative_g_score < *g_score.get(&neighbor).unwrap_or(&i32::MAX) {
@@ -148,11 +157,14 @@ impl Grid {
             (0, 1),
             (1, 1),
         ];
-
+        
+        // If the top and right neighbors are blocked, the top-right diagonal
+        // should be blocked. The same is true for the other diagonals
+        let blocked_diagonals = self.blocked_diagonals(pos);
         directions
             .iter()
             .map(|&(dx, dy)| (pos.0 + dx, pos.1 + dy))
-            .filter(|&pos| self.is_node_walkable(pos))
+            .filter(|&pos| self.is_node_walkable(pos) && !blocked_diagonals.contains(&pos))
             .collect()
     }
 
