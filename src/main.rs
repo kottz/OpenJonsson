@@ -450,6 +450,14 @@ impl Game {
         for audio_file in audio_files {
             self.asset_manager.load_sound(&audio_file).await?;
         }
+
+        // UI sounds
+        self.asset_manager
+            .load_sound("Huvudmeny/ljudfx/oppna.wav")
+            .await?;
+        self.asset_manager
+            .load_sound("Huvudmeny/ljudfx/stanga.wav")
+            .await?;
         Ok(())
     }
 
@@ -796,13 +804,26 @@ impl Game {
         }
     }
 
+    fn toggle_inventory(&mut self) {
+        self.inventory.open = !self.inventory.open;
+
+        let audio_path = if self.inventory.open {
+            "Huvudmeny/ljudfx/oppna.wav"
+        } else {
+            "Huvudmeny/ljudfx/stanga.wav"
+        };
+
+        self.audio_system
+            .play_audio(&self.asset_manager, audio_path, AudioCategory::SoundEffect);
+    }
+
     async fn handle_mouse_click(&mut self, game_pos: Vec2) {
         if !self.renderer.is_in_game_area(game_pos) {
             return;
         }
 
         if self.inventory.button_rect.contains(game_pos) {
-            self.inventory.open = !self.inventory.open;
+            self.toggle_inventory();
             return;
         }
 
@@ -827,7 +848,7 @@ impl Game {
             }
             // If the click is above the inventory, close it
             if game_pos.y < inventory_top {
-                self.inventory.open = false;
+                self.toggle_inventory();
                 return;
             }
         }
