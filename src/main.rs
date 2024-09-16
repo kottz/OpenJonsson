@@ -332,6 +332,88 @@ impl Grid {
 
         true
     }
+
+    fn pathfind(&self, start: (i32, i32), goal: (i32, i32)) -> Option<Vec<(i32, i32)>> {
+        let mut open_set = BinaryHeap::new();
+        let mut came_from = HashMap::new();
+        let mut g_score = HashMap::new();
+        let mut f_score = HashMap::new();
+
+        g_score.insert(start, 0);
+        f_score.insert(start, self.heuristic(start, goal));
+        open_set.push(Node {
+            position: start,
+            f_score: f_score[&start],
+            g_score: 0,
+        });
+
+        while let Some(current) = open_set.pop() {
+            if current.position == goal {
+                return Some(self.reconstruct_path(came_from, current.position));
+            }
+
+            for neighbor in self.get_neighbors(current.position) {
+                if !self.is_node_walkable(neighbor) {
+                    continue; // Skip non-walkable nodes
+                }
+
+                let tentative_g_score = g_score[&current.position] + 1;
+
+                if tentative_g_score < *g_score.get(&neighbor).unwrap_or(&i32::MAX) {
+                    came_from.insert(neighbor, current.position);
+                    g_score.insert(neighbor, tentative_g_score);
+                    let f = tentative_g_score + self.heuristic(neighbor, goal);
+                    f_score.insert(neighbor, f);
+                    open_set.push(Node {
+                        position: neighbor,
+                        f_score: f,
+                        g_score: tentative_g_score,
+                    });
+                }
+            }
+        }
+
+        None
+    }
+
+    fn get_neighbors(&self, pos: (i32, i32)) -> Vec<(i32, i32)> {
+        let directions = [
+            (-1, -1),
+            (0, -1),
+            (1, -1),
+            (-1, 0),
+            (1, 0),
+            (-1, 1),
+            (0, 1),
+            (1, 1),
+        ];
+
+        directions
+            .iter()
+            .map(|&(dx, dy)| (pos.0 + dx, pos.1 + dy))
+            .filter(|&pos| self.is_node_walkable(pos))
+            .collect()
+    }
+
+    fn heuristic(&self, a: (i32, i32), b: (i32, i32)) -> i32 {
+        let dx = (a.0 - b.0).abs();
+        let dy = (a.1 - b.1).abs();
+        (dx + dy) + (1414 - 1000) * dx.min(dy)
+    }
+
+    fn reconstruct_path(
+        &self,
+        came_from: HashMap<(i32, i32), (i32, i32)>,
+        mut current: (i32, i32),
+    ) -> Vec<(i32, i32)> {
+        let mut path = vec![current];
+        while let Some(&prev) = came_from.get(&current) {
+            path.push(prev);
+            current = prev;
+        }
+        path.reverse();
+        path
+    }
 }
 
 struct Game {
@@ -761,87 +843,6 @@ impl Game {
         }
     }
 
-    fn pathfind(&self, start: (i32, i32), goal: (i32, i32)) -> Option<Vec<(i32, i32)>> {
-        let mut open_set = BinaryHeap::new();
-        let mut came_from = HashMap::new();
-        let mut g_score = HashMap::new();
-        let mut f_score = HashMap::new();
-
-        g_score.insert(start, 0);
-        f_score.insert(start, self.heuristic(start, goal));
-        open_set.push(Node {
-            position: start,
-            f_score: f_score[&start],
-            g_score: 0,
-        });
-
-        while let Some(current) = open_set.pop() {
-            if current.position == goal {
-                return Some(self.reconstruct_path(came_from, current.position));
-            }
-
-            for neighbor in self.get_neighbors(current.position) {
-                if !self.grid.is_node_walkable(neighbor) {
-                    continue; // Skip non-walkable nodes
-                }
-
-                let tentative_g_score = g_score[&current.position] + 1;
-
-                if tentative_g_score < *g_score.get(&neighbor).unwrap_or(&i32::MAX) {
-                    came_from.insert(neighbor, current.position);
-                    g_score.insert(neighbor, tentative_g_score);
-                    let f = tentative_g_score + self.heuristic(neighbor, goal);
-                    f_score.insert(neighbor, f);
-                    open_set.push(Node {
-                        position: neighbor,
-                        f_score: f,
-                        g_score: tentative_g_score,
-                    });
-                }
-            }
-        }
-
-        None
-    }
-
-    fn get_neighbors(&self, pos: (i32, i32)) -> Vec<(i32, i32)> {
-        let directions = [
-            (-1, -1),
-            (0, -1),
-            (1, -1),
-            (-1, 0),
-            (1, 0),
-            (-1, 1),
-            (0, 1),
-            (1, 1),
-        ];
-
-        directions
-            .iter()
-            .map(|&(dx, dy)| (pos.0 + dx, pos.1 + dy))
-            .filter(|&pos| self.grid.is_node_walkable(pos))
-            .collect()
-    }
-
-    fn heuristic(&self, a: (i32, i32), b: (i32, i32)) -> i32 {
-        let dx = (a.0 - b.0).abs();
-        let dy = (a.1 - b.1).abs();
-        (dx + dy) + (1414 - 1000) * dx.min(dy)
-    }
-
-    fn reconstruct_path(
-        &self,
-        came_from: HashMap<(i32, i32), (i32, i32)>,
-        mut current: (i32, i32),
-    ) -> Vec<(i32, i32)> {
-        let mut path = vec![current];
-        while let Some(&prev) = came_from.get(&current) {
-            path.push(prev);
-            current = prev;
-        }
-        path.reverse();
-        path
-    }
 
     fn update_window_size(&mut self) {
         let new_window_size = Vec2::new(screen_width(), screen_height());
@@ -1334,7 +1335,7 @@ impl Game {
                 .grid
                 .get_grid_from_coord(self.characters.positions[active_index]);
 
-            if let Some(path) = self.pathfind(start_grid, final_target) {
+            if let Some(path) = self.grid.pathfind(start_grid, final_target) {
                 self.characters.paths[active_index] = Some(path);
                 self.characters.targets[active_index] = Some(final_target);
             } else {
