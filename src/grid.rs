@@ -157,7 +157,7 @@ impl Grid {
             (0, 1),
             (1, 1),
         ];
-        
+
         // If the top and right neighbors are blocked, the top-right diagonal
         // should be blocked. The same is true for the other diagonals
         let blocked_diagonals = self.blocked_diagonals(pos);
