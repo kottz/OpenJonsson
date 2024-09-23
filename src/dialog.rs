@@ -1,4 +1,3 @@
-use macroquad::rand::ChooseRandom;
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug, Clone)]
@@ -9,6 +8,7 @@ pub struct Dialog {
     pub width: f32,
     pub height: f32,
     pub description: String,
+    pub open_audio: Option<String>,
     pub tree: Vec<DialogNode>,
 }
 

@@ -435,6 +435,11 @@ impl Game {
                 }
                 // Add dialog audio files if needed
                 for dialog in &scene.dialogs {
+                    if let Some(open_audio) = &dialog.open_audio {
+                        let audio_path =
+                            format!("voice/{}/{}_{}.wav", scene.name, scene.name, open_audio);
+                        audio_files.insert(audio_path);
+                    }
                     for level in &dialog.tree {
                         for option in &level.options {
                             for audio in &option.response_audio {
@@ -940,6 +945,25 @@ impl Game {
         if let Some(id) = dialog_id {
             self.dialog_menu.open = true;
             self.dialog_menu.current_dialog_id = Some(id);
+            self.play_open_dialog_sound(id);
+        }
+    }
+
+    fn play_open_dialog_sound(&mut self, dialog_id: u32) {
+        if let Some(current_scene) = self.get_current_scene() {
+            if let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id) {
+                if let Some(audio) = &dialog.open_audio {
+                    let audio_to_play = format!(
+                        "voice/{}/{}_{}.wav",
+                        current_scene.name, current_scene.name, audio
+                    );
+                    self.audio_system.play_audio(
+                        &self.asset_manager,
+                        &audio_to_play,
+                        AudioCategory::Dialog,
+                    );
+                }
+            }
         }
     }
 
