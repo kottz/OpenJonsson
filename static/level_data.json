@@ -88,7 +88,7 @@
                       "response_audio":[
                         "DG1_D_1_1"
                       ],
-                      "target":100
+                      "target":1
                     },
                     {
                       "option_id":1,
@@ -96,7 +96,7 @@
                       "response_audio":[
                         "DG1_D_1_2"
                       ],
-                      "target":1
+                      "target":100
                     }
                   ]
                 },
@@ -595,7 +595,117 @@
             
           ],
           "dialogs":[
-            
+            {
+              "id":0,
+              "description":"Sekreterare",
+              "x":1510,
+              "y":930,
+              "width":161,
+              "height":211,
+              "open_audio":"DG1_S1_1_1",
+              "tree":[
+                {
+                  "level":0,
+                  "options":[
+                    {
+                      "option_id":0,
+                      "text":"Fröken, Jag söker direktör Wall-Enberg.",
+                      "response_audio":[
+                        "DG1_S1_2_1"
+                      ],
+                      "target":1
+                    },
+                    {
+                      "option_id":1,
+                      "text":"Jo jag tackar, Jag är direktör Vanheden, jag vill träffa direktör Wall-Enberg.",
+                      "response_audio":[
+                        "DG1_S1_2_2"
+                      ],
+                      "target":100
+                    },
+                    {
+                      "option_id":0,
+                      "text":"Arbetar ni här?",
+                      "response_audio":[
+                        "DG1_S1_2_3"
+                      ],
+                      "target":1
+                    }
+                  ]
+                },
+                {
+                  "level":1,
+                  "options":[
+                    {
+                      "option_id":0,
+                      "text":"Jag är själv en direktör, var vänlig släpp in mig",
+                      "response_audio":[
+                        "DG1_S1_3_1"
+                      ],
+                      "target":100
+                    },
+                    {
+                      "option_id":1,
+                      "text":"Vilken skönhet ni är! ni borde vara mannekäng istället!",
+                      "response_audio":[
+                        "DG1_S1_3_2"
+                      ],
+                      "target":2
+                    },
+                    {
+                      "option_id":2,
+                      "text":"Säg åt dirren att Vanis vill träffa honom!",
+                      "response_audio":[
+                        "DG1_S1_3_3"
+                      ],
+                      "target":100
+                    }
+                  ]
+                },
+                {
+                  "level":2,
+                  "options":[
+                    {
+                      "option_id":1,
+                      "text":"Visst serrö, du liknar en liten hund.",
+                      "response_audio":[
+                        "DG1_S1_4_1"
+                      ],
+                      "target":100
+                    },
+                    {
+                      "option_id":2,
+                      "text":"Du é vacker som en dag, det är säkert.",
+                      "response_audio":[
+                        "DG1_S1_4_2"
+                      ],
+                      "target":3
+                    }
+                  ]
+                },
+                {
+                  "level":3,
+                  "options":[
+                    {
+                      "option_id":1,
+                      "text":"Det stämmer pullan, då blir du bara ännu sötare!",
+                      "response_audio":[
+                        "DG1_S1_5_1"
+                      ],
+                      "target":200
+                    },
+                    {
+                      "option_id":2,
+                      "text":"Javisst serru, nu liknar ni rena rama stopplyset!",
+                      "response_audio":[
+                        "DG1_S1_5_2"
+                      ],
+                      "target":100
+                    }
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
