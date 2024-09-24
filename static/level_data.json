@@ -2982,6 +2982,12 @@
         "mouse_over":"Huvudmeny/inventory/Dynamit1BoxenR.png",
         "in_inventory":"Huvudmeny/inventory/Dynamit1Inven.png",
         "in_inventory_text":"Huvudmeny/inventory/Dynamit1InvenR.png"
+      },
+      "allowed_characters":["harry"],
+      "pickup_audio": {
+        "sickan": ["voice/GHV/GHV_KY4_1_1.wav"],
+        "vanheden": ["voice/GHV/GHV_KY4_2_1.wav"],
+        "harry": ["voice/GHV/GHV_KY4_3_1.wav", "voice/GHV/GHV_KY4_3_2.wav", "voice/GHV/GHV_KY4_3_3.wav"]
       }
     },
     {
@@ -2992,6 +2998,12 @@
         "mouse_over":"Huvudmeny/inventory/Dynamit2BoxenR.png",
         "in_inventory":"Huvudmeny/inventory/Dynamit2Inven.png",
         "in_inventory_text":"Huvudmeny/inventory/Dynamit2InvenR.png"
+      },
+      "allowed_characters":["harry"],
+      "pickup_audio": {
+        "sickan": ["voice/GHV/GHV_KY4_1_1.wav"],
+        "vanheden": ["voice/GHV/GHV_KY4_2_1.wav"],
+        "harry": ["voice/GHV/GHV_KY4_3_1.wav", "voice/GHV/GHV_KY4_3_2.wav", "voice/GHV/GHV_KY4_3_3.wav"]
       }
     },
     {
@@ -3002,6 +3014,12 @@
         "mouse_over":"Huvudmeny/inventory/Dynamit3BoxenR.png",
         "in_inventory":"Huvudmeny/inventory/Dynamit3Inven.png",
         "in_inventory_text":"Huvudmeny/inventory/Dynamit3InvenR.png"
+      },
+      "allowed_characters":["harry"],
+      "pickup_audio": {
+        "sickan": ["voice/GHV/GHV_KY4_1_1.wav"],
+        "vanheden": ["voice/GHV/GHV_KY4_2_1.wav"],
+        "harry": ["voice/GHV/GHV_KY4_3_1.wav", "voice/GHV/GHV_KY4_3_2.wav", "voice/GHV/GHV_KY4_3_3.wav"]
       }
     },
     {
@@ -3012,6 +3030,12 @@
         "mouse_over":"Huvudmeny/inventory/Dynamit4BoxenR.png",
         "in_inventory":"Huvudmeny/inventory/Dynamit4Inven.png",
         "in_inventory_text":"Huvudmeny/inventory/Dynamit4InvenR.png"
+      },
+      "allowed_characters":["harry"],
+      "pickup_audio": {
+        "sickan": ["voice/GHV/GHV_KY4_1_1.wav"],
+        "vanheden": ["voice/GHV/GHV_KY4_2_1.wav"],
+        "harry": ["voice/GHV/GHV_KY4_3_1.wav", "voice/GHV/GHV_KY4_3_2.wav", "voice/GHV/GHV_KY4_3_3.wav"]
       }
     },
     {
@@ -3022,6 +3046,12 @@
         "mouse_over":"Huvudmeny/inventory/Dynamit5BoxenR.png",
         "in_inventory":"Huvudmeny/inventory/Dynamit5Inven.png",
         "in_inventory_text":"Huvudmeny/inventory/Dynamit5InvenR.png"
+      },
+      "allowed_characters":["harry"],
+      "pickup_audio": {
+        "sickan": ["voice/GHV/GHV_KY4_1_1.wav"],
+        "vanheden": ["voice/GHV/GHV_KY4_2_1.wav"],
+        "harry": ["voice/GHV/GHV_KY4_3_1.wav", "voice/GHV/GHV_KY4_3_2.wav", "voice/GHV/GHV_KY4_3_3.wav"]
       }
     }
   ]

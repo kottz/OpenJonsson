@@ -14,6 +14,7 @@ use macroquad::prelude::*;
 use macroquad::rand::ChooseRandom;
 use renderer::Renderer;
 use serde::Deserialize;
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Direction {
@@ -118,6 +119,7 @@ pub struct ItemTextures {
     pub in_world: String,
     pub mouse_over: String,
     pub in_inventory: String,
+    pub in_inventory_text: String,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -125,6 +127,8 @@ pub struct Item {
     pub id: u32,
     pub name: String,
     pub textures: ItemTextures,
+    pub allowed_characters: Vec<String>,
+    pub pickup_audio: HashMap<String, Vec<String>>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -452,6 +456,16 @@ impl Game {
                 }
             }
         }
+
+        // Add item pickup audio files
+        for item in &self.items {
+            for audio_list in item.pickup_audio.values() {
+                for audio_file in audio_list {
+                    audio_files.insert(audio_file.clone());
+                }
+            }
+        }
+
         for audio_file in audio_files {
             self.asset_manager.load_sound(&audio_file).await?;
         }
@@ -692,24 +706,77 @@ impl Game {
         }
     }
 
+    // fn handle_item_click(&mut self, game_pos: Vec2) {
+    //     let current_scene = self.current_scene as usize;
+    //     let item_to_add = self.world_items[current_scene]
+    //         .iter()
+    //         .position(|item| {
+    //             game_pos.x >= item.x
+    //                 && game_pos.x <= item.x + item.width
+    //                 && game_pos.y >= item.y
+    //                 && game_pos.y <= item.y + item.height
+    //         })
+    //         .map(|index| self.world_items[current_scene][index].item_id);
+    //
+    //     if let Some(item_id) = item_to_add {
+    //         if self.add_item_to_inventory(item_id) {
+    //             println!("Item added to inventory");
+    //             self.world_items[current_scene].retain(|item| item.item_id != item_id);
+    //         } else {
+    //             println!("Inventory is full!");
+    //         }
+    //     }
+    // }
+
     fn handle_item_click(&mut self, game_pos: Vec2) {
         let current_scene = self.current_scene as usize;
-        let item_to_add = self.world_items[current_scene]
-            .iter()
-            .position(|item| {
-                game_pos.x >= item.x
-                    && game_pos.x <= item.x + item.width
-                    && game_pos.y >= item.y
-                    && game_pos.y <= item.y + item.height
-            })
-            .map(|index| self.world_items[current_scene][index].item_id);
+        let active_character_name = self
+            .active_character
+            .and_then(|index| self.characters.data.get(index))
+            .map(|character| character.name.clone());
 
-        if let Some(item_id) = item_to_add {
-            if self.add_item_to_inventory(item_id) {
-                println!("Item added to inventory");
-                self.world_items[current_scene].retain(|item| item.item_id != item_id);
-            } else {
-                println!("Inventory is full!");
+        if let Some(active_character_name) = active_character_name {
+            let pickup_info = self.world_items[current_scene]
+                .iter()
+                .enumerate()
+                .find(|(_, item)| self.is_mouse_over_item(game_pos, item))
+                .and_then(|(index, world_item)| {
+                    self.items
+                        .iter()
+                        .find(|i| i.id == world_item.item_id)
+                        .map(|item| {
+                            (
+                                index,
+                                item.id,
+                                item.allowed_characters.contains(&active_character_name),
+                                item.pickup_audio.get(&active_character_name).cloned(),
+                            )
+                        })
+                });
+
+            if let Some((item_index, item_id, is_allowed, maybe_audio)) = pickup_info {
+                if is_allowed {
+                    if self.add_item_to_inventory(item_id) {
+                        println!("Item added to inventory");
+                        self.world_items[current_scene].remove(item_index);
+                    } else {
+                        println!("Inventory is full!");
+                    }
+                } else {
+                    println!("{} cannot pick up this item!", active_character_name);
+                    // You might want to play a "cannot pick up" sound here
+                }
+
+                // Play pickup audio
+                if let Some(audio_files) = maybe_audio {
+                    if let Some(audio_file) = audio_files.choose() {
+                        self.audio_system.play_audio(
+                            &self.asset_manager,
+                            audio_file,
+                            AudioCategory::SoundEffect,
+                        );
+                    }
+                }
             }
         }
     }
