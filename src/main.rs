@@ -569,6 +569,7 @@ impl Game {
             textures_to_load.push(item.textures.in_world.clone());
             textures_to_load.push(item.textures.mouse_over.clone());
             textures_to_load.push(item.textures.in_inventory.clone());
+            textures_to_load.push(item.textures.in_inventory_text.clone());
         }
 
         self.asset_manager.load_textures(&textures_to_load).await;

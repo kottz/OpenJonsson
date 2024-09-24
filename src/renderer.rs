@@ -305,33 +305,58 @@ impl Renderer {
                         // Draw item in slot if it exists
                         if let Some(item_id) = slot {
                             if let Some(item) = game.items.iter().find(|i| i.id == item_id) {
-                                if let Some(item_texture) =
+                                if let Some(mut item_texture) =
                                     asset_manager.get_texture(&item.textures.in_inventory)
                                 {
-                                    let item_width = item_texture.width().min(inventory::SLOT_SIZE);
-                                    let item_height =
-                                        item_texture.height().min(inventory::SLOT_SIZE);
-                                    let item_scale = (inventory::SLOT_SIZE / item_width)
-                                        .min(inventory::SLOT_SIZE / item_height);
+                                    if let Some(item_texture_text) =
+                                        asset_manager.get_texture(&item.textures.in_inventory_text)
+                                    {
+                                        item_texture = if Some(i) == game.inventory.hovered_slot {
+                                            item_texture_text
+                                        } else {
+                                            item_texture
+                                        };
+                                    }
 
-                                    let scaled_item_width = item_width * item_scale * scale;
-                                    let scaled_item_height = item_height * item_scale * scale;
+                                    // text asset is wider than the item asset
+                                    // TODO: clean up as this does nothing when
+                                    // item_texture is changed above
+                                    // still works though
+                                    let max_width = item_texture.width().max(
+                                        asset_manager
+                                            .get_texture(&item.textures.in_inventory_text)
+                                            .map_or(0.0, |t| t.width()),
+                                    );
+                                    let max_height = item_texture.height();
 
+                                    // Calculate scaling factors
+                                    let scale_x = inventory::SLOT_SIZE / max_width;
+                                    let scale_y = inventory::SLOT_SIZE / max_height;
+                                    let item_scale = scale_x.min(scale_y);
+
+                                    let scaled_item_width =
+                                        item_texture.width() * item_scale * scale;
+                                    let scaled_item_height =
+                                        item_texture.height() * item_scale * scale;
+
+                                    // Center the item in the slot
                                     let item_x =
                                         screen_x + (scaled_slot_size - scaled_item_width) / 2.0;
                                     let item_y =
                                         screen_y + (scaled_slot_size - scaled_item_height) / 2.0;
 
+                                    // Calculate the visible portion of the item
                                     let visible_item_width = (slot_visible_width
                                         / inventory::SLOT_SIZE
                                         * scaled_item_width)
                                         .min(scaled_item_width);
 
+                                    // Adjust the source rectangle to account for the item's original dimensions
                                     let source_rect = Rect::new(
                                         0.0,
                                         0.0,
                                         visible_item_width / (item_scale * scale),
-                                        item_height,
+                                        item_texture.height(),
                                     );
 
                                     draw_texture_ex(
