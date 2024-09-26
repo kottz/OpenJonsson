@@ -707,28 +707,6 @@ impl Game {
         }
     }
 
-    // fn handle_item_click(&mut self, game_pos: Vec2) {
-    //     let current_scene = self.current_scene as usize;
-    //     let item_to_add = self.world_items[current_scene]
-    //         .iter()
-    //         .position(|item| {
-    //             game_pos.x >= item.x
-    //                 && game_pos.x <= item.x + item.width
-    //                 && game_pos.y >= item.y
-    //                 && game_pos.y <= item.y + item.height
-    //         })
-    //         .map(|index| self.world_items[current_scene][index].item_id);
-    //
-    //     if let Some(item_id) = item_to_add {
-    //         if self.add_item_to_inventory(item_id) {
-    //             println!("Item added to inventory");
-    //             self.world_items[current_scene].retain(|item| item.item_id != item_id);
-    //         } else {
-    //             println!("Inventory is full!");
-    //         }
-    //     }
-    // }
-
     fn handle_item_click(&mut self, game_pos: Vec2) {
         let current_scene = self.current_scene as usize;
         let active_character_name = self
