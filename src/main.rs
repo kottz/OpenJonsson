@@ -97,6 +97,7 @@ pub struct CharacterData {
     pub name: String,
     pub speed: f32,
     pub run_speed: f32,
+    pub select_audio: Vec<String>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -463,6 +464,13 @@ impl Game {
                 for audio_file in audio_list {
                     audio_files.insert(audio_file.clone());
                 }
+            }
+        }
+
+        // Add character audio files
+        for c in &self.characters.data {
+            for audio_file in &c.select_audio {
+                audio_files.insert(audio_file.clone());
             }
         }
 
@@ -925,6 +933,15 @@ impl Game {
         {
             if Some(index) != self.active_character {
                 self.active_character = Some(index);
+
+                // Play select character audio
+                if let Some(audio_file) = self.characters.data[index].select_audio.choose() {
+                    self.audio_system.play_audio(
+                        &self.asset_manager,
+                        audio_file,
+                        AudioCategory::SoundEffect,
+                    );
+                }
                 return;
             }
         }

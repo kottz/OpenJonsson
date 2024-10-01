@@ -728,9 +728,7 @@
           "items":[
             
           ],
-          "dialogs":[
-            
-          ]
+          "dialogs":[]
         }
       ]
     },
@@ -2918,17 +2916,20 @@
     {
       "name":"sickan",
       "speed":200.0,
-      "run_speed":400.0
+      "run_speed":400.0,
+      "select_audio": ["Huvudmeny/ljudfx/S2.wav", "Huvudmeny/ljudfx/S3.wav", "Huvudmeny/ljudfx/S4.wav", "Huvudmeny/ljudfx/S5.wav"]
     },
     {
       "name":"vanheden",
       "speed":200.0,
-      "run_speed":400.0
+      "run_speed":400.0,
+      "select_audio": ["Huvudmeny/ljudfx/V1.wav", "Huvudmeny/ljudfx/V2.wav", "Huvudmeny/ljudfx/V3.wav", "Huvudmeny/ljudfx/V4.wav"]
     },
     {
       "name":"harry",
       "speed":200.0,
-      "run_speed":400.0
+      "run_speed":400.0,
+      "select_audio": ["Huvudmeny/ljudfx/H1.wav", "Huvudmeny/ljudfx/H2.wav", "Huvudmeny/ljudfx/H3.wav", "Huvudmeny/ljudfx/H4.wav"]
     }
   ],
   "ui":{
