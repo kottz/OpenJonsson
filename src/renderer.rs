@@ -2,6 +2,55 @@ use crate::asset_manager::AssetManager;
 use crate::config::{character, dialog, inventory};
 use crate::{ClickableArea, Game, OverlayAsset, Scene};
 use macroquad::prelude::*;
+use std::cmp::Ordering;
+use std::collections::BinaryHeap;
+
+struct DrawableItem<'a> {
+    y_position: i32,
+    item: DrawableType<'a>,
+}
+
+enum DrawableType<'a> {
+    Character(usize),
+    OverlayAsset(&'a OverlayAsset),
+}
+
+impl<'a> DrawableItem<'a> {
+    fn new_character(index: usize, y: f32) -> Self {
+        DrawableItem {
+            y_position: ((y + character::HEIGHT) * 1000.0) as i32,
+            item: DrawableType::Character(index),
+        }
+    }
+
+    fn new_overlay(overlay: &'a OverlayAsset) -> Self {
+        DrawableItem {
+            y_position: ((overlay.y + overlay.height as f32) * 1000.0) as i32,
+            item: DrawableType::OverlayAsset(overlay),
+        }
+    }
+}
+
+impl<'a> Ord for DrawableItem<'a> {
+    fn cmp(&self, other: &Self) -> Ordering {
+        // Reverse ordering for max-heap behavior
+        other.y_position.cmp(&self.y_position)
+    }
+}
+
+impl<'a> PartialOrd for DrawableItem<'a> {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl<'a> Eq for DrawableItem<'a> {}
+
+impl<'a> PartialEq for DrawableItem<'a> {
+    fn eq(&self, other: &Self) -> bool {
+        self.y_position == other.y_position
+    }
+}
 
 pub struct Renderer {
     window_size: Vec2,
@@ -77,23 +126,51 @@ impl Renderer {
     }
 
     fn draw_scene(&self, game: &Game, scene: &Scene, asset_manager: &AssetManager) {
-        if let Some(texture) = asset_manager.get_texture(&scene.background) {
-            self.draw_background(&texture);
-
-            self.draw_world_items(game, asset_manager);
-
-            let scale = self.get_scale();
-
-            for i in 0..game.characters.count {
-                let is_active = game.active_character == Some(i);
-                self.draw_character(game, i, scale, is_active, asset_manager);
-            }
-
-            for overlay in &scene.overlay_assets {
-                self.draw_overlay_asset(overlay, asset_manager);
-            }
-        } else {
+        let Some(texture) = asset_manager.get_texture(&scene.background) else {
             self.draw_loading_message(&scene.background);
+            return;
+        };
+
+        self.draw_background(&texture);
+        self.draw_world_items(game, asset_manager);
+        let scale = self.get_scale();
+
+        let mut heap = BinaryHeap::new();
+        let mut top_overlays = Vec::new();
+
+        for (i, pos) in game.characters.positions.iter().enumerate() {
+            heap.push(DrawableItem::new_character(i, pos.y));
+        }
+
+        for overlay in &scene.overlay_assets {
+            match overlay.z_value {
+                0 => self.draw_overlay_asset(overlay, asset_manager),
+                4 => top_overlays.push(overlay),
+                _ => heap.push(DrawableItem::new_overlay(overlay)),
+            }
+        }
+
+        // Draw items in correct z-order
+        while let Some(item) = heap.pop() {
+            match item.item {
+                DrawableType::Character(index) => {
+                    self.draw_character(
+                        game,
+                        index,
+                        scale,
+                        game.active_character == Some(index),
+                        asset_manager,
+                    );
+                }
+                DrawableType::OverlayAsset(overlay) => {
+                    self.draw_overlay_asset(overlay, asset_manager);
+                }
+            }
+        }
+
+        // Draw overlays with z_value=4 last
+        for overlay in top_overlays {
+            self.draw_overlay_asset(overlay, asset_manager);
         }
     }
 

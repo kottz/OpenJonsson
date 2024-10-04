@@ -105,6 +105,8 @@ pub struct OverlayAsset {
     pub texture_path: String,
     pub x: f32,
     pub y: f32,
+    pub height: usize,
+    pub width: usize,
     pub z_value: usize,
 }
 

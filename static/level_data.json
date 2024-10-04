@@ -24,12 +24,16 @@
               "texture_path":"stockholm/Internal/213.png",
               "x":132,
               "y":0,
+              "width":480,
+              "height":993,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/vind_förgrund-211.png",
               "x":0,
               "y":0,
+              "width":1920,
+              "height":1440,
               "z_value":3
             }
           ],
@@ -183,24 +187,32 @@
               "texture_path":"stockholm/Internal/Mattpisk-194.png",
               "x":164,
               "y":368,
+              "width":168,
+              "height":336,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/Parasoll-195.png",
               "x":0,
               "y":50,
+              "width":528,
+              "height":951,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/Träd-198.png",
               "x":451,
               "y":75,
+              "width":567,
+              "height":834,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/Förgrund-197.png",
               "x":0,
               "y":0,
+              "width":1920,
+              "height":1440,
               "z_value":3
             }
           ],
@@ -238,13 +250,25 @@
               "texture_path":"stockholm/Internal/fg-232.png",
               "x":0,
               "y":0,
+              "width":396,
+              "height":1440,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/huset-233.png",
               "x":199,
               "y":0,
+              "width":1323,
+              "height":1155,
               "z_value":0
+            },
+            {
+              "texture_path":"stockholm/Internal/huset-234.png",
+              "x":242,
+              "y":0,
+              "width":1194,
+              "height":549,
+              "z_value":2
             }
           ],
           "items":[
@@ -288,12 +312,16 @@
               "texture_path":"stockholm/Internal/anusengträd-312.png",
               "x":266,
               "y":0,
+              "width":1122,
+              "height":1080,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/314.png",
               "x":334,
               "y":372,
+              "width":918,
+              "height":324,
               "z_value":3
             }
           ],
@@ -331,36 +359,48 @@
               "texture_path":"stockholm/Internal/anusensbakgträd-313.png",
               "x":356,
               "y":0,
+              "width":852,
+              "height":1212,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/310.png",
               "x":2,
               "y":418,
-              "z_value":3
+              "width":1914,
+              "height":186,
+              "z_value":4
             },
             {
               "texture_path":"stockholm/Internal/AnusenBackDörr0-306.png",
               "x":249,
               "y":277,
+              "width":141,
+              "height":288,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/AnusenBackDörr1-307.png",
               "x":249,
               "y":277,
+              "width":141,
+              "height":288,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/AnusenBackDörr2-308.png",
               "x":248,
               "y":294,
+              "width":198,
+              "height":291,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/AnusenBackDörr3-309.png",
               "x":231,
               "y":292,
+              "width":315,
+              "height":345,
               "z_value":3
             }
           ],
@@ -398,24 +438,32 @@
               "texture_path":"stockholm/Internal/336.png",
               "x":56,
               "y":117,
+              "width":249,
+              "height":651,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/trappan-326.png",
               "x":99,
               "y":98,
+              "width":294,
+              "height":384,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/327.png",
               "x":35,
               "y":67,
+              "width":210,
+              "height":402,
               "z_value":3
             },
             {
               "texture_path":"stockholm/Internal/328.png",
               "x":173,
               "y":28,
+              "width":339,
+              "height":942,
               "z_value":3
             }
           ],
@@ -2923,7 +2971,7 @@
       "name":"vanheden",
       "speed":200.0,
       "run_speed":400.0,
-      "select_audio": ["Huvudmeny/ljudfx/V1.wav", "Huvudmeny/ljudfx/V2.wav", "Huvudmeny/ljudfx/V3.wav", "Huvudmeny/ljudfx/V4.wav"]
+      "select_audio": ["Huvudmeny/ljudfx/V1.wav", "Huvudmeny/ljudfx/V2.wav", "Huvudmeny/ljudfx/V3.wav", "Huvudmeny/ljudfx/V4.wav", "Huvudmeny/ljudfx/V5.wav"]
     },
     {
       "name":"harry",
