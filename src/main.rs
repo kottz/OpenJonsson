@@ -655,7 +655,7 @@ impl Game {
         // Check for items first
         let current_scene_items = &self.world_items[self.current_scene as usize];
         for item in current_scene_items {
-            if self.is_mouse_over_item(game_pos, item) {
+            if self.is_mouse_over_item(game_pos, item) && self.is_item_in_range(item) {
                 return CursorType::Take;
             }
         }
@@ -717,6 +717,49 @@ impl Game {
         }
     }
 
+    fn get_clicked_item(&self, game_pos: Vec2) -> Option<(usize, &ItemInstance)> {
+        let current_scene = self.current_scene as usize;
+        self.world_items[current_scene]
+            .iter()
+            .enumerate()
+            .find(|(_, item)| self.is_mouse_over_item(game_pos, item))
+    }
+
+    fn find_closest_accessible_position(&self, target_pos: Vec2) -> Option<(i32, i32)> {
+        let target_grid = self.grid.get_grid_from_coord(target_pos);
+        let search_radius = 5; // Adjust this value as needed
+
+        let mut closest_pos = None;
+        let mut min_distance = f32::MAX;
+
+        for dx in -search_radius..=search_radius {
+            for dy in -search_radius..=search_radius {
+                let grid_pos = (target_grid.0 + dx, target_grid.1 + dy);
+                if self.grid.is_node_walkable(grid_pos) {
+                    let pos = self.grid.get_coord_from_grid(grid_pos.0, grid_pos.1);
+                    let distance = Vec2::distance(target_pos, pos);
+                    if distance < min_distance {
+                        min_distance = distance;
+                        closest_pos = Some(grid_pos);
+                    }
+                }
+            }
+        }
+
+        closest_pos
+    }
+
+    fn is_item_in_range(&self, item: &ItemInstance) -> bool {
+        if let Some(active_character_index) = self.active_character {
+            let character_pos = self.characters.positions[active_character_index];
+            let item_pos = Vec2::new(item.x, item.y);
+            let distance = Vec2::distance(item_pos, character_pos);
+            distance <= character::INTERACTION_RANGE
+        } else {
+            false
+        }
+    }
+
     fn handle_item_click(&mut self, game_pos: Vec2) {
         let current_scene = self.current_scene as usize;
         let active_character_name = self
@@ -737,13 +780,18 @@ impl Game {
                             (
                                 index,
                                 item.id,
+                                world_item,
                                 item.allowed_characters.contains(&active_character_name),
                                 item.pickup_audio.get(&active_character_name).cloned(),
                             )
                         })
                 });
 
-            if let Some((item_index, item_id, is_allowed, maybe_audio)) = pickup_info {
+            if let Some((item_index, item_id, world_item, is_allowed, maybe_audio)) = pickup_info {
+                if !self.is_item_in_range(&world_item) {
+                    return;
+                }
+
                 if is_allowed {
                     if self.add_item_to_inventory(item_id) {
                         println!("Item added to inventory");
@@ -753,7 +801,6 @@ impl Game {
                     }
                 } else {
                     println!("{} cannot pick up this item!", active_character_name);
-                    // You might want to play a "cannot pick up" sound here
                 }
 
                 // Play pickup audio
@@ -1236,8 +1283,11 @@ impl Game {
                 .grid
                 .get_grid_from_coord(self.characters.positions[active_index]);
 
-            // Check if the click is within a scene transition area
-            if let Some(transition) = self.find_clicked_transition(target_pos) {
+            if let Some(_clicked_item) = self.get_clicked_item(target_pos) {
+                if let Some(closest_grid) = self.find_closest_accessible_position(target_pos) {
+                    final_target = closest_grid;
+                }
+            } else if let Some(transition) = self.find_clicked_transition(target_pos) {
                 if !self.grid.is_node_walkable(target_grid) {
                     // Find the closest walkable node within the transition area
                     if let Some(closest_node) =

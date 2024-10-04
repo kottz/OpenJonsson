@@ -6,6 +6,8 @@ pub mod character {
     // Character dimensions for hitbox calculation
     pub const WIDTH: f32 = 55.0;
     pub const HEIGHT: f32 = 120.0;
+
+    pub const INTERACTION_RANGE: f32 = 250.0;
 }
 
 pub mod inventory {
