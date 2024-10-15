@@ -598,6 +598,13 @@
           "background":"stockholm/Internal/B WEG-609.png",
           "sceneTransitions":[
             {
+              "x":1494,
+              "y":1170,
+              "width":225,
+              "height":215,
+              "targetScene":3
+            },
+            {
               "x":1182,
               "y":334,
               "width":224,
@@ -606,7 +613,22 @@
             }
           ],
           "overlay_assets":[
-            
+            {
+              "texture_path":"stockholm/Internal/huset-614.png",
+              "x":243,
+              "y":0,
+              "width":1191,
+              "height":1014,
+              "z_value":0
+            },
+            {
+              "texture_path":"stockholm/Internal/förgrund-612.png",
+              "x":0,
+              "y":0,
+              "width":642,
+              "height":1440,
+              "z_value":4
+            }
           ],
           "items":[
             
