@@ -1494,7 +1494,6 @@ impl Game {
             self.current_scene = 0; // Reset to the first scene of the new level
             self.load_current_and_adjacent_scenes().await;
 
-            // Reset character positions (you might want to adjust this based on your game's logic)
             let spawn_position = Vec2::new(1000.0, 800.0); // Default spawn position
             let spawn_positions =
                 self.generate_spawn_positions(spawn_position, self.characters.count);
