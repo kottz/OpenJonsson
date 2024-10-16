@@ -582,7 +582,86 @@
             }
           ],
           "overlay_assets":[
-            
+            {
+              "texture_path":"stockholm/Internal/förgrund-364.png",
+              "x":0,
+              "y":338,
+              "width":1920,
+              "height":426,
+              "z_value":4
+            },
+            {
+              "texture_path":"stockholm/Internal/371.png",
+              "x":82,
+              "y":288,
+              "width":108,
+              "height":198,
+              "z_value":3
+            },
+            {
+              "texture_path":"stockholm/Internal/373.png",
+              "x":443,
+              "y":330,
+              "width":159,
+              "height":174,
+              "z_value":3
+            },
+            {
+              "texture_path":"stockholm/Internal/374.png",
+              "x":429,
+              "y":258,
+              "width":168,
+              "height":219,
+              "z_value":3
+            },
+            {
+              "texture_path":"stockholm/Internal/375.png",
+              "x":476,
+              "y":299,
+              "width":198,
+              "height":189,
+              "z_value":3
+            },
+            {
+              "texture_path":"stockholm/Internal/AFKEdörr1-376.png",
+              "x":446,
+              "y":130,
+              "width":120,
+              "height":294,
+              "z_value":3
+            },
+            {
+              "texture_path":"stockholm/Internal/skrivbord-372.png",
+              "x":115,
+              "y":279,
+              "width":255,
+              "height":306,
+              "z_value":3
+            },
+            {
+              "texture_path":"stockholm/Internal/röda stolar-370.png",
+              "x":213,
+              "y":293,
+              "width":165,
+              "height":285,
+              "z_value":3
+            },
+            {
+              "texture_path":"stockholm/Internal/röd soffa-369.png",
+              "x":539,
+              "y":260,
+              "width":285,
+              "height":333,
+              "z_value":3
+            },
+            {
+              "texture_path":"stockholm/Internal/Lampa-410.png",
+              "x":569,
+              "y":9,
+              "width":159,
+              "height":303,
+              "z_value":3
+            }
           ],
           "items":[
             
