@@ -25,7 +25,7 @@ impl<'a> DrawableItem<'a> {
 
     fn new_overlay(overlay: &'a OverlayAsset) -> Self {
         DrawableItem {
-            y_position: ((overlay.y + overlay.height as f32) * 1000.0) as i32,
+            y_position: ((overlay.y * 3.0 + overlay.height as f32) * 1000.0) as i32, // 3.0 is the scale factor
             item: DrawableType::OverlayAsset(overlay),
         }
     }
@@ -33,7 +33,7 @@ impl<'a> DrawableItem<'a> {
 
 impl<'a> Ord for DrawableItem<'a> {
     fn cmp(&self, other: &Self) -> Ordering {
-        // Reverse ordering for max-heap behavior
+        // We want min-heap behaviour for sorting textures in y-order
         other.y_position.cmp(&self.y_position)
     }
 }
