@@ -1,6 +1,6 @@
 # OpenJönsson
 
-OpenJönsson is a reimplementation of the classic Swedish point-and-click adventure game *Jönssonligan: Jakten på Mjölner*.
+OpenJönsson is a re-implementation of the classic Swedish point-and-click adventure game *Jönssonligan: Jakten på Mjölner*.
 
 It is currently in an early prototype state, not yet playable.
 
