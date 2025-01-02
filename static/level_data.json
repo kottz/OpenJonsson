@@ -467,6 +467,30 @@
               "z_value":3
             },
             {
+              "texture_path":"stockholm/Internal/lillaBordet-332.png",
+              "x":123,
+              "y":365,
+              "width":126,
+              "height":141,
+              "z_value":3
+            },
+            {
+              "texture_path":"stockholm/Internal/telefon-334.png",
+              "x":133,
+              "y":366,
+              "width":57,
+              "height":45,
+              "z_value":4
+            },
+            {
+              "texture_path":"stockholm/Internal/riddaren-329.png",
+              "x":53,
+              "y":263,
+              "width":123,
+              "height":264,
+              "z_value":3
+            },
+            {
               "texture_path":"stockholm/Internal/327.png",
               "x":290,
               "y":190,
@@ -481,6 +505,14 @@
               "width":339,
               "height":942,
               "z_value":3
+            },
+            {
+              "texture_path":"stockholm/Internal/förgrund-325.png",
+              "x":0,
+              "y":0,
+              "width":1920,
+              "height":1440,
+              "z_value":4
             }
           ],
           "items":[
