@@ -12,7 +12,7 @@ https://github.com/user-attachments/assets/774d43a6-ef0f-4089-ac34-dc55ee3983a6
 ### Asset Extraction (using Docker)
 OpenJönsson uses original game assets. You need to provide your own legitimate copy of *Jönssonligan: Jakten på Mjölner* to proceed.
 
-We will extract and process the assets using [cgex](https://github.com/kottz/cgex). The easiest way to do this is by using the provided docker container. To begin first:
+Extract and process the assets using [cgex](https://github.com/kottz/cgex). The easiest way to do this is by using the provided docker container. After all of the image and audio assets have been extracted, the images are upscaled from the original 480x360 resolution to 1920x1440.
 
 1. Create a `disc_contents` directory and a `resources` directory for the output.
 2. Insert game CD or mount your .iso and copy everything on the CD into the `disc_contents` folder.
@@ -36,8 +36,6 @@ cp -r resources openjonsson/static/
 cd openjonsson
 cargo run --release
 ```
-
-Compile and run the game with `cargo run --release`.
 
 ## Legal
 OpenJönsson is not affiliated with Korkeken AB or the original game creators. You must provide original game assets from a legally acquired copy.
