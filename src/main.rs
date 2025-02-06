@@ -12,6 +12,7 @@ use asset_manager::AssetManager;
 use audio::{AudioCategory, AudioSystem};
 use macroquad::prelude::*;
 use macroquad::rand::ChooseRandom;
+use macroquad::time::get_fps;
 use renderer::Renderer;
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -1575,6 +1576,7 @@ impl Game {
 
     fn draw(&self) {
         self.renderer.draw(self, &self.asset_manager);
+        draw_text(&format!("FPS: {}", get_fps()), 0., 16., 32., crate::WHITE);
     }
 
     fn is_mouse_over_item(&self, game_pos: Vec2, item: &ItemInstance) -> bool {
