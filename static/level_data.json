@@ -723,6 +723,7 @@
           "name":"WEG",
           "description":"Wall-Enberg street outside office",
           "background":"stockholm/Internal/B WEG-609.png",
+          "background_music":"Huvudmeny/ljudfx/068.wav",
           "sceneTransitions":[
             {
               "x":1494,
@@ -769,6 +770,7 @@
           "name":"Whall",
           "description":"Wall-Enberg office secretary",
           "background":"stockholm/Internal/B Whall-438.png",
+          "background_music":"Huvudmeny/ljudfx/069.wav",
           "sceneTransitions":[
             {
               "x":344,
