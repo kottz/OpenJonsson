@@ -131,7 +131,7 @@ impl Renderer {
             return;
         };
 
-        self.draw_background(&texture);
+        self.draw_background(texture);
         self.draw_world_items(game, asset_manager);
         let scale = self.get_scale();
 
@@ -222,7 +222,7 @@ impl Renderer {
             let xt = texture.width() / 2.0 * scale;
             let yt = texture.height() / 2.0 * scale;
             draw_texture_ex(
-                &texture,
+                texture,
                 (x + x_offset) - xt,
                 (y + y_offset) - yt,
                 WHITE,
@@ -260,7 +260,7 @@ impl Renderer {
             let (x, y) = self.get_scaled_pos(ox, oy);
             let scale = self.get_scale();
             draw_texture_ex(
-                &texture,
+                texture,
                 x,
                 y,
                 WHITE,
@@ -295,7 +295,7 @@ impl Renderer {
                 let (x, y) = self.get_scaled_pos(item_instance.x, item_instance.y);
                 let scale = self.get_scale();
                 draw_texture_ex(
-                    &texture,
+                    texture,
                     x,
                     y,
                     WHITE,
@@ -331,7 +331,7 @@ impl Renderer {
 
             // Draw the background texture
             draw_texture_ex(
-                &texture,
+                texture,
                 screen_x,
                 screen_y,
                 WHITE,
@@ -359,9 +359,8 @@ impl Renderer {
                     let (screen_x, screen_y) = self.get_scaled_pos(slot_x, slot_y);
                     let scaled_slot_size = inventory::SLOT_SIZE * scale;
 
-                    let slot_visible_width = (visible_width - (slot_x - game_x))
-                        .max(0.0)
-                        .min(inventory::SLOT_SIZE);
+                    let slot_visible_width =
+                        (visible_width - (slot_x - game_x)).clamp(0.0, inventory::SLOT_SIZE);
 
                     if slot_visible_width > 0.0 {
                         let slot_color = if Some(i) == game.inventory.hovered_slot {
@@ -380,78 +379,71 @@ impl Renderer {
                         );
 
                         // Draw item in slot if it exists
-                        if let Some(item_id) = slot {
-                            if let Some(item) = game.items.iter().find(|i| i.id == item_id) {
-                                if let Some(mut item_texture) =
-                                    asset_manager.get_texture(&item.textures.in_inventory)
-                                {
-                                    if let Some(item_texture_text) =
-                                        asset_manager.get_texture(&item.textures.in_inventory_text)
-                                    {
-                                        item_texture = if Some(i) == game.inventory.hovered_slot {
-                                            item_texture_text
-                                        } else {
-                                            item_texture
-                                        };
-                                    }
-
-                                    // text asset is wider than the item asset
-                                    // TODO: clean up as this does nothing when
-                                    // item_texture is changed above
-                                    // still works though
-                                    let max_width = item_texture.width().max(
-                                        asset_manager
-                                            .get_texture(&item.textures.in_inventory_text)
-                                            .map_or(0.0, |t| t.width()),
-                                    );
-                                    let max_height = item_texture.height();
-
-                                    // Calculate scaling factors
-                                    let scale_x = inventory::SLOT_SIZE / max_width;
-                                    let scale_y = inventory::SLOT_SIZE / max_height;
-                                    let item_scale = scale_x.min(scale_y);
-
-                                    let scaled_item_width =
-                                        item_texture.width() * item_scale * scale;
-                                    let scaled_item_height =
-                                        item_texture.height() * item_scale * scale;
-
-                                    // Center the item in the slot
-                                    let item_x =
-                                        screen_x + (scaled_slot_size - scaled_item_width) / 2.0;
-                                    let item_y =
-                                        screen_y + (scaled_slot_size - scaled_item_height) / 2.0;
-
-                                    // Calculate the visible portion of the item
-                                    let visible_item_width = (slot_visible_width
-                                        / inventory::SLOT_SIZE
-                                        * scaled_item_width)
-                                        .min(scaled_item_width);
-
-                                    // Adjust the source rectangle to account for the item's original dimensions
-                                    let source_rect = Rect::new(
-                                        0.0,
-                                        0.0,
-                                        visible_item_width / (item_scale * scale),
-                                        item_texture.height(),
-                                    );
-
-                                    draw_texture_ex(
-                                        item_texture,
-                                        item_x,
-                                        item_y,
-                                        WHITE,
-                                        DrawTextureParams {
-                                            dest_size: Some(Vec2::new(
-                                                visible_item_width,
-                                                scaled_item_height,
-                                            )),
-                                            source: Some(source_rect),
-                                            ..Default::default()
-                                        },
-                                    );
-                                }
+                        if let Some(item_id) = slot
+                            && let Some(item) = game.items.iter().find(|i| i.id == item_id)
+                            && let Some(mut item_texture) =
+                                asset_manager.get_texture(&item.textures.in_inventory)
+                        {
+                            if let Some(item_texture_text) =
+                                asset_manager.get_texture(&item.textures.in_inventory_text)
+                            {
+                                item_texture = if Some(i) == game.inventory.hovered_slot {
+                                    item_texture_text
+                                } else {
+                                    item_texture
+                                };
                             }
+
+                            // text asset is wider than the item asset
+                            // TODO: clean up as this does nothing when
+                            // item_texture is changed above
+                            // still works though
+                            let max_width = item_texture.width().max(
+                                asset_manager
+                                    .get_texture(&item.textures.in_inventory_text)
+                                    .map_or(0.0, |t| t.width()),
+                            );
+                            let max_height = item_texture.height();
+
+                            // Calculate scaling factors
+                            let scale_x = inventory::SLOT_SIZE / max_width;
+                            let scale_y = inventory::SLOT_SIZE / max_height;
+                            let item_scale = scale_x.min(scale_y);
+
+                            let scaled_item_width = item_texture.width() * item_scale * scale;
+                            let scaled_item_height = item_texture.height() * item_scale * scale;
+
+                            // Center the item in the slot
+                            let item_x = screen_x + (scaled_slot_size - scaled_item_width) / 2.0;
+                            let item_y = screen_y + (scaled_slot_size - scaled_item_height) / 2.0;
+
+                            // Calculate the visible portion of the item
+                            let visible_item_width = (slot_visible_width / inventory::SLOT_SIZE
+                                * scaled_item_width)
+                                .min(scaled_item_width);
+
+                            // Adjust the source rectangle to account for the item's original dimensions
+                            let source_rect = Rect::new(
+                                0.0,
+                                0.0,
+                                visible_item_width / (item_scale * scale),
+                                item_texture.height(),
+                            );
+
+                            draw_texture_ex(
+                                item_texture,
+                                item_x,
+                                item_y,
+                                WHITE,
+                                DrawTextureParams {
+                                    dest_size: Some(Vec2::new(
+                                        visible_item_width,
+                                        scaled_item_height,
+                                    )),
+                                    source: Some(source_rect),
+                                    ..Default::default()
+                                },
+                            );
                         }
                     }
                 }
@@ -559,7 +551,7 @@ impl Renderer {
                 let (x, y) = self.get_scaled_pos(menu_item.position[0], menu_item.position[1]);
                 let scale = self.get_scale();
                 draw_texture_ex(
-                    &texture,
+                    texture,
                     x,
                     y,
                     WHITE,
@@ -575,8 +567,7 @@ impl Renderer {
         }
 
         if let Some(cursor_texture) = asset_manager.get_texture(
-            &game
-                .ui
+            game.ui
                 .cursors
                 .iter()
                 .find(|c| c.cursor_type == game.current_cursor)
@@ -592,7 +583,7 @@ impl Renderer {
             {
                 let scale = self.get_scale();
                 draw_texture_ex(
-                    &cursor_texture,
+                    cursor_texture,
                     cursor_pos.0 - (cursor.hotspot[0] as f32 * scale),
                     cursor_pos.1 - (cursor.hotspot[1] as f32 * scale),
                     WHITE,
@@ -770,85 +761,79 @@ impl Renderer {
     }
 
     fn draw_dialog_menu(&self, game: &Game, asset_manager: &AssetManager) {
-        if game.dialog_menu.open {
-            if let Some(dialog_background) =
+        if game.dialog_menu.open
+            && let Some(dialog_background) =
                 asset_manager.get_texture(&game.ui.general_textures.dialog_background)
+        {
+            let scale = self.get_scale();
+
+            // Draw dialog background
+            let (scaled_x, scaled_y) = self.get_scaled_pos(0.0, dialog::START_Y);
+            let scaled_width = dialog::WIDTH * scale;
+            let scaled_height = dialog::HEIGHT * scale;
+
+            draw_texture_ex(
+                dialog_background,
+                scaled_x,
+                scaled_y,
+                WHITE,
+                DrawTextureParams {
+                    dest_size: Some(Vec2::new(scaled_width, scaled_height)),
+                    ..Default::default()
+                },
+            );
+
+            if let Some(dialog_id) = game.dialog_menu.current_dialog_id
+                && let Some(current_scene) = game.get_current_scene()
+                && let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id)
+                && let Some(level) = dialog.tree.get(game.dialog_menu.current_level)
             {
-                let scale = self.get_scale();
+                // Get the font outside the loop
+                let dialog_font = asset_manager.get_font("dialog");
 
-                // Draw dialog background
-                let (scaled_x, scaled_y) = self.get_scaled_pos(0.0, dialog::START_Y);
-                let scaled_width = dialog::WIDTH * scale;
-                let scaled_height = dialog::HEIGHT * scale;
+                for (i, option) in level.options.iter().enumerate() {
+                    let option_x = dialog::OPTION_START_X * scale + scaled_x;
+                    let option_y = (dialog::OPTION_START_Y + i as f32 * dialog::OPTION_SPACING)
+                        * scale
+                        + scaled_y;
+                    let option_width = dialog::OPTION_BOX_WIDTH * scale;
+                    let option_height = dialog::OPTION_BOX_HEIGHT * scale;
 
-                draw_texture_ex(
-                    dialog_background,
-                    scaled_x,
-                    scaled_y,
-                    WHITE,
-                    DrawTextureParams {
-                        dest_size: Some(Vec2::new(scaled_width, scaled_height)),
-                        ..Default::default()
-                    },
-                );
+                    let is_hovered = game.dialog_menu.hovered_option == Some(i);
+                    let (box_color, text_color) = if is_hovered {
+                        (
+                            dialog::OPTION_HOVER_BOX_COLOR,
+                            dialog::OPTION_HOVER_TEXT_COLOR,
+                        )
+                    } else {
+                        (dialog::OPTION_BOX_COLOR, dialog::OPTION_TEXT_COLOR)
+                    };
 
-                if let Some(dialog_id) = game.dialog_menu.current_dialog_id {
-                    if let Some(current_scene) = game.get_current_scene() {
-                        if let Some(dialog) =
-                            current_scene.dialogs.iter().find(|d| d.id == dialog_id)
-                        {
-                            if let Some(level) = dialog.tree.get(game.dialog_menu.current_level) {
-                                // Get the font outside the loop
-                                let dialog_font = asset_manager.get_font("dialog");
-
-                                for (i, option) in level.options.iter().enumerate() {
-                                    let option_x = dialog::OPTION_START_X * scale + scaled_x;
-                                    let option_y = (dialog::OPTION_START_Y
-                                        + i as f32 * dialog::OPTION_SPACING)
-                                        * scale
-                                        + scaled_y;
-                                    let option_width = dialog::OPTION_BOX_WIDTH * scale;
-                                    let option_height = dialog::OPTION_BOX_HEIGHT * scale;
-
-                                    let is_hovered = game.dialog_menu.hovered_option == Some(i);
-                                    let (box_color, text_color) = if is_hovered {
-                                        (
-                                            dialog::OPTION_HOVER_BOX_COLOR,
-                                            dialog::OPTION_HOVER_TEXT_COLOR,
-                                        )
-                                    } else {
-                                        (dialog::OPTION_BOX_COLOR, dialog::OPTION_TEXT_COLOR)
-                                    };
-
-                                    if game.debug_tools.active {
-                                        draw_rectangle_lines(
-                                            option_x,
-                                            option_y,
-                                            option_width,
-                                            option_height,
-                                            2.0,
-                                            box_color,
-                                        );
-                                    }
-                                    // Draw option text with custom font
-                                    let font_size = dialog::FONT_SIZE * scale;
-                                    let text_params = TextParams {
-                                        font: dialog_font,
-                                        font_size: font_size as u16,
-                                        color: text_color,
-                                        ..Default::default()
-                                    };
-
-                                    draw_text_ex(
-                                        &option.text,
-                                        option_x + dialog::TEXT_PADDING_X * scale,
-                                        option_y + option_height / 2.0 + font_size / 2.0,
-                                        text_params,
-                                    );
-                                }
-                            }
-                        }
+                    if game.debug_tools.active {
+                        draw_rectangle_lines(
+                            option_x,
+                            option_y,
+                            option_width,
+                            option_height,
+                            2.0,
+                            box_color,
+                        );
                     }
+                    // Draw option text with custom font
+                    let font_size = dialog::FONT_SIZE * scale;
+                    let text_params = TextParams {
+                        font: dialog_font,
+                        font_size: font_size as u16,
+                        color: text_color,
+                        ..Default::default()
+                    };
+
+                    draw_text_ex(
+                        &option.text,
+                        option_x + dialog::TEXT_PADDING_X * scale,
+                        option_y + option_height / 2.0 + font_size / 2.0,
+                        text_params,
+                    );
                 }
             }
         }

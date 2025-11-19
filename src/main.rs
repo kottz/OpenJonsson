@@ -159,6 +159,12 @@ pub struct InventoryData {
     pub hovered_right_arrow: bool,
 }
 
+impl Default for InventoryData {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl InventoryData {
     pub fn new() -> Self {
         let inventory_width = inventory::SLOT_SIZE * inventory::SLOT_COUNT as f32
@@ -789,7 +795,7 @@ impl Game {
                 });
 
             if let Some((item_index, item_id, world_item, is_allowed, maybe_audio)) = pickup_info {
-                if !self.is_item_in_range(&world_item) {
+                if !self.is_item_in_range(world_item) {
                     return;
                 }
 
@@ -805,24 +811,21 @@ impl Game {
                 }
 
                 // Play pickup audio
-                if let Some(audio_files) = maybe_audio {
-                    if let Some(audio_file) = audio_files.choose() {
-                        self.audio_system.play_audio(
-                            &self.asset_manager,
-                            audio_file,
-                            AudioCategory::SoundEffect,
-                        );
-                    }
+                if let Some(audio_files) = maybe_audio
+                    && let Some(audio_file) = audio_files.choose()
+                {
+                    self.audio_system.play_audio(
+                        &self.asset_manager,
+                        audio_file,
+                        AudioCategory::SoundEffect,
+                    );
                 }
             }
         }
     }
 
     fn is_item_in_inventory(&self, item_id: u32) -> bool {
-        self.inventory
-            .items
-            .iter()
-            .any(|&item| item == Some(item_id))
+        self.inventory.items.contains(&Some(item_id))
     }
 
     fn update_inventory_animation(&mut self, delta_time: f32) {
@@ -838,10 +841,8 @@ impl Game {
                 if self.inventory.animation_frame < TOTAL_FRAMES - 1 {
                     self.inventory.animation_frame += 1;
                 }
-            } else {
-                if self.inventory.animation_frame > 0 {
-                    self.inventory.animation_frame -= 1;
-                }
+            } else if self.inventory.animation_frame > 0 {
+                self.inventory.animation_frame -= 1;
             }
         }
     }
@@ -980,20 +981,19 @@ impl Game {
         // Check if a character was clicked
         if let Some(index) =
             (0..self.characters.count).find(|&i| self.is_point_in_character(game_pos, i))
+            && Some(index) != self.active_character
         {
-            if Some(index) != self.active_character {
-                self.active_character = Some(index);
+            self.active_character = Some(index);
 
-                // Play select character audio
-                if let Some(audio_file) = self.characters.data[index].select_audio.choose() {
-                    self.audio_system.play_audio(
-                        &self.asset_manager,
-                        audio_file,
-                        AudioCategory::SoundEffect,
-                    );
-                }
-                return;
+            // Play select character audio
+            if let Some(audio_file) = self.characters.data[index].select_audio.choose() {
+                self.audio_system.play_audio(
+                    &self.asset_manager,
+                    audio_file,
+                    AudioCategory::SoundEffect,
+                );
             }
+            return;
         }
 
         // Check for dialog interactions
@@ -1015,13 +1015,13 @@ impl Game {
         }
 
         // Check for scene transitions and handle scene changes
-        if let Some(transition) = self.find_clicked_transition(game_pos) {
-            if self.debug_instant_move || self.is_active_character_in_transition_area(transition) {
-                let current_scene_id = self.current_scene;
-                self.current_scene = transition.target_scene;
-                self.transition_to_new_scene(current_scene_id).await;
-                return;
-            }
+        if let Some(transition) = self.find_clicked_transition(game_pos)
+            && (self.debug_instant_move || self.is_active_character_in_transition_area(transition))
+        {
+            let current_scene_id = self.current_scene;
+            self.current_scene = transition.target_scene;
+            self.transition_to_new_scene(current_scene_id).await;
+            return;
         }
 
         // Handle item clicks
@@ -1063,20 +1063,19 @@ impl Game {
     }
 
     fn play_open_dialog_sound(&mut self, dialog_id: u32) {
-        if let Some(current_scene) = self.get_current_scene() {
-            if let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id) {
-                if let Some(audio) = &dialog.open_audio {
-                    let audio_to_play = format!(
-                        "voice/{}/{}_{}.wav",
-                        current_scene.name, current_scene.name, audio
-                    );
-                    self.audio_system.play_audio(
-                        &self.asset_manager,
-                        &audio_to_play,
-                        AudioCategory::Dialog,
-                    );
-                }
-            }
+        if let Some(current_scene) = self.get_current_scene()
+            && let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id)
+            && let Some(audio) = &dialog.open_audio
+        {
+            let audio_to_play = format!(
+                "voice/{}/{}_{}.wav",
+                current_scene.name, current_scene.name, audio
+            );
+            self.audio_system.play_audio(
+                &self.asset_manager,
+                &audio_to_play,
+                AudioCategory::Dialog,
+            );
         }
     }
 
@@ -1087,30 +1086,28 @@ impl Game {
     }
 
     fn get_clicked_dialog_option(&self, game_pos: Vec2) -> Option<usize> {
-        if let Some(current_scene) = self.get_current_scene() {
-            if let Some(dialog_id) = self.dialog_menu.current_dialog_id {
-                if let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id) {
-                    if let Some(level) = dialog.tree.get(self.dialog_menu.current_level) {
-                        // Calculate the relative mouse position within the dialog area
-                        let relative_pos = Vec2::new(
-                            game_pos.x - config::dialog::OPTION_START_X,
-                            game_pos.y - config::dialog::START_Y - config::dialog::OPTION_START_Y,
-                        );
+        if let Some(current_scene) = self.get_current_scene()
+            && let Some(dialog_id) = self.dialog_menu.current_dialog_id
+            && let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id)
+            && let Some(level) = dialog.tree.get(self.dialog_menu.current_level)
+        {
+            // Calculate the relative mouse position within the dialog area
+            let relative_pos = Vec2::new(
+                game_pos.x - config::dialog::OPTION_START_X,
+                game_pos.y - config::dialog::START_Y - config::dialog::OPTION_START_Y,
+            );
 
-                        for (i, _) in level.options.iter().enumerate() {
-                            let option_y = i as f32 * config::dialog::OPTION_SPACING;
-                            let option_rect = Rect::new(
-                                0.0,
-                                option_y,
-                                config::dialog::OPTION_BOX_WIDTH,
-                                config::dialog::OPTION_BOX_HEIGHT,
-                            );
+            for (i, _) in level.options.iter().enumerate() {
+                let option_y = i as f32 * config::dialog::OPTION_SPACING;
+                let option_rect = Rect::new(
+                    0.0,
+                    option_y,
+                    config::dialog::OPTION_BOX_WIDTH,
+                    config::dialog::OPTION_BOX_HEIGHT,
+                );
 
-                            if option_rect.contains(relative_pos) {
-                                return Some(i);
-                            }
-                        }
-                    }
+                if option_rect.contains(relative_pos) {
+                    return Some(i);
                 }
             }
         }
@@ -1127,23 +1124,20 @@ impl Game {
         let mut audio_to_play = None;
         let mut next_level = None;
 
-        if let Some(current_scene) = self.get_current_scene() {
-            if let Some(dialog_id) = self.dialog_menu.current_dialog_id {
-                if let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id) {
-                    if let Some(level) = dialog.tree.get(self.dialog_menu.current_level) {
-                        if let Some(option) = level.options.get(selected_option) {
-                            println!("Selected option: {}", option.text);
-                            if let Some(audio) = option.response_audio.choose() {
-                                audio_to_play = Some(format!(
-                                    "voice/{}/{}_{}.wav",
-                                    current_scene.name, current_scene.name, audio
-                                ));
-                            }
-                            next_level = Some(option.target as usize);
-                        }
-                    }
-                }
+        if let Some(current_scene) = self.get_current_scene()
+            && let Some(dialog_id) = self.dialog_menu.current_dialog_id
+            && let Some(dialog) = current_scene.dialogs.iter().find(|d| d.id == dialog_id)
+            && let Some(level) = dialog.tree.get(self.dialog_menu.current_level)
+            && let Some(option) = level.options.get(selected_option)
+        {
+            println!("Selected option: {}", option.text);
+            if let Some(audio) = option.response_audio.choose() {
+                audio_to_play = Some(format!(
+                    "voice/{}/{}_{}.wav",
+                    current_scene.name, current_scene.name, audio
+                ));
             }
+            next_level = Some(option.target as usize);
         }
 
         // Now that we've gathered all the information, we can modify the state
@@ -1265,10 +1259,8 @@ impl Game {
 
         let spawn_positions = self.find_n_closest_walkable_grids(center, count).unwrap();
 
-        for i in 0..count {
-            let pos = self
-                .grid
-                .get_coord_from_grid(spawn_positions[i].0, spawn_positions[i].1);
+        for item in spawn_positions.iter().take(count) {
+            let pos = self.grid.get_coord_from_grid(item.0, item.1);
             positions.push(pos);
         }
 
@@ -1308,10 +1300,10 @@ impl Game {
             }
 
             // Check if the clicked position is the same as the current target
-            if let Some(current_target) = self.characters.targets[active_index] {
-                if current_target == final_target {
-                    return;
-                }
+            if let Some(current_target) = self.characters.targets[active_index]
+                && current_target == final_target
+            {
+                return;
             }
 
             // Don't move if the player is already at the target
@@ -1378,12 +1370,12 @@ impl Game {
         ));
 
         let mut closest_node = None;
-        let mut min_distance = std::i32::MAX;
+        let mut min_distance = i32::MAX;
 
         for x in start.0..=end.0 {
             for y in start.1..=end.1 {
                 if self.grid.is_node_walkable((x, y)) {
-                    let distance = ((x - target.0).pow(2) + (y - target.1).pow(2)) as i32;
+                    let distance = (x - target.0).pow(2) + (y - target.1).pow(2);
                     if distance < min_distance {
                         min_distance = distance;
                         closest_node = Some((x, y));
@@ -1412,10 +1404,8 @@ impl Game {
         if is_key_pressed(KeyCode::D) {
             self.debug_tools.active = !self.debug_tools.active;
         }
-        if is_key_pressed(KeyCode::G) {
-            if self.debug_tools.active {
-                self.debug_tools.draw_grid = !self.debug_tools.draw_grid;
-            }
+        if is_key_pressed(KeyCode::G) && self.debug_tools.active {
+            self.debug_tools.draw_grid = !self.debug_tools.draw_grid;
         }
 
         if is_key_pressed(KeyCode::M) && self.debug_tools.active {

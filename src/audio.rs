@@ -1,5 +1,5 @@
 use crate::asset_manager::AssetManager;
-use macroquad::audio::{play_sound, set_sound_volume, stop_sound, Sound};
+use macroquad::audio::{play_sound, set_sound_volume, stop_sound};
 use std::collections::HashMap;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
@@ -37,12 +37,11 @@ impl AudioSystem {
             let volume = self.volume_levels.get(&category).cloned().unwrap_or(1.0);
 
             // Stop any currently playing audio in the same category
-            if let Some(current_name) = self.currently_playing.get(&category).cloned().flatten() {
-                if current_name != name {
-                    if let Some(current_sound) = asset_manager.get_sound(&current_name) {
-                        stop_sound(current_sound);
-                    }
-                }
+            if let Some(current_name) = self.currently_playing.get(&category).cloned().flatten()
+                && current_name != name
+                && let Some(current_sound) = asset_manager.get_sound(&current_name)
+            {
+                stop_sound(current_sound);
             }
 
             play_sound(
@@ -61,11 +60,11 @@ impl AudioSystem {
     }
 
     pub fn stop_audio(&mut self, asset_manager: &AssetManager, category: &AudioCategory) {
-        if let Some(Some(current_name)) = self.currently_playing.get(category) {
-            if let Some(sound) = asset_manager.get_sound(current_name) {
-                stop_sound(sound);
-                self.currently_playing.insert(category.clone(), None);
-            }
+        if let Some(Some(current_name)) = self.currently_playing.get(category)
+            && let Some(sound) = asset_manager.get_sound(current_name)
+        {
+            stop_sound(sound);
+            self.currently_playing.insert(*category, None);
         }
     }
 
@@ -103,10 +102,10 @@ impl AudioSystem {
 
         // Apply new volume to all playing sounds
         for (_, name) in self.currently_playing.iter() {
-            if let Some(name) = name {
-                if let Some(sound) = asset_manager.get_sound(name) {
-                    set_sound_volume(sound, new_volume);
-                }
+            if let Some(name) = name
+                && let Some(sound) = asset_manager.get_sound(name)
+            {
+                set_sound_volume(sound, new_volume);
             }
         }
     }

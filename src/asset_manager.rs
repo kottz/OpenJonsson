@@ -1,4 +1,4 @@
-use macroquad::audio::{load_sound, Sound};
+use macroquad::audio::{Sound, load_sound};
 use macroquad::prelude::*;
 use std::collections::HashMap;
 
